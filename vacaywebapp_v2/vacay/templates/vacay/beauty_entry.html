@@ -1,0 +1,170 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Women's Or Men's?{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<style>
+
+html, body{
+  background:linear-gradient(0deg,rgba(20,150,250,0.3),rgba(0,100,250,0.3)), url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+img {
+  height: 80px;
+  width: 80px;
+}
+
+form h1 {
+  font-size: 30px;
+  color: #fff;
+  text-shadow: 2px 2px 0px rgba(153, 115, 0, 0.7);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-align:center;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  font-weight:600;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-bottom: auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+  background:linear-gradient(0deg,rgba(0, 179, 179,0.0),rgba(0, 102, 102,0.5),rgba(0, 102, 102,0.8),rgba(0, 102, 102,0.8),rgba(0, 102, 102,0.8),rgba(0, 102, 102,0.5),rgba(0, 179, 179,0.0));
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#edit:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+.form-group {
+  overflow: hidden;
+  width:48%;
+  float:left;
+  height:auto;
+  padding-bottom:10px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 5px;
+  float:middle;
+  margin:auto;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+div.home-large-btn {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-color: #EEE #CCC #CCC #EEE;
+  background-color: white;
+  text-align: center;
+  width: 100%;
+  height:auto;
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+label {
+    color: #fff;
+    font-size:20px;
+    font-weight:600;
+    margin-top:15px;
+}
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+  <form id="edit" action="#" method="post" enctype="multipart/form-data">
+	  {% csrf_token %}
+	    <h1>Women's? Or Men's? Select...</h1>
+
+    <div class="contentform" style="margin-top:10px;">
+
+		<div class="formcontent">
+            <center>
+            <div class="form-group" style=" padding-bottom:10%; border-radius:10px; margin-left:1%;" onclick="women();">
+                <div class="home-large-btn">
+                    <img src="/static/vacay/images/womenservice.png" style="width:100%; height:auto; border-radius:8px;">
+                </div>
+                <label>WOMEN</label>
+            </div>
+			<div class="form-group" style="margin-left:8px; padding-bottom:10%; border-radius:10px;" onclick="men();">
+                <div class="home-large-btn">
+                    <img src="/static/vacay/images/menservice.png" style="width:100%; height:auto; border-radius:8px;">
+                </div>
+                <label>MEN</label>
+            </div>
+            </center>
+	    </div>
+
+	</div>
+
+  </form>
+
+<!--<script>-->
+    <!--alert("Swipe right if you want to accept this friend and swipe left if you don’t want to accept the friend");-->
+<!--</script>-->
+<script>
+  //  document.getElementById("alert").style.display = 'block';
+    function women(){
+        window.location.href = "/women_beauty";
+    }
+    function men(){
+        window.location.href = "/men_beauty";
+    }
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

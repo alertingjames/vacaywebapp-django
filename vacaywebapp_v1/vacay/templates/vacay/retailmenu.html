@@ -1,0 +1,334 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Welcome{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<style>
+
+html, body{
+  background:linear-gradient(90deg,rgba(0,100,250,0.8),rgba(0,100,250,0.3)), url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+form h1 {
+  font-size: 25px;
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  color: #F7D479;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7);
+  text-align:center;
+  font-weight:600;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+#form {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-bottom: 2% auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+  <!--background:linear-gradient(30deg,rgba(200,150,250,0.7),rgba(50,200,250,0.7));-->
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#form:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #F7D479;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px;
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 50px 0px 0px 50px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 10px;
+  float:middle;
+  margin:auto;
+  <!--background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.3),rgba(100,50,250,0.3),rgba(100,50,250,0.3),rgba(100,50,250,0.3),rgba(100,50,250,0.3),rgba(50,100,250,0.0));-->
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom:3%;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+div.home-btn {
+  display: inline-block;
+  font-size:18px;
+  font-weight:600;
+  color:rgb(0, 153, 153);
+  font-weight:700;
+  background:linear-gradient(90deg,rgba(255, 255, 255,0.8),rgba(255, 230, 255,0.7),rgba(255, 230, 255,0.7),rgba(255, 230, 255,0.3),rgba(204, 238, 255,0.0));
+  width: 95%;
+  height:70px;
+  padding: 16px 0px 16px 30px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+div.home-large-btn {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-color: #EEE #CCC #CCC #EEE;
+  background-color: white;
+  text-align: center;
+  width: 48%;
+  height:220px;
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.btn-text {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    width:100%;
+    font-size:20px;
+    color:white;
+    font-weight:350;
+    transform: translate(-50%, -50%);
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #CCC #EEE #EEE #CCC;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="image"] {
+  display: none;
+}
+
+</style>
+
+<script>
+	<!--history.pushState(null, null, location.href);-->
+	<!--window.onpopstate = function () {-->
+        <!--history.go(1);-->
+    <!--};-->
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% if note %}
+<h4><script>alert("You haven't been registered. Please register...")</script></h4>
+    {% endif %}
+
+{% if error %}
+<h4><script>alert("Server failed. Try again ...")</script></h4>
+    {% endif %}
+
+{% if verified %}
+<h4><script>alert("You already have payment verified.")</script></h4>
+{% endif %}
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle; border-radius: 1px;
+	transform:translate(-50%, -50%); width:auto; z-index:100; top:120px; display: none;" id="gif">
+
+<div onclick="showNotification()" id="alert" style="font-size:16px; font-weight:300; color: red; text-align:center; box-shadow: 0px 0px 100px rgba(0, 0, 0, 1.0);
+	position:fixed; left:50%; float:middle; background-color:white; border-radius:10px; padding: 5px 10px 5px 10px;
+	transform:translate(-50%, -50%); width:200px; z-index:100; top:100px; display:none;"><i class="fa fa-bell" style="font-size:18px; color:red;"></i>
+	You have a message!<br>
+	Click here to view it.
+</div>
+
+  <form id="form">
+	  {% csrf_token %}
+	    <h1 style="font-size:25px; font-weight:800; margin-bottom:30px;
+        color: #ffe680; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center; width:100%;">WHAT DO YOU WANT?</h1>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+            <div class="form-group" style="padding-bottom:50px;">
+              <div style="width:100%; max-height:70px;">
+                <div class="home-btn" id="tennis" onclick="tennis()">
+                  <img src="/static/vacay/images/tennisicon.png" style="width:40px; height:auto; margin-right:20px;">Tennis
+                </div>
+              </div>
+              <div style="width:100%; margin-top:5px; max-height:70px;">
+                <div class="home-btn" id="golf" onclick="golf()">
+                  <img src="/static/vacay/images/golficon.png" style="width:40px; height:auto; margin-right:20px;">Golf
+                </div>
+              </div>
+              <div style="width:100%; margin-top:5px; max-height:70px;">
+                <div class="home-btn" id="running" onclick="running()">
+                  <img src="/static/vacay/images/runningicon.png" style="width:40px; height:auto; margin-right:20px;">Running
+                </div>
+              </div>
+              <div style="width:100%; margin-top:5px; max-height:70px;">
+                <div class="home-btn" id="skiing" onclick="skiing()">
+                  <img src="/static/vacay/images/skiingicon.png" style="width:40px; height:auto; margin-right:20px;">Skiing & Snowboarding
+                </div>
+              </div>
+              <div style="width:100%; margin-top:5px; max-height:70px;">
+                <div class="home-btn" id="biking" onclick="biking()">
+                  <img src="/static/vacay/images/bikingicon.png" style="width:40px; height:auto; margin-right:20px;">Biking
+                </div>
+              </div>
+                <div style="width:100%; margin-top:5px; max-height:70px;">
+                <div class="home-btn" id="fishing" onclick="fishing()">
+                  <img src="/static/vacay/images/fishingicon.png" style="width:40px; height:auto; margin-right:20px;">Fishing
+                </div>
+              </div>
+                <div style="width:100%; margin-top:5px; max-height:70px;">
+                <div class="home-btn" id="surfing" onclick="surfing()">
+                  <img src="/static/vacay/images/surfingicon.png" style="width:40px; height:auto; margin-right:20px;">Surfing/Kitesurfing
+                </div>
+              </div>
+              <div style="width:100%; margin-top:5px; max-height:70px;">
+                <div class="home-btn" id="exploring" onclick="exploring()">
+                  <img src="/static/vacay/images/exploringicon.png" style="width:40px; height:auto; margin-right:20px;">Exploring
+                </div>
+              </div>
+			</div>
+        </div>
+	</div>
+
+  </form>
+
+<script>
+    function tennis(){
+        window.location.href = "https://vacayalldays.com/getretailinfo?category=Tennis";
+    }
+    function golf(){
+        window.location.href = "https://vacayalldays.com/getretailinfo?category=Golf";
+    }
+    function running(){
+        window.location.href = "https://vacayalldays.com/getretailinfo?category=Running";
+    }
+    function skiing(){
+        window.location.href = "https://vacayalldays.com/getretailinfo?category=Skiing";
+    }
+    function showNotification(){
+      //  alert(document.getElementById("me_email").value);
+		window.location.href = "https://vacayalldays.com/get_notifications";
+	}
+	function biking(){
+		window.location.href = "https://vacayalldays.com/getretailinfo?category=Biking";
+	}
+	function fishing(){
+		window.location.href = "https://vacayalldays.com/getretailinfo?category=Fishing";
+	}
+	function surfing(){
+		window.location.href = "https://vacayalldays.com/getretailinfo?category=Surfing/Kitesurfing";
+	}
+	function exploring(){
+		window.location.href = "https://vacayalldays.com/getretailinfo?category=Exploring";
+	}
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

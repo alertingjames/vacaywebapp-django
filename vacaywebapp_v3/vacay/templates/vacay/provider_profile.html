@@ -1,0 +1,542 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}My Profile{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<style>
+
+html, body{
+  background: url("/static/vacay/images/homebg.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+img {
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+}
+
+.info p {
+  text-align:center;
+  color: #999;
+  text-transform:none;
+  font-weight:600;
+  font-size:15px;
+  margin-top:2px
+}
+
+.info i {
+  color:#F6AA93;
+}
+form h1 {
+  font-size: 22px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:middle;
+  font-family: verdana;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:600px;
+  width:auto;
+  height:auto;
+  margin-bottom: auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+  background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.3),rgba(100,50,250,0.3),rgba(100,50,250,0.4),rgba(100,50,250,0.4),rgba(100,50,250,0.3),rgba(50,100,250,0.0));
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#edit:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+  text-align:left;
+}
+
+select {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+  text-align:left;
+}
+
+a {
+  text-decoration:inherit
+}
+
+textarea {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #EEE;
+  margin: 0;
+  width: 75%;
+  height: 130px;
+  float: left;
+  padding: 15px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 50px 0px 0px 50px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 30px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+
+  margin-bottom:10%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.validation {
+  display:none;
+  margin: 0 0 10px;
+  font-weight:400;
+  font-size:13px;
+  color: #DE5959;
+}
+
+#sendmessage {
+  border:1px solid #fff;
+  display:none;
+  text-align:center;
+  margin:10px 0;
+  font-weight:600;
+  margin-bottom:30px;
+  background-color: #EBF6E0;
+  color: #5F9025;
+  border: 1px solid #B3DC82;
+  padding: 13px 40px 13px 18px;
+  border-radius: 3px;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.03);
+}
+
+#sendmessage.show,.show  {
+  display:block;
+}
+
+th {color:white;}
+
+td {text-align:middle;}
+
+#container {
+    top:400px;
+    width: 480px;
+    height: 360px;
+    position:fixed;
+    z-index:100;
+    left:50%;
+    display:none;
+    transform:translate(-50%, -50%);
+    border: 10px #333 solid;
+}
+
+label.cameraButton {
+  display: inline-block;
+  /* Styles to make it look like a button */
+  padding-top: 0.6em;
+  padding-bottom: 0.3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border: 2px solid #666;
+  border-color: #EEE #CCC #CCC #EEE;
+  border-radius:50px 50px 50px 50px;
+  font-size:16px;
+  color:white;
+  width:160px;
+  height:45px;
+  text-align:middle;
+  background-color: green;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #CCC #EEE #EEE #CCC;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="image"] {
+  display: none;
+}
+
+#city {
+  border-radius: 0px 0px 0px 0px;
+  border: 1px solid #eee;
+  width: 78%;
+  height: 42px;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+#map {
+  border-radius: 0px 0px 0px 0px;
+  border: 0px solid #eee;
+  width: 12%;
+  height: 42px;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+  background-image: url(/static/vacay/images/loc.png); /* 16px x 16px */
+  background-color: transparent; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position: 0px 0px;  /*
+}
+
+label input {
+  display: none;/* <-- hide the default checkbox */
+}
+label span {/* <-- style the artificial checkbox */
+  height: 25px;
+  width: 25px;
+  margin-right:20px;
+  border: 1px solid white;
+  display: inline-block;
+  position: relative;
+}
+[type=checkbox]:checked + span:before {/* <-- style its checked state..with a ticked icon */
+  content: '\2714';
+  position: absolute;
+  top: 0px;
+  left: 5px;
+}
+
+#checkbox-panel {
+    padding-top:10px;
+    background:linear-gradient(90deg, rgba(0, 255, 0, 0.0),rgba(153, 102, 0, 0.8), rgba(0, 255, 0, 0.0));
+}
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+  <form id="edit" action="/providereditprofilepicture" method="post" enctype="multipart/form-data">
+	  {% csrf_token %}
+	    <h1>My Profile</h1>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+            <div class="form-group" style="margin-bottom:20px;">
+				<center>
+                    <img src="{{me.proProfileImageUrl}}" style="max-width:160px; width:auto; height:auto; max-height:200px; margin-top:10px; margin-bottom:10px; border-radius: 5%;" id="picture">
+                    <div id="views" style="margin:15px;"></div>
+                    <input type="hidden" id="x" name="x" />
+                    <input type="hidden" id="y" name="y" />
+                    <input type="hidden" id="w" name="w" />
+                    <input type="hidden" id="h" name="h" />
+            	    <button id="cropbutton" type="button" style="background:transparent; color:white; font-size:16px; border:0px; margin-bottom:8px; display:none;">Crop</button>
+                </center>
+
+                <center>
+                    <label class="cameraButton" style="padding:8px; margin-bottom:25px;">
+                        <i class="fa fa-camera-retro" style="font-size:16px; color:white; margin-right:8px;"></i>Edit Photo
+                        <input type="file" name="photo" value="http://lorempixel.com/100/100/people/9" id="file" accept="image/*"/>
+                        <input type="hidden" name="bphoto" id="bphoto">
+                    </label>
+                </center>
+
+                <input type="hidden" name="photo" value="{{me.proProfileImageUrl}}">
+                <input type="hidden" name="name" value="{{me.proFirstName}} {{me.proLastName}}">
+                <input type="hidden" name="first_name" value="{{me.proFirstName}}">
+                <input type="hidden" name="last_name" value="{{me.proLastName}}">
+                <input type="hidden" name="email" value="{{me.proEmail}}">
+                <input type="hidden" name="city" value="{{me.proCity}}">
+                <input type="hidden" name="proPassword" value="{{me.proPassword}}">
+                <input type="hidden" name="company" value="{{me.proCompany}}">
+                <input type="hidden" name="survey" value="{{me.proToken}}">
+
+                <center>
+                    <button id="submitbutton" type="submit" style="background:transparent; font-size:16px; border:0px; color:red; margin-bottom:25px; display:none;">Submit</button>
+                </center>
+
+                <center>
+                    <div style="font-size:22px; font-weight:600; color:white;">{{me.proFirstName}} {{me.proLastName}}</div>
+                    <div style="font-size:18px; color:white;">{{me.proEmail}}</div>
+                </center>
+            </div>
+            <div class="form-group">
+                <p>Company <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-building"></i></span>
+                <input type="text" name="company" data-rule="required" data-msg="" required id="company" value="{{me.proCompany}}" readonly/>
+                <div class="validation"></div>
+			</div>
+			<div class="form-group">
+                <p>City <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-map-marker"></i></span>
+                <input type="text" name="city" data-rule="required" data-msg="" required id="city" value="{{me.proCity}}" readonly/>
+                <input name="map" id="map" onclick="show_onmap()" readonly>
+                <div class="validation"></div>
+			</div>
+            <div class="form-group">
+                <p>Address <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-location-arrow"></i></span>
+                <input type="text" name="address" data-rule="required" data-msg="" required id="address" value="{{me.proAddress}}" readonly/>
+                <div class="validation"></div>
+			</div>
+            <div class="form-group">
+                <p>Password <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-lock"></i></span>
+                <input type="text" name="password" data-rule="required" data-msg="" required id="password" value="{{me.proPassword}}" readonly/>
+                <div class="validation"></div>
+			</div>
+            <div class="form-group" style="padding:10px;">
+                <div>
+                    <p style="width:100%;"><i class="fa fa-credit-card" style="margin-right:8px; font-size:22px;"></i> Payment <span>*</span></p>
+                    <div id="payment" style="padding:0px 8px 8px 30px; color: red; font-weight:500; font-size:16px; text-align:left; white-space: pre-line;">
+                        {% if me.proToken != '' and me.proToken != 'None' %}Verified{% else %}Unverified{% endif %}
+                    </div>
+                </div>
+			</div>
+	    </div>
+
+	</div>
+
+  </form>
+
+<script>
+    var surflag = false;
+    function show_onmap(){
+        var city = document.getElementById('city');
+        window.location.href = "/userloc?address=" + city.value.replace(' ', '+');
+    }
+    function show_survey(){
+        var survey = document.getElementById('surv');
+        if (surflag){
+            surflag = false;
+            survey.style.display = 'none';
+        }else {
+            surflag = true;
+            survey.style.display = 'block';
+        }
+    }
+</script>
+
+<script>
+
+var crop_max_width = 250;
+var crop_max_height = 250;
+var jcrop_api;
+var canvas;
+var context;
+var image;
+
+var prefsize;
+
+$("#file").change(function() {
+  loadImage(this);
+});
+
+function loadImage(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    canvas = null;
+    reader.onload = function(e) {
+      image = new Image();
+      image.onload = validateImage;
+      image.src = e.target.result;
+      document.getElementById("b64").value = e.target.result;
+    }
+    reader.readAsDataURL(input.files[0]);
+    document.getElementById("cropbutton").style.display = "block";
+    document.getElementById("submitbutton").style.display = "block";
+    document.getElementById("picture").style.display = "none";
+  }
+}
+
+function dataURLtoBlob(dataURL) {
+  var BASE64_MARKER = ';base64,';
+  if (dataURL.indexOf(BASE64_MARKER) == -1) {
+    var parts = dataURL.split(',');
+    var contentType = parts[0].split(':')[1];
+    var raw = decodeURIComponent(parts[1]);
+
+    return new Blob([raw], {
+      type: contentType
+    });
+  }
+  var parts = dataURL.split(BASE64_MARKER);
+  var contentType = parts[0].split(':')[1];
+  var raw = window.atob(parts[1]);
+  var rawLength = raw.length;
+  var uInt8Array = new Uint8Array(rawLength);
+  for (var i = 0; i < rawLength; ++i) {
+    uInt8Array[i] = raw.charCodeAt(i);
+  }
+
+  return new Blob([uInt8Array], {
+    type: contentType
+  });
+}
+
+function validateImage() {
+  if (canvas != null) {
+    image = new Image();
+    image.onload = restartJcrop;
+    image.src = canvas.toDataURL('image/png');
+  } else restartJcrop();
+}
+
+function restartJcrop() {
+  if (jcrop_api != null) {
+    jcrop_api.destroy();
+  }
+  $("#views").empty();
+  $("#views").append("<canvas id=\"canvas\">");
+  canvas = $("#canvas")[0];
+  context = canvas.getContext("2d");
+  canvas.width = image.width;
+  canvas.height = image.height;
+  context.drawImage(image, 0, 0);
+  $("#canvas").Jcrop({
+    onSelect: selectcanvas,
+    onRelease: clearcanvas,
+    boxWidth: crop_max_width,
+    boxHeight: crop_max_height
+  }, function() {
+    jcrop_api = this;
+  });
+//  clearcanvas();
+}
+
+function clearcanvas() {
+  prefsize = {
+    x: 0,
+    y: 0,
+    w: canvas.width,
+    h: canvas.height,
+  };
+}
+
+function selectcanvas(coords) {
+  prefsize = {
+    x: Math.round(coords.x),
+    y: Math.round(coords.y),
+    w: Math.round(coords.w),
+    h: Math.round(coords.h)
+  };
+
+  $('#x').val(Math.round(coords.x));
+  $('#y').val(Math.round(coords.y));
+  $('#w').val(Math.round(coords.w));
+  $('#h').val(Math.round(coords.h));
+
+}
+
+function applyCrop() {
+  canvas.width = prefsize.w;
+  canvas.height = prefsize.h;
+  context.drawImage(image, prefsize.x, prefsize.y, prefsize.w, prefsize.h, 0, 0, canvas.width, canvas.height);
+  validateImage();
+}
+
+$("#cropbutton").click(function(e) {
+  applyCrop();
+});
+
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

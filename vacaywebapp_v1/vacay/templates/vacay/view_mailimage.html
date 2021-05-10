@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Picture</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../lib/w3.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Satisfy' rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="/static/vacay/images/vacaylogo.jpg" type="image/jpg">
+
+    <!--<meta name="mobile-web-app-capable" content="yes">-->
+    <!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+
+<!--<script>-->
+  <!--function launchFullScreen(element) {-->
+  <!--if(element.requestFullScreen) {-->
+    <!--element.requestFullScreen();-->
+  <!--} else if(element.mozRequestFullScreen) {-->
+    <!--element.mozRequestFullScreen();-->
+  <!--} else if(element.webkitRequestFullScreen) {-->
+    <!--element.webkitRequestFullScreen();-->
+  <!--}-->
+<!--}-->
+
+<!--// Launch fullscreen for browsers that support it!-->
+<!--launchFullScreen(document.documentElement); // the whole page-->
+<!--</script>-->
+    <style>
+        html, body{
+            background: linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.2),rgba(100,50,250,0.2),rgba(100,50,250,0.0)),
+                url("/static/vacay/images/datingbg.jpg") no-repeat center center fixed;
+            background-size:cover;
+        }
+    </style>
+</head>
+<body>
+
+<a href="{{image}}" download="download" style="position:fixed; left:30%; transform:translate(-50%, -50%); z-index:100; top:40px; color:white;">
+    <span class="glyphicon glyphicon-download" style="width:auto; font-size:35px; color:green; text-shadow: -1px 0 yellow, 0 1px yellow, 1px 0 yellow, 0 -1px yellow;"></span>Download
+</a>
+
+<center>
+    <img src="{{image}}" style="max-width:500px; width:auto; max-height: 500px; height:auto; margin-top:100px;">
+</center>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

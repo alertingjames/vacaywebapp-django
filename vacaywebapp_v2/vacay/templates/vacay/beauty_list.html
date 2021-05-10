@@ -1,0 +1,344 @@
+{% extends 'vacay/base_search.html' %}
+{% block title %}Beauty Services{% endblock %}
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta charset="utf-8">
+<meta content="stuff, to, help, search, engines, not" name="keywords">
+<meta content="What this page is about." name="description">
+<style>
+
+html, body{
+  background:linear-gradient(0deg,rgba(20,150,250,0.3),rgba(0,100,250,0.3)), url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+img {
+  border-radius: 10px;
+  height: 80px;
+  width: 80px;
+}
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 10px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+#myBtn:hover {
+  background-color: blue;
+}
+#admin{
+    display:none;
+}
+
+.info p {
+  text-align:center;
+  color: #999;
+  text-transform:none;
+  font-weight:600;
+  font-size:15px;
+  margin-top:2px
+}
+
+.info i {
+  color:#F6AA93;
+}
+div h1 {
+  font-size: 25px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:center;
+  font-family: verdana;
+  <!--font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;-->
+  font-weight:500;
+}
+
+#form {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-bottom: 2% auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+  background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.3),rgba(100,50,250,0.5),rgba(100,50,250,0.6),rgba(100,50,250,0.5),rgba(50,100,250,0.0));
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#form:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 200;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+i {
+  color:red;
+}
+
+.contentform {
+  padding: 10px 10px 20px 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background:linear-gradient(90deg,rgba(100,50,250,0.0),rgb(0, 128, 43),rgb(0, 128, 43),rgb(0, 128, 43),rgba(50,100,250,0.0));
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom:3%;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.items {
+    color:white;
+    font-size:18px;
+    padding:8px 8px;
+    height:42px;
+}
+
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--<meta name="mobile-web-app-capable" content="yes">-->
+<!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+
+<!--<script>-->
+  <!--function launchFullScreen(element) {-->
+  <!--if(element.requestFullScreen) {-->
+    <!--element.requestFullScreen();-->
+  <!--} else if(element.mozRequestFullScreen) {-->
+    <!--element.mozRequestFullScreen();-->
+  <!--} else if(element.webkitRequestFullScreen) {-->
+    <!--element.webkitRequestFullScreen();-->
+  <!--}-->
+<!--}-->
+
+<!--// Launch fullscreen for browsers that support it!-->
+<!--launchFullScreen(document.documentElement); // the whole page-->
+<!--</script>-->
+
+<div id="title" style="font-size:25px; font-weight:800; color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center;
+	position:fixed; left:50%; float:middle; transform:translate(-50%, -50%); width:350px; z-index:100; top:92px; display:none;">WHICH DO YOU WANT?</div>
+
+<div onclick="showAlert()" id="alert" style="font-size:16px; font-weight:300; color: red; text-align:center; box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.3);
+	position:fixed; left:50%; float:middle; background-color:white; border-radius:10px; padding: 5px 10px 5px 10px;
+	transform:translate(-50%, -50%); width:200px; z-index:200; top:160px; display:none;"><i class="fa fa-bell" style="font-size:18px; color:red;"></i>
+	You have message!<br>
+	Click here to contact it.
+</div>
+
+{% if services %}
+<div style="width:100%; height:auto;">
+    <div style="font-size:25px; font-weight:800; margin-bottom:30px;
+        color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center; width:100%;">WHICH DO YOU WANT?</div>
+    {% for service in services %}
+    <div id="form">
+    <div class="contentform">
+
+		<div class="formcontent">
+            <h1>{{service.proBeautySubCategory}}</h1>
+            <div class="form-group">
+                <center>
+                    <div style="width:20%; float:left;">
+                        <center>
+                            <a href="/userloc?address={{service.providerAddress}}">
+                                <img src="{{service.providerPhotoUrl}}" style="width:100%; height:auto; border-radius:20px;">
+                            </a>
+                        </center>
+                    </div>
+                </center>
+                <div style="width:75%; float:left; padding-left:10px; padding-top:5px;  margin-left:5px; color:white; font-size:14px;">
+                    <label style="font-size:16px; font-weight:600;">{{service.providerFirstName}} {{service.providerLastName}}</label> <label style="float:right; margin-left:10px; color:white; background:orange; padding:2px 10px 2px 10px; border-radius:20px; border-radius:3px 30px 3px 30px;">{{service.providerCompany}}</label><br>
+                    {{service.providerEmail}}<br>
+                    <i class="fa fa-map-marker" style="font-size:16px; margin-right:5px; color:red;"></i>{{service.providerAddress}}<br>
+                    <center>
+                        <a href="/get_schedule/{{service.proid}}">
+                            <div style="width:auto; color:white; font-size:14px; padding:3px 12px; border:1px solid white; border-radius:20px; margin-top:5px;">Schedule</div>
+                        </a>
+                    </center>
+                </div>
+			</div>
+            <div class="form-group">
+                <center>
+                    <div style="width:100%; text-align:center;">
+                        <center>
+                            <img src="{{service.proServicePictureUrl}}" style="width:100%; height:auto;">
+                        </center>
+                    </div>
+                </center>
+			</div>
+            <div style="width:100%; text-align:right; float:left;">
+                <a href="/service_media/{{service.serviceid}}" class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center; background:green; border:1px solid white;">
+                    <span class="glyphicon glyphicon-facetime-video" style="padding-right:8px;"></span>Media
+                </a>
+                <a href="/get_products/{{service.proid}}" class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center; margin-left:10px; background:green; border:1px solid white;">
+                    <span class="glyphicon glyphicon-shopping-cart" style="padding-right:8px;"></span>Buy Products
+                </a>
+            </div><br><br>
+			<div class="form-group" style="margin-top:10px;">
+                <div style="width:100%;">
+                    <div id="category" class="items" style="float:left; width:auto; text-align:center; white; font-weight:600;
+                        font-family: 'Satisfy', Apple Chancery, cursive; font-size:22px;">{{service.proBeautyCategory}}</div>
+                    <div id="price" style="width:auto; text-align:center; display:inline-block; float:right; font-size:16px; padding:3px 20px 3px 20px; color:white;
+                        font-weight:600; border-radius:50px 5px 50px 5px; border:1px solid white;">{% if '$' in service.proServicePrice %}{{service.proServicePrice}}{% else%}$ {{service.proServicePrice}}{% endif %}</div>
+                </div>
+			</div>
+            <div style="padding:8px; color: #fff; font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+                      font-weight:300; font-size:18px; width:100%; margin-top:5px;  border-radius:5px; border:1px solid #fff;" id="desc">
+                {{service.proServiceDescription}}
+            </div>
+            <div class="form-group" style="margin-top:8%;">
+                <a href="/brequest/{{service.serviceid}}">
+                    <button type="submit" class="bouton-update">Accept & Request</button>
+                </a>
+			</div>
+	    </div>
+
+	</div>
+
+  </div>
+<br>
+{% endfor %}
+</div>
+
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";
+        document.getElementById("title").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+        document.getElementById("title").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+
+<!--<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>-->
+<!--<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>-->
+<!--<script>-->
+  <!--// Initialize Firebase-->
+  <!--var config = {-->
+    <!--apiKey: "AIzaSyChIIFGUTJFOeHo7LeHiEdVQP-a43XkvCI",-->
+    <!--authDomain: "cayseesweb.firebaseapp.com",-->
+    <!--databaseURL: "https://cayseesweb.firebaseio.com",-->
+    <!--projectId: "cayseesweb",-->
+    <!--storageBucket: "cayseesweb.appspot.com",-->
+    <!--messagingSenderId: "479622600641"-->
+  <!--};-->
+  <!--firebase.initializeApp(config);-->
+<!--</script>-->
+
+<!--<script src="/static/caysees/noti_alert.js"></script>-->
+<!--<script>-->
+	<!--function showAlert(){-->
+		<!--window.location.href = "http://18.218.121.125/get_notifications";-->
+	<!--}-->
+<!--</script>-->
+
+{%else %}
+        <center>
+            <br>
+            <br>
+            <br>
+            <br><br>
+            <h3 class="my_items col-sm-offset-1" style="color:red; margin: 30px;">No Beauty Service...</h3></center>
+
+{% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

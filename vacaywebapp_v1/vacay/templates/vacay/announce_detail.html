@@ -1,0 +1,541 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Announce Detail{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+      WebFont.load({
+      google: {
+      families: ["Lato:100,300,400,700,900","Karla:regular","Cookie:regular"]
+    }
+    });
+</script>
+
+<style>
+
+html, body{
+  background: url("/static/vacay/images/loginbackground.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+.header {
+  background-color: #327a81;
+  color: white;
+  font-size: 1.5em;
+  padding: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  border: 1px solid white;
+}
+
+img {
+  border-radius: 5px;
+  height: 80px;
+  width: 80px;
+}
+
+.manage {
+  border-radius: 10%;
+}
+
+.table-users {
+  border: 1px solid #327a81;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  width: 100%;
+  background-color: white;
+  overflow-x:auto;
+}
+
+.table>tbody>tr>td{
+    vertical-align: middle;
+    horizontal-align: middle;
+}
+
+table td, table th {
+  color: #2b686e;
+  padding: 10px;
+  border: 1px solid white;
+  text-align: center;
+  vertical-align: middle;
+}
+table td {
+  text-align: center;
+  vertical-align: middle;
+}
+table td:last-child {
+  font-size: 0.95em;
+  line-height: 1.4;
+  text-align: center;
+}
+table th {
+  background-color: #daeff1;
+  font-weight: 300;
+  text-align: center;
+  vertical-align: middle;
+}
+table tr:nth-child(2n) {
+  background-color: white;
+  border: 1px solid #327a81;
+}
+table tr:nth-child(2n+1) {
+  background-color: #edf7f8;
+  border: 1px solid white;
+}
+#manage-menu{
+    -webkit-padding-start: 0px;
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    width:40px;
+    background-color:#7be5f8;
+    position: relative; /* <-- Added */
+    z-index: 1; /* <-- Added */
+}
+
+.info p {
+  text-align:center;
+  color: #999;
+  text-transform:none;
+  font-weight:600;
+  font-size:15px;
+  margin-top:2px
+}
+
+.info i {
+  color:#F6AA93;
+}
+form h1 {
+  font-size: 22px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:middle;
+  font-family: verdana;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-bottom: auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+  background:linear-gradient(0deg,rgba(255,255,255,0.0),rgba(255,255,255,0.9),rgba(255,255,255,0.9),rgba(255,255,255,0.9),
+        rgba(255,255,255,0.9),rgba(255,255,255,0.9),rgba(255,255,255,0.9),rgba(255,255,255,0.9),rgba(255,255,255,0.9),rgba(255,255,255,0.3),rgba(250,255,250,0.0));
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#edit:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 500;
+  line-height: 2;
+  font-size:16px;
+  color: rgb(153, 102, 0);
+  font-family:Cookie;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+select {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+textarea {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #EEE;
+  margin: 0;
+  width: 75%;
+  height: 130px;
+  float: left;
+  padding: 15px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 50px 0px 0px 50px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 10px 10px 30px 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+
+  margin-bottom:10%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.validation {
+  display:none;
+  margin: 0 0 10px;
+  font-weight:400;
+  font-size:13px;
+  color: #DE5959;
+}
+
+#sendmessage {
+  border:1px solid #fff;
+  display:none;
+  text-align:center;
+  margin:10px 0;
+  font-weight:600;
+  margin-bottom:30px;
+  background-color: #EBF6E0;
+  color: #5F9025;
+  border: 1px solid #B3DC82;
+  padding: 13px 40px 13px 18px;
+  border-radius: 3px;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.03);
+}
+
+#sendmessage.show,.show  {
+  display:block;
+}
+
+th {color:white;}
+
+td {text-align:middle;}
+
+#container {
+    top:400px;
+    width: 480px;
+    height: 360px;
+    position:fixed;
+    z-index:100;
+    left:50%;
+    display:none;
+    transform:translate(-50%, -50%);
+    border: 10px #333 solid;
+}
+
+label.cameraButton {
+  display: inline-block;
+  /* Styles to make it look like a button */
+  padding-top: 0.6em;
+  padding-bottom: 0.3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border: 2px solid #666;
+  border-color: #EEE #CCC #CCC #EEE;
+  border-radius:50px 50px 50px 50px;
+  font-size:16px;
+  color:white;
+  width:50%;
+  height:45px;
+  text-align:middle;
+  background-color: green;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #CCC #EEE #EEE #CCC;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="image"] {
+  display: none;
+}
+
+#city {
+  border-radius: 0px 0px 0px 0px;
+  border: 1px solid #eee;
+  width: 78%;
+  height: 42px;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+#map {
+  border-radius: 0px 0px 0px 0px;
+  border: 0px solid #eee;
+  width: 12%;
+  height: 42px;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+  background-image: url(/static/vacay/images/loc.png); /* 16px x 16px */
+  background-color: transparent; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position: 0px 0px;  /*
+}
+
+label input {
+  display: none;/* <-- hide the default checkbox */
+}
+label span {/* <-- style the artificial checkbox */
+  height: 25px;
+  width: 25px;
+  margin-right:20px;
+  border: 1px solid white;
+  display: inline-block;
+  position: relative;
+}
+[type=checkbox]:checked + span:before {/* <-- style its checked state..with a ticked icon */
+  content: '\2714';
+  position: absolute;
+  top: 0px;
+  left: 5px;
+}
+
+#checkbox-panel {
+    padding-top:10px;
+    background:linear-gradient(90deg, rgba(0, 255, 0, 0.0),rgba(153, 102, 0, 0.8), rgba(0, 255, 0, 0.0));
+}
+
+</style>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.1.js">
+</script>
+<script src="https://connect.facebook.net/en_US/all.js">
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+{% if signed %}
+    <script>
+        alert("Thank you. You signed up.");
+    </script>
+{% endif %}
+
+  <form id="edit" action="#" method="post" enctype="multipart/form-data">
+	  {% csrf_token %}
+	    <h1>{{announce.title}}</h1>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+            <div class="form-group">
+				<div style="width:100%;">
+                    <div style="width:100%; padding-bottom:10px;">
+                        <center>
+                            <a href="#">
+                                <img src="{{announce.image}}" style="width:100%; height:auto;">
+                            </a>
+                        </center>
+                    </div>
+                    <div style="padding-left:30px; padding-right:8px; color: #04a2be; font-weight:500; font-size:14px; width:100%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                        <label style="color:rgb(255, 51, 204);float:right;">{{announce.postdate}}</label>
+                    </div>
+                    <p>Audience</p>
+                    <div style="padding-left:30px; color: #04a2be; float:left; font-weight:600; font-size:18px; width:100%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                        {{announce.audience}}
+                    </div>
+                    <p>Subject</p>
+                    <div style="padding-left:30px; padding-right:8px; color: #04a2be; float:left; font-weight:600; font-size:16px; width:100%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                        {{announce.subject}}
+                    </div>
+                    <p>Company</p>
+                    <div style="text-align:center; padding-left:30px;">
+                        <div style="width:auto; text-align:left; float:left;">
+                            <div id="company" style="color: #04a2be; font-weight:800; font-size:18px; max-width:70%; width:auto; display:inline-block;">
+                                {{announce.admincompany}}
+                            </div>
+                        </div>
+                        <div style="padding:5px; width:auto; float:left; margin-left:20px;">
+                            <a href="#">
+                                <img src="{{announce.adminlogo}}" style="width:100px; height:auto; border-radius:15px">
+                            </a>
+                        </div>
+                    </div><br>
+                    <div style="text-align:right; float:right; margin-bottom:8px; margin-right:10px;">
+                        <a href="/announce_media/{{announce.an_id}}" class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center;">
+                            <span class="glyphicon glyphicon-facetime-video" style="padding-right:8px;"></span>Media
+                        </a>
+                    </div>
+                    <div style="padding:8px; color: #04a2be; float:left; font-family:Cookie; font-weight:500; font-size:25px; width:100%; margin-top:10px;" id="desc">
+                        {{announce.description}}
+                    </div>
+                    {% if not manager %}
+                    <div style="padding:8px; color: #04a2be; float:left; font-family:Cookie;
+                        font-weight:500; font-size:20px; width:100%; margin-top:10px;  border-radius:5px; border:2px solid #04a2be;">
+                        <p>Message Owner Email</p>
+                        <div style="padding-left:20px; color: #04a2be; float:left; font-weight:600; font-size:18px; width:100%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                            {{announce.owneremail}}
+                        </div>
+                        <p>Call of Action</p>
+                        <div style="padding-left:20px; padding-right:8px; color: #04a2be; float:left; font-weight:500; font-size:16px; width:70%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                            {{announce.callofaction}}
+                        </div>
+                        <div style="color: #04a2be; float:right; font-weight:600; font-size:16px;">
+                            <a href="/announce_signup/{{announce.an_id}}" class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center;">
+                                <span class="glyphicon glyphicon-user" style="padding-right:8px;"></span>Sign Up
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if manager %}
+                    <div style="width:100%; text-align:center; float:left; margin-bottom:20px; margin-top:20px;">
+                        <a href="/respondeds?announce_id={{announce.an_id}}">
+                            <div style="color: #04a2be; padding:8px 16px; border-radius:20px; box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); display:inline-block;">
+                                <i class="fa fa-user" style="color: #04a2be; margin-right:10px;"></i>Employees Responded
+                            </div>
+                        </a>
+                    </div>
+                    {% endif %}
+                    <input type="hidden" id="announce_id" value="{{announce.an_id}}">
+                    {% if survey %}
+                    <a href="{{announce.survey}}" target="_blank">
+                        <div style="padding:30px; color: white; font-weight:500; float:left; font-size:14px; width:100%; height:auto; text-align:center; margin-top:15px;
+                            margin-bottom:20px; background:linear-gradient(90deg, rgba(0, 255, 0, 0.1), rgba(51, 153, 255, 0.8), rgba(255, 153, 221, 0.8), rgba(0, 255, 0, 0.1));">
+                            {% if not manager %}
+                            <img src="/static/vacay/images/surveymonkeyicon.png" style="width:50px; height:40px; float:left;">
+                            <div style="float:left; text-align:center; word-break: break-all; word-wrap: break-word; width:80%;">
+                                Click here to respond <label style="color:red;">Survey</label> to<br> {{adminEmail}}
+                            </div>
+                            {% else %}
+                            <img src="/static/vacay/images/surveymonkeyicon.png" style="width:50px; height:40px;">
+                            <div style="text-align:center;">
+                                <label style="color:red;">Survey</label>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </a>
+                    {% endif %}
+
+                </div>
+            </div>
+	    </div>
+
+	</div>
+
+  </form>
+
+<script language="javascript">
+    function tweetCurrentPage()
+    {
+        window.open("https://twitter.com/share?url="+escape(window.location.href)+"&text="+document.title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+        return false;
+    }
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

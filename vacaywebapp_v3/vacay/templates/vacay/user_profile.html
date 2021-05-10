@@ -1,0 +1,468 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Friend Profile{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<style>
+
+html, body{
+  background: linear-gradient(0deg,rgba(20,150,250,0.3),rgba(0,100,250,0.3)), url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+.header {
+  background-color: #327a81;
+  color: white;
+  font-size: 1.5em;
+  padding: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  border: 1px solid white;
+}
+
+img {
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+}
+
+.info p {
+  text-align:center;
+  color: #999;
+  text-transform:none;
+  font-weight:600;
+  font-size:15px;
+  margin-top:2px
+}
+
+.info i {
+  color:#F6AA93;
+}
+form h1 {
+  font-size: 22px;
+  font-weight:600;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:middle;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:600px;
+  width:auto;
+  height:auto;
+  margin-top:2%;
+  margin-bottom: 2%;
+  margin-left:auto;
+  margin-right:auto;
+  background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.4),rgba(100,50,250,0.4),rgba(100,50,250,0.4),rgba(100,50,250,0.4),rgba(50,100,250,0.0));
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#edit:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+  text-align:left;
+}
+
+select {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+textarea {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #EEE;
+  margin: 0;
+  width: 75%;
+  height: 130px;
+  float: left;
+  padding: 15px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 50px 0px 0px 50px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background:linear-gradient(90deg,rgb(102, 51, 0),rgb(102, 51, 0),rgb(102, 51, 0),rgb(102, 51, 0));
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+
+  margin-bottom:5%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 20px 0px 20px;
+}
+
+.validation {
+  display:none;
+  margin: 0 0 10px;
+  font-weight:400;
+  font-size:13px;
+  color: #DE5959;
+}
+
+#sendmessage {
+  border:1px solid #fff;
+  display:none;
+  text-align:center;
+  margin:10px 0;
+  font-weight:600;
+  margin-bottom:30px;
+  background-color: #EBF6E0;
+  color: #5F9025;
+  border: 1px solid #B3DC82;
+  padding: 13px 40px 13px 18px;
+  border-radius: 3px;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.03);
+}
+
+#sendmessage.show,.show  {
+  display:block;
+}
+
+th {color:white;}
+
+td {text-align:middle;}
+
+#container {
+    top:400px;
+    width: 480px;
+    height: 360px;
+    position:fixed;
+    z-index:100;
+    left:50%;
+    display:none;
+    transform:translate(-50%, -50%);
+    border: 10px #333 solid;
+}
+
+label.cameraButton {
+  display: inline-block;
+  /* Styles to make it look like a button */
+  padding-top: 0.6em;
+  padding-bottom: 0.3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border: 2px solid #666;
+  border-color: #EEE #CCC #CCC #EEE;
+  border-radius:50px 50px 50px 50px;
+  font-size:16px;
+  color:white;
+  width:50%;
+  height:45px;
+  text-align:middle;
+  background-color: green;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #CCC #EEE #EEE #CCC;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="image"] {
+  display: none;
+}
+
+#city {
+  border-radius: 0px 0px 0px 0px;
+  border: 1px solid #eee;
+  width: 80%;
+  height: 42px;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+  float:left;
+}
+
+#map {
+  border-radius: 0px 0px 0px 0px;
+  border: 0px solid #eee;
+  width: 12%;
+  height: 42px;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+  float:left;
+  background-image: url(/static/vacay/images/loc.png); /* 16px x 16px */
+  background-color: transparent; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position: 0px 0px;  /*
+}
+
+label input {
+  display: none;/* <-- hide the default checkbox */
+}
+label span {/* <-- style the artificial checkbox */
+  height: 25px;
+  width: 25px;
+  margin-right:20px;
+  border: 1px solid white;
+  display: inline-block;
+  position: relative;
+}
+[type=checkbox]:checked + span:before {/* <-- style its checked state..with a ticked icon */
+  content: '\2714';
+  position: absolute;
+  top: 0px;
+  left: 5px;
+}
+
+#checkbox-panel {
+    padding-top:10px;
+    background:linear-gradient(90deg, rgba(0, 255, 0, 0.0),rgba(153, 102, 0, 0.8), rgba(0, 255, 0, 0.0));
+}
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+  <form id="edit" action="{% url 'match_friend' %}" method="post" enctype="multipart/form-data">
+	  {% csrf_token %}
+	    <h1>Friend Profile</h1>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+            <div class="form-group" style="margin-bottom:20px;">
+				<div style="width:100%;">
+                    <div style="width:25%; float:left;">
+                        <img src="{{friend.photo_url}}" style="width:90px; height:90px; border-radius: 10%; object-fit:cover;" id="output">
+                    </div>
+                    <div style="width:70%; float:left; padding-left:30px; margin-top:10px;">
+                        <div style="font-size:20px; font-weight:500; color:white; word-break: break-all; word-wrap: break-word;">{{friend.first_name}} {{friend.last_name}}</div>
+                        <div style="font-size:18px; color:white; word-break: break-all; word-wrap: break-word;">{{friend.email}}</div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="photo" value="{{friend.photo_url}}">
+                <input type="hidden" name="name" value="{{friend.first_name}} {{friend.last_name}}">
+                <input type="hidden" name="first_name" value="{{friend.first_name}}">
+                <input type="hidden" name="last_name" value="{{friend.last_name}}">
+                <input type="hidden" name="email" value="{{friend.email}}">
+                <input type="hidden" name="interests" value="{{friend.interests}}">
+                <input type="hidden" name="relationship" value="{{friend.relationship}}">
+                <input type="hidden" name="survey" value="{{friend.survey}}">
+                <input type="hidden" name="mode" value="{% if mail %}mail{% elif chat %}chat{% endif %}">
+
+                <div id="survey" style="font-size:16px; color:white; border:1px solid #fff; float:left; margin-left:30px;
+                        border-radius:50px; margin-top:15px; padding: 5px 12px; display:inline-block;" onclick="show_survey()">Why joining VaCay?</div>
+                <center>
+                    <div id="surv" style="float:left; padding:0px 16px 0px 16px; color: #fff; font-weight:500;
+                        font-size:16px; width:100%; text-align:left; white-space: pre-line; display:none;">
+                        {{friend.survey}}
+                    </div>
+                </center>
+            </div>
+			<div class="form-group" style="display:none;">
+                <p>Current Job <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-briefcase"></i></span>
+                <input type="text" name="job" data-rule="required" data-msg="" required id="job" value="{{friend.job}}" readonly/>
+                <div class="validation"></div>
+			</div>
+            <div class="form-group">
+                <p>City <span>*</span></p>
+                <a href="https://www.google.com/maps/search/?api=1&query={{friend.address}}" target="_blank">
+                    <span class="icon-case"><i class="fa fa-location-arrow"></i></span>
+                    <input type="button" name="city" data-rule="required" data-msg="" value="{{friend.address}}" readonly/>
+                </a>
+                <div class="validation"></div>
+			</div>
+			{% if friend.em_millennial != '' and friend.em_millennial != 'None' %}
+            <div class="form-group">
+                <p>Millennial/Gen Xer <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-leaf"></i></span>
+                <input type="text" name="millennial" data-rule="required" data-msg="" required id="millennial" value="{{friend.em_millennial}}" readonly/>
+                <div class="validation"></div>
+			</div>
+            {% endif %}
+            <div class="form-group" style="display:none;">
+                <p>Age <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-child"></i></span>
+                <input type="text" name="age" data-rule="required" data-msg="" required id="age" value="{{friend.age}}" readonly/>
+                <div class="validation"></div>
+			</div>
+            <div class="form-group" style="display:none;">
+                <p>Education <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-mortar-board"></i></span>
+                <input type="text" name="education" data-rule="required" data-msg="" required id="education" value="{{friend.education}}" readonly/>
+                <div class="validation"></div>
+			</div>
+            <div class="form-group" style="padding-left:20px; display:none;">
+                <div>
+                    <p>Interests <span>*</span></p>
+                    <div id="interests" style="padding:0px 8px 8px 30px; color: #fff; font-weight:500; float:left;
+                        font-size:16px; text-align:left; white-space: pre-line; word-break: break-all; word-wrap: break-word;">
+                        {{friend.interests}}
+                    </div>
+                </div>
+			</div>
+            <div class="form-group" style="padding-left:20px;">
+                <p>{% if 'common' in friend.relationship %}Info{% elif 'Cohort' in friend.relationship %}Cohort{% else %}Department{% endif %} <span>*</span></p>
+                <div id="relationship" style="padding:0px 8px 8px 30px; color: #fff; font-weight:500; font-size:16px; text-align:left; white-space: pre-line;">
+                    {{friend.relationship}}
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-top:10%;">
+                <button type="submit" class="bouton-update" style="font-weight:600;">{% if mail %}<i class="fa fa-envelope" style="margin-right:20px; font-size:20px; color:white;"></i>Contact via Mail{% elif chat %}<i class="fa fa-comments-o" style="margin-right:20px; font-size:22px; color:white;"></i>Contact via Chat{% endif %}</button>
+			</div>
+	    </div>
+
+	</div>
+
+  </form>
+
+<script>
+    if(document.getElementById("relationship").innerHTML.includes("common")){
+        document.getElementById("relationship").innerHTML = document.getElementById("relationship").innerHTML.replace("common", "");
+    }
+    var surflag = false;
+    function show_onmap(){
+        var city = document.getElementById('city');
+        window.location.href = "/userloc?address=" + city.value.replace(' ', '+');
+    }
+    function show_survey(){
+        var survey = document.getElementById('surv');
+        if (surflag){
+            surflag = false;
+            survey.style.display = 'none';
+        }else {
+            surflag = true;
+            survey.style.display = 'block';
+        }
+    }
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,286 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Eat & Drink Detail{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+      WebFont.load({
+      google: {
+      families: ["Lato:100,300,400,700,900","Karla:regular","Cookie:regular"]
+    }
+    });
+</script>
+<style>
+
+html, body{
+  background:linear-gradient(0deg,rgba(20,150,250,0.3),rgba(0,100,250,0.3)), url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+@font-face {
+  font-family: Futura;
+  src: url('.../FuturaStdLight.woff') format("WOFF");
+  font-weight: 300;
+}
+
+div h1 {
+  font-size: 23px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:center;
+  font-family: verdana;
+  <!--font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;-->
+  font-weight:500;
+}
+
+#form {
+  border-radius: 5px;
+  max-width:100%;
+  width:auto;
+  height:auto;
+  margin-bottom: 2%;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+  background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.3),rgba(100,50,250,0.5),rgba(100,50,250,0.6),rgba(100,50,250,0.5),rgba(50,100,250,0.0));
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#form:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+i {
+  color:red;
+}
+
+.contentform {
+  padding: 5px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background:linear-gradient(90deg,rgba(100,50,250,0.0),rgb(102, 51, 0),rgb(102, 51, 0),rgb(102, 51, 0),rgba(50,100,250,0.0));
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom:3%;
+  font-weight:600;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.items {
+    color:white;
+    font-size:18px;
+    padding:8px 8px;
+    height:42px;
+}
+
+</style>
+
+<script>
+	<!--history.pushState(null, null, location.href);-->
+	<!--window.onpopstate = function () {-->
+        <!--history.go(1);-->
+    <!--};-->
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle; border-radius: 1px;
+	transform:translate(-50%, -50%); width:auto; z-index:100; top:120px; display: none;" id="gif">
+
+<div id="alert" style="font-size:16px; font-weight:300; color: black; box-shadow: 0px 0px 100px rgba(0, 0, 0, 1.0);
+	position:fixed; left:50%; float:middle; background-color:white; border-radius:5px; padding: 10px;
+	transform:translate(-50%, -50%); width:300px; z-index:200; top:300px; display:none;">
+    <img src="/static/vacay/images/emojiicon.png" style="width:25px; height:25px;"><label style="font-size:16px; padding:10px;">VaCay says</label>
+    <img src="/static/vacay/images/cancel.png" style="width:25px; height:25px; float:right;" onclick="dismiss_alert()"><br>
+	<div>You can go alone or together with a friend.<br>Do you want to go there with a friend?</div><br>
+    <div style="width:100%; text-align:center; margin-top:10px;">
+        <label style="width:40%; text-align:center; padding:3px; float:left; border-radius:5px; border:1px solid #0073e6; color:#0073e6; margin-left:5%;" onclick="alone()" >No, Alone</label>
+        <label style="width:40%; text-align:center; padding:5px; float:left; border-radius:5px; background:#0073e6; color:white; margin-left:10%;" onclick="with_friend()" >Yes</label>
+    </div>
+</div>
+
+  <div id="form">
+	  {% csrf_token %}
+      <h1>Welcome! Please review this restaurant's information.</h1>
+
+      <div class="container-fluid" style="margin-top:2%;">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="pan" style="max-width:500px; height:auto; margin-bottom: auto; margin-left:auto; margin-right:0; opacity:0.9; overflow: hidden;">
+                        <div class="contentform">
+                            <div class="formcontent">
+                                <div class="form-group">
+                                    <center>
+                                        <div style="width:100%; text-align:center; height:auto; max-height:500px;">
+                                            <center>
+                                                <img src="{{eatdrink.photo}}" style="width:100%; height:auto;">
+                                            </center>
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="pan2" style="max-width:500px; height:auto; margin-bottom: auto; margin-left:0; margin-right:auto; opacity:0.9; overflow: hidden;">
+                        <div class="contentform">
+                            <div class="formcontent">
+                                <div class="form-group">
+                                    <div style="width:100%;">
+                                        <label style="width:30%; float:left; color:white;">Restaurant Name</label>
+                                        <div id="name" class="items" style="float:left; width:70%; text-align:center; white-space:nowrap; overflow:hidden; text-overflow: ellipsis;
+                                            font-weight:600; border-radius:5px 5px 50px 50px; border:1px solid white;">{{eatdrink.name}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div style="width:100%;">
+                                        <label style="width:30%; float:left; color:white;">Restaurant Type</label>
+                                        <div id="type" class="items" style="float:left; width:70%; text-align:center; white; font-weight:600;
+                                            font-family: 'Satisfy', Apple Chancery, cursive; font-size:22px;">{{eatdrink.type}}</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div style="width:100%; height:3px; border-radius:5%; background:#00cccc;">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div style="width:100%;">
+                                        <label style="width:25%; float:left; color:white;">Menu</label>
+                                        <a href="{{eatdrink.menu}}">
+                                            <div id="menu" class="items" style="float:left; width:75%; color:white; font-weight:300; text-decoration: underline;
+                                                    white-space: nowrap; overflow:hidden; text-overflow: ellipsis;">{{eatdrink.menu}}</div>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% if eatdrink.opentable %}
+                                <div class="form-group">
+                                    <div style="width:100%;">
+                                        <label style="width:25%; float:left; color:white;">OpenTable</label>
+                                        <a href="{{eatdrink.opentable}}">
+                                            <div id="opentable" class="items" style="float:left; width:75%; color:white; text-decoration: underline;
+                                                    font-weight:300; white-space: nowrap; overflow:hidden; text-overflow: ellipsis;">{{eatdrink.opentable}}</div>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <div class="form-group">
+                                    <div style="width:100%;">
+                                        <label style="width:25%; float:left; color:white;"><i class="fa fa-map-marker" style="font-size:25px; margin-right:3px;"></i>Location</label>
+                                        <a href="{{eatdrink.location}}">
+                                            <div id="location" class="items" style="float:left; width:75%; color:white; text-decoration: underline; background:linear-gradient(90deg,rgba(100,50,250,0.0),rgb(0, 128, 43),rgba(50,100,250,0.0));
+                                                    font-weight:300; white-space: nowrap; overflow:hidden; text-overflow: ellipsis;">{{eatdrink.location}}</div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-top:15%;">
+                                    <button type="submit" class="bouton-update" onclick="show_alert()">
+                                        <span class="glyphicon glyphicon-cutlery" aria-hidden="true" style="margin-right:20px; font-weight:600;"></span>Continue</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      </div>
+  </div>
+
+<script>
+    function show_alert(){
+        document.getElementById("alert").style.display = "block";
+    }
+    function dismiss_alert(){
+        document.getElementById("alert").style.display = "none";
+    }
+    function alone(){
+        window.location.href = "https://vacayalldays.com/home";
+    }
+    function with_friend(){
+        window.location.href = "https://vacayalldays.com/get_all_users";
+    }
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

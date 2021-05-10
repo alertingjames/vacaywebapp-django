@@ -1,0 +1,932 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Beauty Service Request{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+      WebFont.load({
+      google: {
+      families: ["Lato:100,300,400,700,900","Karla:regular","Cookie:regular"]
+    }
+    });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<style>
+
+html, body{
+  background:url("/static/vacay/images/winterbackground.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+@font-face {
+  font-family: Futura;
+  src: url('.../FuturaStdLight.woff') format("WOFF");
+  font-weight: 300;
+}
+
+div h1 {
+  font-size: 25px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:center;
+  font-family: verdana;
+  <!--font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;-->
+  font-weight:500;
+}
+
+#form {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-bottom: 2% auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+  background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.3),rgba(100,50,250,0.5),rgba(100,50,250,0.6),rgba(100,50,250,0.5),rgba(50,100,250,0.0));
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#form:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+textarea {
+  border-radius: 5px;
+  border: 1px solid #EEE;
+  margin: 0;
+  width: 100%;
+  height: 100px;
+  float: middle;
+  padding: 15px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+input {
+  border-radius: 5px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: auto;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+i {
+  color:red;
+}
+
+.contentform {
+  padding: 10px 10px 20px 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background:linear-gradient(90deg,rgba(100,50,250,0.2),rgba(100,50,250,0.9),rgba(100,50,250,0.9),rgba(100,50,250,0.2));
+  color: #FFF;
+  text-align: center;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom:3%;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.items {
+    color:white;
+    font-size:18px;
+    padding:8px 8px;
+    height:42px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+#slideshow {
+  margin: auto;
+  position: relative;
+  width: 120px;
+  height: 96px;
+  padding: 2px;
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  text-align:center;
+}
+
+#slideshow > div {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+}
+
+</style>
+
+<script>
+	<!--history.pushState(null, null, location.href);-->
+	<!--window.onpopstate = function () {-->
+        <!--history.go(1);-->
+    <!--};-->
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% if employee %}
+<div id="alert" style="font-size:16px; font-weight:300; color: black; box-shadow: 0px 0px 100px rgba(0, 0, 0, 1.0);
+	position:fixed; left:50%; float:middle; background-color:white; border-radius:10px; padding: 5px 15px 5px 15px;
+	transform:translate(-50%, -50%); width:300px; z-index:200; top:300px; display:none;">
+    <i class="fa fa-meh-o" style="font-size:22px; color:green;"></i><label style="font-size:20px; padding:10px;">Please select ...</label>
+    <img src="/static/vacay/images/cancel.png" style="width:30px; height:30px; float:right; margin-top:5px;" onclick="close_alert()"><br>
+    <div style="width:100%; text-align:center;">
+        <a href="javascript:bucks();">
+            <label style="width:90%; text-align:center; padding:4px; border-radius:20px; border:1px solid blue; color:blue;">VaCay Bucks Status</label>
+        </a>
+        <a href="javascript:pay_beauty();">
+            <label style="width:90%; text-align:center; padding:5px; border-radius:20px; background:blue; color:white; margin-top:5px; margin-bottom:15px;">Pay Now</label>
+        </a>
+    </div>
+</div>
+{% endif %}
+
+<script>
+    function bucks(){
+        close_alert();
+        window.location.href = '/bucks';
+    }
+    function pay_beauty(){
+        close_alert();
+        window.location.href = '/check_payment?proemail=' + document.getElementById("providerEmail").value;
+    }
+</script>
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle; border-radius: 1px;
+	transform:translate(-50%, -50%); width:auto; z-index:100; top:120px; display: none;" id="gif">
+
+<div style="width:100%; height;auto;">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6" style="height:94%; overflow:scroll;">
+
+                <div id="form">
+	            {% csrf_token %}
+	                <h1>Request Beauty Service for {{service.proBeautySubCategory}}</h1>
+
+                    <div class="contentform">
+
+		                <div class="formcontent">
+                            <div class="form-group">
+                                <center>
+                                    <div style="width:20%; float:left; opacity:1.0;">
+                                        <center>
+                                             <a href="/userloc?address={{service.providerAddress}}">
+                                                 <img src="{{service.providerPhotoUrl}}" name="providerPhoto" id="providerPhoto" style="width:100%; height:auto; border-radius:20px;">
+                                             </a>
+                                        </center>
+                                    </div>
+                                </center>
+                                <input type="hidden" id="providerEmail" name="providerEmail" value="{{service.providerEmail}}">
+                                <input type="hidden" id="providerName" name="providerName" value="{{service.providerFirstName}} {{service.providerLastName}}">
+                                <input type="hidden" id="beautySubName" name="beautySubName" value="{{service.proBeautySubCategory}}">
+                                <input type="hidden" id="beautyName" name="beautyName" value="{{service.proBeautyCategory}}">
+                                <input type="hidden" name="lat" id="lat" value="">
+                                <input type="hidden" name="lng" id="lng" value="">
+                                <input type="hidden" name="senderName" id="senderName" value="{{me.first_name}} {{me.last_name}}">
+                                <input type="hidden" name="senderEmail" id="senderEmail" value="{{me.email}}">
+                                <input type="hidden" name="senderPhoto" id="senderPhoto" value="{{me.photo_url}}">
+                                <div style="width:75%; float:left; padding-left:10px; padding-top:5px;  margin-left:5px; color:white; font-size:14px;">
+                                    <label style="font-size:16px; font-weight:600;">{{service.providerFirstName}} {{service.providerLastName}}</label> <label style="float:right; margin-left:10px; color:white; background:orange; padding:2px 10px 2px 10px; border-radius:3px 30px 3px 30px;">{{service.providerCompany}}</label><br>
+                                        {{service.providerEmail}}<br>
+                                        <i class="fa fa-map-marker" style="font-size:16px; margin-right:5px; color:red;"></i>{{service.providerAddress}}<br>
+                                        <center>
+                                            <a href="/get_schedule/{{service.proid}}">
+                                                <div style="width:auto; color:white; font-size:14px; padding:3px 12px; border:1px solid white; border-radius:20px; margin-top:5px;">Schedule</div>
+                                            </a>
+                                        </center>
+                                </div>
+			                </div>
+                            <div class="form-group">
+                                <center>
+                                    <div style="width:100%; text-align:center; position:relative;">
+                                        <center>
+                                            <img src="{{service.proServicePictureUrl}}" style="width:100%; height:auto; border-radius:5px;">
+                                            <div class="form-group" id="slideshow" style="position:absolute; bottom:2%; left:2%;">
+                                                {% for product in products %}
+                                                    <div onclick="javascript:window.location.href='/get_products/{{service.proid}}';">
+                                                        <img src="{{product.pictureUrl}}" style="max-width:100%; width:auto; max-height:100%; height:auto;">
+                                                    </div>
+                                                {% endfor %}
+			                                </div>
+                                            <script>
+                                                $("#slideshow > div:gt(0)").hide();
+
+                                                setInterval(function() {
+                                                    $('#slideshow > div:first')
+                                                        .fadeOut(1000)
+                                                        .next()
+                                                        .fadeIn(1000)
+                                                        .end()
+                                                        .appendTo('#slideshow');
+                                                    }, 1800);
+                                            </script>
+                                        </center>
+                                    </div>
+                                </center>
+			                </div>
+			                <div class="form-group" style="margin-top:10px;">
+                                <div style="width:100%;">
+                                    <div id="category" class="items" style="float:left; width:auto; text-align:center; white; font-weight:600;
+                                        font-family: 'Satisfy', Apple Chancery, cursive; font-size:22px;">{{service.proBeautyCategory}}</div>
+                                    <div id="price" style="width:auto; text-align:center; display:inline-block; float:right; font-size:16px; padding:3px 20px 3px 20px; color:white;
+                                        font-weight:600; border-radius:50px 5px 50px 5px; border:1px solid white;">{% if '$' in service.proServicePrice %}{{service.proServicePrice}}{% else%}$ {{service.proServicePrice}}{% endif %}</div>
+                                </div>
+			                </div>
+                            <div style="padding:8px; color: #fff; font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+                                 font-weight:300; font-size:18px; width:100%; margin-top:5px;" id="desc">
+                                {{service.proServiceDescription}}
+                            </div>
+                            <br>
+                            <center><div style="width:100%; height:5px; background:yellow; border-radius:20px;"></div></center>
+                            <br>
+
+                            <link rel="stylesheet" href="/static/vacay/jquery.datetimepicker.min.css">
+                            <script src="/static/vacay/jquery.datetimepicker.full.js"></script>
+                            <div class="form-group">
+                                <p><i class="fa fa-calendar" style="font-size:18px; margin-right:5px; color:white;"></i>Request Date & Time <span>*</span></p>
+                                <div id="datetimebox" style="width:auto;" onchange="updatedatetime();">
+                                    <input type="text" required id="datetime" name="datetime" placeholder="Request Date" style="width:90%; text-align:left; margin-left:10%;" readonly>
+                                </div>
+			                </div>
+                            <script>
+                                jQuery('#datetimebox').datetimepicker();
+                                function updatedatetime(){
+                                    var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                                    var mths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                    var datetime = document.getElementById("datetimebox").value;
+                                    var year = datetime.substring(0, 4);
+                                    var month = datetime.substring(5, 7);
+                                    var day = datetime.substring(8, 10);
+                                    var hour = datetime.substring(11, 13);
+                                    var minute = datetime.substring(14, 16);
+                                    var ap = '';
+                                    if (parseInt(hour) > 12) {
+                                        hour = String(parseInt(hour) - 12);
+                                        ap = 'PM';
+                                    }else ap = 'AM';
+                                    var monthindex = parseInt(month);
+                                    month = months[monthindex - 1];
+                                    document.getElementById("datetime").value = month + ' ' + day + ',' + year + ' - ' + hour + ':' + minute + ' ' + ap;
+                                }
+                            </script>
+
+                            <div class="form-group">
+                                <p><i class="fa fa-map-marker" style="font-size:22px; margin-right:5px; color:red;"></i>Request Location <span>*</span></p>
+                                <input type="text" required id="location" name="location" placeholder="Request Location" style="width:90%; margin-left:10%;" onclick="javascript:document.body.scrollTop = 2000; alert('Please input request location from search here.');" readonly>
+                                <input type="text" id="moreloc" name="moreloc" placeholder="More info for request location..." style="width:90%; margin-top:5px; margin-left:10%;">
+                            </div>
+                            <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+                            <div class="form-group">
+			                    <p>Request Text <span>*</span></p>
+                                <textarea name="text"  rows="5" data-rule="required" data-msg="" required id="text" placeholder="Write something ..."></textarea>
+			                </div>
+                            <script>autosize(document.getElementById("text"));</script>
+                            <div class="form-group" style="margin-top:10%;">
+                                <center>
+                                    <button type="submit" class="bouton-update" onclick="javascript:request_beauty()" style="width:48%; float:left; margin-left:5px;">Booking</button>
+                                    <button type="submit" class="bouton-update" onclick="javascript:open_alert()" style="width:48%; float:right; margin-right:5px;">Pay Now</button>
+                                </center>
+			                </div>
+	                    </div>
+
+	                </div>
+
+                </div>
+
+            </div>
+            <input type="hidden" id="em" value="{% if employee %}employee{% else %}{% endif %}">
+            <div class="col-sm-6" id="mapframe" style="display:block; position:relative;">
+
+                <div style="width:100%; height:auto; margin-top:5%; margin-bottom:10px;">
+                    <form style="width:100%;">
+
+                        <input id="addr" type="hidden" value="" placeholder="Address..." style="max-width:400px;" name="address">
+                        <input id="city" type="hidden" value="" placeholder="City..." style="max-width:250px;" name="city">
+                        <input type="text" placeholder="Enter a request address" style="width:70%; float:left;" id="address">
+                        <input type="button" style="width:29%; margin-left:1%; background: orange; color:white; font-size:20px; font-weight:600;" value="Search" onclick="codeAddress2()" id="button">
+                    </form>
+                    <div id="map_canvas" style="width:100%; height:400px; background:white; margin-top:5px;"></div>
+                    <div id="pano" style="width: 100%; height: 350px;"></div>
+
+                    <script src="https://maps.googleapis.com/maps/api/js"></script>
+                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBwhfTWDzet-mu2KwXqkfP9bnQjMaFzq4&libraries=places&callback=initMap" async defer></script>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC1e8-93-ia4seBJlMR7_BPt-pxnWGrgNA",
+    databaseURL: "https://vacay-42bcd.firebaseio.com",
+    projectId: "vacay-42bcd",
+    storageBucket: "vacay-42bcd.appspot.com"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+var proEmail = document.getElementById("providerEmail");
+var senderEmail = document.getElementById('senderEmail');
+var senderName = document.getElementById('senderName');
+var senderPhoto = document.getElementById('senderPhoto');
+var providerName = document.getElementById("providerName");
+var beautySubName = document.getElementById("beautySubName");
+var beautyName = document.getElementById("beautyName");
+
+var provider_email;
+var provider_name;
+var sender_name;
+var sender_email;
+var sender_photo;
+var beauty_name;
+var beauty_subName;
+var req_date;
+var location;
+var moreloc;
+var text;
+var request_date;
+
+sender_email = senderEmail.value.replace(".com","").replace(".","ddoott");
+provider_email = proEmail.value.replace(".com","").replace(".","ddoott");
+sender_name = senderName.value;
+sender_photo = senderPhoto.value;
+provider_name = providerName.value;
+
+var date = new Date();
+var seconds = date.getSeconds();
+var minutes = date.getMinutes();
+var hours = date.getHours();
+//
+var year = date.getFullYear();
+var month = date.getMonth() + 1; // beware: January = 0; February = 1, etc.
+var day = date.getDate();
+
+var ampm = hours >= 12 ? 'PM' : 'AM';
+hours = hours % 12;
+hours = hours ? hours : 12; // the hour '0' should be '12'
+minutes = minutes < 10 ? '0'+minutes : minutes;
+var timeStr = month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm;
+
+request_date = timeStr;
+
+function request_beauty(){
+   //  alert(message);
+   //  send_msg();
+
+   var context = {
+        'providerEmail': document.getElementById("providerEmail").value,
+        'providerName': document.getElementById("providerName").value,
+        'beautyName': document.getElementById("beautyName").value,
+        'beautySubName': document.getElementById("beautySubName").value,
+        'location': document.getElementById("location").value,
+        'moreloc': document.getElementById("moreloc").value,
+        'datetime': document.getElementById("datetime").value,
+        'text': document.getElementById("text").value,
+        'lat': document.getElementById("lat").value,
+        'lng': document.getElementById("lng").value
+   }
+   post('/request_beauty', context);
+}
+
+function post(path, params, method) {
+        method = method || "post"; // Set method to post by default if not specified.
+
+        // The rest of this code assumes you are not using a library.
+        // It can be made less wordy if you use one.
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for(var key in params) {
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+}
+
+function send_msg(){
+    var messageText = 'Hi, ' + provider_name + '\n' + sender_name + ' wants ' + beautySubName.value + ' as following:\n' +
+                'Requested Date & Time:\n ' + document.getElementById("datetime").value + '\n' + 'Requested Location:\n ' +
+                document.getElementById("location").value + '\n' + document.getElementById("moreloc").value + '\n' + 'Service Category: ' +
+                beautyName.value + '\n' + 'Service Name: ' + beautySubName.value+'\n'+'Description: '+document.getElementById("text").value +'\n\n' +
+                'Please review the information. If you have questions, you can reply directly to the customer. If you want to accept or decline, please click here.\n' +
+                'Thanks\n'+request_date+'\n'+sender_name;
+
+    var time = new Date().getTime();
+    if (messageText.length > 0){
+        firebase.database().ref('messages/' + sender_email + '_' + provider_email).push().set({
+            message: messageText,
+            image:'',
+            video:'',
+            lat: document.getElementById("beautySubName").value,
+            lon: document.getElementById("datetime").value,
+            time: new Date().getTime(),
+            user:sender_email
+        });
+        firebase.database().ref('messages/' + provider_email + '_' + sender_email).push().set({
+            message: messageText,
+            image:'',
+            video:'',
+            lat: document.getElementById("beautySubName").value,
+            lon: document.getElementById("datetime").value,
+            time: new Date().getTime(),
+            user:sender_email
+        });
+        firebase.database().ref('notification/' + provider_email + '/' + sender_email).remove();
+        firebase.database().ref('notification/' + provider_email + '/' + sender_email).push().set({
+            sender: sender_email,
+            senderName: sender_name,
+            msg: messageText,
+            senderPhoto: sender_photo
+        });
+    }
+}
+</script>
+<script>
+    function open_alert(){
+        if (document.getElementById("em").value != '')
+            document.getElementById("alert").style.display = 'block';
+        else {
+            window.location.href = '/check_payment?proemail=' + document.getElementById("providerEmail").value;
+        }
+    }
+    function close_alert(){
+        document.getElementById("alert").style.display = 'none';
+    }
+</script>
+
+<script>
+    initialize();
+</script>
+
+<script>
+var geocoder;
+var map;
+var marker;
+var infowindow;
+var addr;
+var latLng;
+
+var sv;
+var panorama;
+
+<!--if (navigator.geolocation) {-->
+    <!--navigator.geolocation.getCurrentPosition(function (p) {-->
+        <!--geocoder = new google.maps.Geocoder();-->
+        <!--latLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);-->
+        <!--var mapOptions = {-->
+            <!--center: latLng,-->
+            <!--zoom: 13,-->
+            <!--mapTypeId: google.maps.MapTypeId.ROADMAP-->
+        <!--};-->
+        <!--map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);-->
+        <!--marker = new google.maps.Marker({-->
+            <!--position: latLng,-->
+            <!--map: map,-->
+            <!--title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude-->
+        <!--});-->
+        <!--google.maps.event.addListener(marker, "click", function (e) {-->
+            <!--var infoWindow = new google.maps.InfoWindow();-->
+            <!--infoWindow.setContent(marker.title);-->
+            <!--infoWindow.open(map, marker);-->
+        <!--});-->
+        <!--&lt;!&ndash;latLng = new google.maps.LatLng(38.785678, -104.8454625);&ndash;&gt;-->
+        <!--if (geocoder){-->
+            <!--codeAddress();-->
+        <!--}-->
+    <!--});-->
+<!--} else {-->
+    <!--alert('Geo Location feature is not supported in this browser.');-->
+<!--}-->
+
+function initialize() {
+
+   sv = new google.maps.StreetViewService();
+   panorama = new google.maps.StreetViewPanorama(document.getElementById('pano'));
+
+   infowindow = new google.maps.InfoWindow({
+      content: 'My Location'
+   });
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(39.736625,-104.991281);
+    addr = document.getElementById('address').value;
+ //   codeLatLng(38.785678, -104.845099);
+    if (addr){
+        codeAddress();
+    }
+    var mapOptions = {
+        zoom: 8,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    }
+    map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions);
+    google.maps.event.addListener(map, 'click', function() {
+        infowindow.close();
+    });
+    sv.getPanorama({location: latlng, radius: 50}, processSVData);
+}
+
+
+function geocodePosition(pos) {
+
+  if (marker) {
+      if (infowindow) infowindow.close();
+  }
+  infowindow = new google.maps.InfoWindow();
+  geocoder.geocode({
+    latLng: pos
+  }, function(responses) {
+    if (responses && responses.length > 0) {
+      marker.formatted_address = responses[0].formatted_address;
+    } else {
+      marker.formatted_address = 'Cannot determine address at this location.';
+    }
+
+    document.getElementById('addr').value = marker.formatted_address;
+    document.getElementById('lat').value = marker.getPosition().lat();
+    document.getElementById('lng').value = marker.getPosition().lng();
+    document.getElementById('address').value = marker.formatted_address;
+
+    document.getElementById('addr').placeholder = marker.formatted_address;
+    document.getElementById('lat').placeholder = marker.getPosition().lat();
+    document.getElementById('lng').placeholder = marker.getPosition().lng();
+    document.getElementById('address').placeholder = marker.formatted_address;
+
+    document.getElementById('location').value = marker.formatted_address;
+
+    lat = marker.getPosition().lat();
+    lng = marker.getPosition().lng();
+
+    codeLatLng(lat, lng)
+
+    infowindow.setContent(marker.formatted_address + "<br>coordinates: " + marker.getPosition().toUrlValue(6));
+    infowindow.open(map, marker);
+
+    sv.getPanorama({location: marker.getPosition(), radius: 50}, processSVData);
+  });
+}
+
+function codeAddress() {
+  var address;
+  var addr;
+  infowindow = new google.maps.InfoWindow();
+
+  geocoder.geocode({
+    'latLng': latLng
+  }, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      map.setCenter(results[0].geometry.location);
+      <!--if (results[0]) {-->
+          <!--console.log(results[0]);-->
+          <!--// choose from console whatever you need.-->
+          <!--var city = results[0].address_components[1].short_name;-->
+          <!--document.getElementById("city").value = city;-->
+      <!--}-->
+      document.getElementById('address').value = results[0].formatted_address;
+      address = document.getElementById('address').value;
+      if (marker) {
+        marker.setMap(null);
+        if (infowindow) infowindow.close();
+      }
+      marker = new google.maps.Marker({
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        position: results[0].geometry.location
+      });
+       marker.addListener('click', toggleBounce);
+      google.maps.event.addListener(marker, 'dragend', function() {
+        geocodePosition(marker.getPosition());
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        if (marker.formatted_address) {
+          addr = marker.formatted_address;
+          infowindow.setContent("My location:" + marker.formatted_address + "<br>coordinates: " + marker.getPosition().toUrlValue(6));
+        } else {
+          addr = address;
+          infowindow.setContent("My location:" + address + "<br>coordinates: " + marker.getPosition().toUrlValue(6));
+        }
+        document.getElementById('address').value = addr;
+        document.getElementById('addr').value = addr;
+        document.getElementById('lat').value = marker.getPosition().lat();
+        document.getElementById('lng').value = marker.getPosition().lng();
+
+        document.getElementById('addr').placeholder = addr;
+        document.getElementById('lat').placeholder = marker.getPosition().lat();
+        document.getElementById('lng').placeholder = marker.getPosition().lng();
+
+        lat = marker.getPosition().lat();
+        lng = marker.getPosition().lng();
+
+        document.getElementById('location').value = marker.formatted_address;
+
+        codeLatLng(lat, lng);
+
+        infowindow.open(map, marker);
+
+        sv.getPanorama({location: marker.getPosition(), radius: 50}, processSVData);
+
+      });
+      google.maps.event.trigger(marker, 'click');
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+
+function codeAddress2() {
+  var address = document.getElementById('address').value;
+  var addr;
+   infowindow = new google.maps.InfoWindow();
+
+  geocoder.geocode({
+    'address': address
+  }, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      map.setCenter(results[0].geometry.location);
+      <!--if (results[0]) {-->
+          <!--console.log(results[0]);-->
+          <!--// choose from console whatever you need.-->
+          <!--var city = results[0].address_components[1].short_name;-->
+          <!--document.getElementById("city").value = city;-->
+      <!--}-->
+      if (marker) {
+        marker.setMap(null);
+        if (infowindow) infowindow.close();
+      }
+      marker = new google.maps.Marker({
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        position: results[0].geometry.location
+      });
+       marker.addListener('click', toggleBounce);
+      google.maps.event.addListener(marker, 'dragend', function() {
+        geocodePosition(marker.getPosition());
+      });
+      google.maps.event.addListener(marker, 'click', function() {
+        if (marker.formatted_address) {
+          addr = marker.formatted_address;
+          infowindow.setContent(marker.formatted_address + "<br>coordinates: " + marker.getPosition().toUrlValue(6));
+        } else {
+          addr = address;
+          infowindow.setContent(address + "<br>coordinates: " + marker.getPosition().toUrlValue(6));
+        }
+        document.getElementById('address').value = addr;
+        document.getElementById('addr').value = addr;
+        document.getElementById('lat').value = marker.getPosition().lat();
+        document.getElementById('lng').value = marker.getPosition().lng();
+
+        document.getElementById('addr').placeholder = addr;
+        document.getElementById('lat').placeholder = marker.getPosition().lat();
+        document.getElementById('lng').placeholder = marker.getPosition().lng();
+
+        lat = marker.getPosition().lat();
+        lng = marker.getPosition().lng();
+
+        document.getElementById('location').value = address;
+
+        codeLatLng(lat, lng);
+
+        infowindow.open(map, marker);
+
+        sv.getPanorama({location: marker.getPosition(), radius: 50}, processSVData);
+      });
+      google.maps.event.trigger(marker, 'click');
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+
+
+function toggleBounce() {
+   if (marker.getAnimation() !== null) {
+      marker.setAnimation(null);
+   } else {
+      marker.setAnimation(google.maps.Animation.BOUNCE);
+   }
+}
+
+function initMap() {
+
+   <!--map = map;-->
+   var pyrmont = {lat: map.getCenter().lat(), lng: map.getCenter().lng()};
+
+   map = new google.maps.Map(document.getElementById('map_canvas'), {
+      center: pyrmont,
+      zoom: 15
+   });
+
+   var service = new google.maps.places.PlacesService(map);
+   service.nearbySearch({
+      location: pyrmont,
+      radius: 500,
+      type: ['store']
+   }, callback);
+
+    <!--map.addListener('idle', performSearch);-->
+}
+
+	<!--function performSearch() {-->
+        <!--var request = {-->
+          <!--bounds: map.getBounds(),-->
+          <!--keyword: 'best view'-->
+        <!--};-->
+        <!--service.radarSearch(request, callback);-->
+      <!--}-->
+
+function callback(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+        for (var i = 0; i < results.length; i++) {
+           createMarker(results[i]);
+        }
+    }
+    else{
+       alert("Service failed...");
+    }
+}
+
+function createMarker(place) {
+
+    var infowindow = new google.maps.InfoWindow();
+    var placeLoc = place.geometry.location;
+    var marker = new google.maps.Marker({
+       map: map,
+       position: place.geometry.location
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+       infowindow.setContent(place.name);
+       infowindow.open(map, this);
+    });
+}
+
+google.maps.event.addDomListener(window, "load", initialize);
+
+function codeLatLng(lat, lng) {
+
+    var latlng = new google.maps.LatLng(lat, lng);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+      console.log(results)
+        if (results[1]) {
+         //formatted address
+   //      alert(results[0].formatted_address)
+        //find country name
+             for (var i=0; i<results[0].address_components.length; i++) {
+            for (var b=0;b<results[0].address_components[i].types.length;b++) {
+
+            //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+                if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+                    //this is the object you are looking for
+                    city= results[0].address_components[i];
+                    break;
+                }
+            }
+        }
+        //city data
+  //      alert(city.long_name)
+        document.getElementById('city').value = city.long_name;
+
+        } else {
+          alert("No results found");
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+      }
+  });
+}
+
+function processSVData(data, status) {
+   if (status === 'OK') {
+       var marker = new google.maps.Marker({
+            position: data.location.latLng,
+            map: map,
+            visible: false,
+            title: data.location.description
+       });
+
+       panorama.setPano(data.location.pano);
+       panorama.setPov({
+            heading: 270,
+            pitch: 0
+       });
+       panorama.setVisible(true);
+
+       marker.addListener('click', function() {
+            var markerPanoID = data.location.pano;
+            // Set the Pano to use the passed panoID.
+            panorama.setPano(markerPanoID);
+            panorama.setPov({
+              heading: 270,
+              pitch: 0
+            });
+            panorama.setVisible(true);
+       });
+   } else {
+       console.error('Street View data not found for this location.');
+   }
+}
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

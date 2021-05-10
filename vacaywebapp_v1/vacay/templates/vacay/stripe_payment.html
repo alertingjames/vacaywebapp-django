@@ -1,0 +1,326 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}VaCay Payment{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<style>
+
+html, body{
+  background: url("/static/vacay/images/paybackground.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+#edit {
+ border-radius: 5px;
+ max-width:500px;
+ width:auto;
+ height:auto;
+ margin-top: 2% auto;
+ margin-bottom: auto;
+ margin-left:auto;
+ margin-right:auto;
+ <!--background:linear-gradient(30deg,rgba(200,150,250,0.7),rgba(50,200,250,0.7));-->
+ opacity:0.9;
+ overflow: hidden;
+ <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+/* Blue outline on focus */
+.StripeElement--focus {
+  border-color: #80BDFF;
+}
+/* Can't see what I type without this */
+#card-number.form-control,
+#card-cvc.form-control,
+#card-exp.form-control {
+  display:block;
+}
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+.contentform {
+  padding: 30px;
+  float:middle;
+  margin:auto;
+}
+</style>
+
+<script>
+	<!--history.pushState(null, null, location.href);-->
+	<!--window.onpopstate = function () {-->
+        <!--history.go(1);-->
+    <!--};-->
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--<meta name="mobile-web-app-capable" content="yes">-->
+<!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+
+<!--<script>-->
+  <!--function launchFullScreen(element) {-->
+  <!--if(element.requestFullScreen) {-->
+    <!--element.requestFullScreen();-->
+  <!--} else if(element.mozRequestFullScreen) {-->
+    <!--element.mozRequestFullScreen();-->
+  <!--} else if(element.webkitRequestFullScreen) {-->
+    <!--element.webkitRequestFullScreen();-->
+  <!--}-->
+<!--}-->
+
+<!--// Launch fullscreen for browsers that support it!-->
+<!--launchFullScreen(document.documentElement); // the whole page-->
+<!--</script>-->
+
+{% if charge_error %}
+<h4><script>alert("Payment charging failed"); history.go(-1);</script></h4>
+{% endif %}
+
+{% if transfer_error %}
+<h4><script>alert("Payment transfering failed"); history.go(-1);</script></h4>
+{% endif %}
+
+{% if seller_error %}
+<h4><script>alert("Provider's payment hasn't been verified yet"); history.go(-1);</script></h4>
+{% endif %}
+
+{% if note %}
+<h4><script>alert("Successfully payment submitted!"); history.go(-1);</script></h4>
+{% endif %}
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle;
+	transform:translate(-50%, -50%); width:80px; z-index:100; top:120px; display: none;" id="gif">
+
+<div style="display:none;">
+  <center>
+      <div style="width:auto; padding-right:30px; margin-bottom:60px;">
+        <h2 style="width:auto;">Payment Detail</h2>
+        <div style="width:auto; float:right;">
+            <img src="http://i76.imgup.net/accepted_c22e0.png">
+        </div>
+      </div>
+  </center>
+  <div id="card-errors" role="alert"></div>
+    <div class="contentform">
+		<div class="formcontent">
+            <div class="card">
+    <div class="card-body">
+      <form id="payment-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="name">Name on Card</label>
+          <div class="input-group">
+            <span class="input-group-addon">A</span>
+            <input type="text" class="form-control" id="name">
+            <span class="input-group-addon">B</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="card-number">Credit Card Number</label>
+          <div class="input-group">
+            <span class="input-group-addon">C</span>
+            <span id="card-number" class="form-control">
+              <!-- Stripe Card Element -->
+            </span>
+            <span class="input-group-addon">D</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="card-cvc">CVC Number</label>
+          <div class="input-group">
+            <span class="input-group-addon">E</span>
+            <span id="card-cvc" class="form-control">
+              <!-- Stripe CVC Element -->
+            </span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="card-exp">Expiration</label>
+          <div class="input-group">
+            <span id="card-exp" class="form-control">
+              <!-- Stripe Card Expiry Element -->
+            </span>
+            <span class="input-group-addon">F</span>
+          </div>
+        </div>
+        <center><button id="payment-submit" class="btn btn-primary" style="width:100%; font-size:18px; margin-top:30px;">Submit Payment</button></center>
+      </form>
+    </div>
+  </div>
+        </div>
+    </div>
+
+</div>
+
+<!--pk_live_J4bQpu3jLQ7jUPfZKLAcs1WV -->
+
+<input type="hidden" id="price" value="{{price}}">
+<input type="hidden" id="retail" value="{% if retail %}retail{% endif %}">
+
+<div id="edit">
+  <div class="contentform">
+		<div class="formcontent">
+          <center>
+            <button id="customButton" style="margin-top:40%; font-size:30px; font-weight:600; color:white; background: #0066ff; border-radius:50px; padding:10px 30px 10px 30px;">Pay with card</button>
+          </center>
+        </div>
+  </div>
+</div>
+
+<script src="https://checkout.stripe.com/checkout.js"></script>
+
+<script>
+var handler = StripeCheckout.configure({
+  key: 'pk_live_J4bQpu3jLQ7jUPfZKLAcs1WV',
+  image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+  locale: 'auto',
+  token: function(token) {
+    // You can access the token ID with `token.id`.
+    // Get the token ID to your server-side code for use.
+    if (document.getElementById("retail").value != 'retail'){
+        post('/new_pay_to_provider', {token: token.id});
+    }else {
+        post('/paytoretailer', {token: token.id});
+    }
+  }
+});
+
+document.getElementById('customButton').addEventListener('click', function(e) {
+  // Open Checkout with further options:
+  handler.open({
+    name: 'VaCay',
+    description: 'Pay service provider',
+    amount: document.getElementById("price").value
+  });
+  e.preventDefault();
+});
+
+// Close Checkout on page navigation:
+window.addEventListener('popstate', function() {
+  handler.close();
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+
+var token = '';
+
+$(document).ready(function(){
+
+  // Create a Stripe client
+  var stripe = Stripe('pk_test_yBa17ScgweXsJdW878xphQr8');
+
+  // Create an instance of Elements
+  var elements = stripe.elements();
+
+  // Try to match bootstrap 4 styling
+  var style = {
+    base: {
+      'lineHeight': '1.35',
+      'fontSize': '1.11rem',
+      'color': '#495057',
+      'fontFamily': 'apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'
+    }
+  };
+
+  // Card number
+  var card = elements.create('cardNumber', {
+    'placeholder': '•••• •••• •••• ••••',
+    'style': style
+  });
+  card.mount('#card-number');
+
+  // CVC
+  var cvc = elements.create('cardCvc', {
+    'placeholder': '•••',
+    'style': style
+  });
+  cvc.mount('#card-cvc');
+
+  // Card number
+  var exp = elements.create('cardExpiry', {
+    'placeholder': '••/••',
+    'style': style
+  });
+  exp.mount('#card-exp');
+
+  // Submit
+  $('#payment-submit').on('click', function(e){
+    e.preventDefault();
+    var cardData = {
+      'name': $('#name').val()
+    };
+    stripe.createToken(card, cardData).then(function(result) {
+      console.log(result);
+      if(result.error && result.error.message){
+        alert(result.error.message);
+      }else{
+        <!--alert(result.token.id);-->
+        var token = result.token.id ;
+        document.getElementById("gif").style.display = "block";
+        post('/pay_to_provider', {token: token});
+      }
+    });
+  });
+
+});
+
+
+
+function post(path, params, method) {
+    method = method || "post"; // Set method to post by default if not specified.
+
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    var form = document.getElementById("payment-form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+</script>
+{% endblock %}

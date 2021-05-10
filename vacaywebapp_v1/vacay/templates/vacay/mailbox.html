@@ -1,0 +1,316 @@
+{% extends 'vacay/base_mailbox.html' %}
+{% block title %}My MailBox{% endblock %}
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta charset="utf-8">
+<meta content="stuff, to, help, search, engines, not" name="keywords">
+<meta content="What this page is about." name="description">
+<style>
+
+html, body{
+  background: linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.2),rgba(100,50,250,0.2),rgba(100,50,250,0.0)),
+    url("/static/vacay/images/datingbg.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+img {
+  border-radius: 5%;
+  height: 80px;
+  width: 80px;
+}
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 10px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+#myBtn:hover {
+  background-color: blue;
+}
+#admin{
+    display:none;
+}
+
+form h1 {
+  font-size: 21px;
+  background: #327a81 none repeat scroll 0% 0%;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:left
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:550px;
+  width:auto;
+  margin:auto;
+  height:auto;
+  background-image: url("/static/vacay/images/pattern4.jpg");
+  background-size:cover;
+  overflow: hidden;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.2);
+}
+#edit:hover {
+  background-image: url("/static/vacay/images/pattern1.jpg");
+  background-size:cover;
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 200;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 10px;
+  width: 92%;
+  height: 42px;
+  float: left;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:blue;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 5px 0px 0px 5px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 10px 10px;
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+  border:0;
+  padding: 17px 25px;
+  border-radius: 0px 0px 5px 5px;
+  cursor: pointer;
+  margin-top: 40px;
+  font-size: 18px;
+}
+
+</style>
+
+<script>
+	history.pushState(null, null, location.href);
+	window.onpopstate = function () {
+        history.go(1);
+    };
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--<meta name="mobile-web-app-capable" content="yes">-->
+<!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+
+<!--<script>-->
+  <!--function launchFullScreen(element) {-->
+  <!--if(element.requestFullScreen) {-->
+    <!--element.requestFullScreen();-->
+  <!--} else if(element.mozRequestFullScreen) {-->
+    <!--element.mozRequestFullScreen();-->
+  <!--} else if(element.webkitRequestFullScreen) {-->
+    <!--element.webkitRequestFullScreen();-->
+  <!--}-->
+<!--}-->
+
+<!--// Launch fullscreen for browsers that support it!-->
+<!--launchFullScreen(document.documentElement); // the whole page-->
+<!--</script>-->
+
+<div id="title" style="font-size:25px; font-weight:800; color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center;
+	position:fixed; left:50%; float:middle; transform:translate(-50%, -50%); width:350px; z-index:100; top:100px; display:none;">
+    <span class="glyphicon glyphicon-inbox" style="margin-right:10px;"></span> My Inbox
+</div>
+
+<img src="/static/vacay/images/vacaylogo.jpg" style="position:relative; width:60px; height:60px; border-radius:50%; border:2px solid yellow; z-index:100; left:3%;">
+
+{% if mails %}
+<div style="width:100%; height:100%; padding-top:1%; padding-bottom:3%;">
+    <div style="font-size:25px; font-weight:800; margin-bottom:30px;
+        color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center; width:100%;">
+        <span class="glyphicon glyphicon-inbox" style="margin-right:10px;"></span> My Inbox
+    </div>
+
+    <div class="container-fluid" style="margin-top:2%;">
+        <div class="row">
+            {% for mail in mails %}
+            <div class="col-sm-4" style="padding-bottom:15px;">
+                <div id="edit">
+                    <!--<input type="hidden" id="user_id" value="{{user_id}}">-->
+                    <div class="contentform">
+                        <div style="width:100%;">
+                            <div style="padding:10px 10px 10px 0px; width:25%; float:left;">
+                                <center>
+                                    <a href="#">
+                                        <img src="{{mail.photo_url}}" style="width:90px; height:90px; border-radius:50%; border:5px solid rgba(255,255,255,0.5);">
+                                    </a>
+                                </center>
+                            </div>
+                            <div style="padding-left:20px; color: #04a2be; float:left; font-weight:600; font-size:18px; width:70%; text-align:left; word-break: break-all; word-wrap: break-word; text-align:left;">
+                                {{mail.name}}
+                            </div><br>
+                            <div id="date" style="color: rgb(255, 51, 204); float:left; font-weight:500; font-size:14px; width:70%; text-overflow: ellipsis; text-align:right;">
+                                {{mail.request_date}}
+                            </div><br>
+                            <div style="padding-left:20px; color: #04a2be; float:left; font-weight:500; font-size:14px; width:70%; word-break: break-all; word-wrap: break-word; text-align:left;">
+                                {{mail.from_mail}}
+                            </div><br>
+                            <div style="padding: 8px 0px 0px 20px; color: black; float:left; font-weight:500; white-space: nowrap;
+                                font-size:14px; width:70%; text-align:left; overflow: hidden; text-overflow: ellipsis;">
+                                {{mail.text_message}}
+                            </div>
+                            <div style="width:100%; text-align:right; float:left; margin-bottom:8px;">
+                                <a href="{% url 'mail_detail' mail.id %}" class="btn btn-info btn-lg" style="padding:3px 8px 3px 8px; font-size:14px; text-align:center;">
+                                    <span class="glyphicon glyphicon-folder-open" style="padding-right:8px;"></span>Detail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div><br>
+    </div>
+</div>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        document.getElementById("myBtn").style.display = "block";
+        document.getElementById("title").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+        document.getElementById("title").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+
+$(document).ready(function() {
+    $('.row #date').each(function(i) {
+
+        $(this).text(getTime(parseInt($(this).html())));
+    });
+});
+
+function getTime(ms){
+    var date = new Date(ms);
+    var seconds = date.getSeconds();
+    var minutes = date.getMinutes();
+    var hours = date.getHours();
+
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1; // beware: January = 0; February = 1, etc.
+    var day = date.getDate();
+
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var timeStr = month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm;
+    return timeStr;
+}
+
+</script>
+
+{%else %}
+        <center>
+            <br>
+            <br>
+            <br>
+            <br><br>
+            <h3 class="my_items col-sm-offset-1" style="color:red; margin: 30px;">No Mails you have received...</h3></center>
+
+{% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

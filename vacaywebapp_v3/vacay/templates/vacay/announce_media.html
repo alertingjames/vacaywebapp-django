@@ -1,0 +1,378 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Announce Media{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+<style>
+
+html, body{
+  background:linear-gradient(0deg,rgba(20,150,250,0.5),rgba(0,100,250,0.5)), url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+@font-face {
+  font-family: Futura;
+  src: url('.../FuturaStdLight.woff') format("WOFF");
+  font-weight: 300;
+}
+
+h1 {
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:center;
+  font-family: verdana;
+}
+
+#form {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-bottom: 2% auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+  <!--background:linear-gradient(30deg,rgba(200,150,250,0.7),rgba(50,200,250,0.7));-->
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#form:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 50px 0px 0px 50px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 0px 10px 20px 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom:3%;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+div.home-btn {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-color: #EEE #CCC #CCC #EEE;
+  font-size:12px;
+  color:rgb(0, 153, 153);
+  font-weight:700;
+  background:linear-gradient(30deg,rgba(255, 230, 255,0.7),rgba(204, 238, 255,0.7));
+  text-align: center;
+  width: 32%;
+  height:70px;
+  padding: 10px 15px;
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+}
+
+div.home-large-btn {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-color: #EEE #CCC #CCC #EEE;
+  background-color: white;
+  text-align: center;
+  width: 100%;
+  height:300px;
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.btn-text {
+    position: absolute;
+    top: 80%;
+    left: 75%;
+    width:100%;
+    font-size:40px;
+    color:white;
+    font-weight:600;
+    transform: translate(-50%, -50%);
+}
+
+.slide {
+    display: inline-block;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #CCC #EEE #EEE #CCC;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="image"] {
+  display: none;
+}
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle; border-radius: 1px;
+	transform:translate(-50%, -50%); width:auto; z-index:100; top:120px; display: none;" id="gif">
+
+  <div id="form">
+	  {% csrf_token %}
+	    <h1 style="font-size:25px;">Enjoy Pictures & Videos for VaCay!</h1>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+            <div class="form-group">
+                <center>
+                <div style="width:60%; text-align:center;">
+                    <button id="image-btn" style="width:50%; height:42px; border-radius:50px 2px 2px 50px; background: green; font-size:16px; float:left; color:white;" onclick="show_images()">Pictures</button>
+                    <button id="video-btn" style="width:50%; height:42px; border-radius:2px 50px 50px 2px; background: yellow; font-size:16px; float:left; color:orange;" onclick="show_video()">Videos</button>
+                </div>
+                </center>
+            </div>
+			<div id="image-panel" class="form-group">
+                <label style="font-size:20px; color:red;">Pictures</label>
+                <center>
+                    <div style="width:100%; text-align:center; max-height:100px;">
+                        <div class="dragscroll" style="white-space: nowrap; overflow-y: hidden; overflow: auto; cursor: grab; cursor : -o-grab; cursor : -moz-grab; cursor : -webkit-grab;">
+                            {% if media.imageA and media.imageA != 'None' %}
+                                <div class="slide">
+                                    <img src="{{media.imageA}}" style="width:auto; height:98%; float:left;" id="imagea" onclick="imageA()">
+                                </div>
+                            {% endif %}
+                            {% if media.imageB and media.imageB != 'None' %}
+                                <div class="slide">
+                                    <img src="{{media.imageB}}" style="width:auto; height:98%; float:left;" id="imageb" onclick="imageB()">
+                                </div>
+                            {% endif %}
+                            {% if media.imageC and media.imageC != 'None' %}
+                                <div class="slide">
+                                    <img src="{{media.imageC}}" style="width:auto; height:98%; float:left;" id="imagec" onclick="imageC()">
+                                </div>
+                            {% endif %}
+                            {% if media.imageD and media.imageD != 'None' %}
+                                <div class="slide">
+                                    <img src="{{media.imageD}}" style="width:auto; height:98%; float:left;" id="imaged" onclick="imageD()">
+                                </div>
+                            {% endif %}
+                            {% if media.imageE and media.imageE != 'None' %}
+                                <div class="slide">
+                                    <img src="{{media.imageE}}" style="width:auto; height:98%; float:left;" id="imagee" onclick="imageE()">
+                                </div>
+                            {% endif %}
+                            {% if media.imageF and media.imageF != 'None' %}
+                                <div class="slide">
+                                    <img src="{{media.imageF}}" style="width:auto; height:98%; float:left;" id="imagef" onclick="imageF()">
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div style="width:100%; text-align:center; margin-top:10px;">
+                        <div class="home-large-btn" style="height:auto;">
+                            <center>
+                                <img src="{% if media.imageA %}{{media.imageA}}{% elif media.imageB %}{{media.imageB}}{% elif media.imageC %}{{media.imageC}}{% elif media.imageD %}{{media.imageD}}{% elif media.imageE %}{{media.imageE}}{% elif media.imageF %}{{media.imageF}}{% else %}/static/vacay/images/noimage.jpg{% endif %}" style="width:98%; height:auto;" id="image">
+                            </center>
+                        </div>
+                    </div>
+                </center>
+			</div>
+            <div id="video-panel" class="form-group" style="display:none;">
+                <center>
+                    {% if media.video and media.video != 'None' %}
+                    <label style="font-size:20px; color:red; float:left;">Video</label>
+                    <div style="width:100%; text-align:center; max-height:300px;">
+                        <div class="home-large-btn">
+                            <center>
+                                <video id="video" controls height="98%" width="98%" src="{{media.video}}" autoplay loop>
+                                    <!--<source src="{{job.video_url}}" />-->
+                                </video>
+                            </center>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if media.youtube and media.youtube != 'None' %}
+                    <label style="font-size:20px; color:red; float:left;">YouTube</label>
+                    <div style="width:100%; text-align:center;">
+                        <div class="home-large-btn">
+                            <center>
+                                <iframe height="98%" width="98%" src="https://www.youtube.com/embed/{{media.youtube}}?autoplay=1"  frameborder="0" allowfullscreen style="margin-top:2.5px;">
+                                </iframe>
+                            </center>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% if not media.youtube and not media.video %}
+                        <label style="font-style:italic; font-size:18px; color:red;">No video ...</label>
+                    {% endif %}
+                </center>
+			</div>
+	    </div>
+
+	</div>
+
+  </div>
+
+<script>
+
+    var image_panel = document.getElementById("image-panel");
+    var video_panel = document.getElementById("video-panel");
+    var image_btn = document.getElementById("image-btn");
+    var video_btn = document.getElementById("video-btn");
+
+    var image = document.getElementById("image");
+    var imagea = document.getElementById("imagea");
+    var imageb = document.getElementById("imageb");
+    var imagec = document.getElementById("imagec");
+    var imaged = document.getElementById("imaged");
+    var imagee = document.getElementById("imagee");
+    var imagef = document.getElementById("imagef");
+    function imageA(){
+        image.style.display = 'block';
+        image.src = imagea.src;
+    }
+    function imageB(){
+        image.style.display = 'block';
+        image.src = imageb.src;
+    }
+    function imageC(){
+        image.style.display = 'block';
+        image.src = imagec.src;
+    }
+    function imageD(){
+        image.style.display = 'block';
+        image.src = imaged.src;
+    }
+    function imageE(){
+        image.style.display = 'block';
+        image.src = imagee.src;
+    }
+    function imageF(){
+        image.style.display = 'block';
+        image.src = imagef.src;
+    }
+    function show_video(){
+        video_panel.style.display = "block";
+        image_panel.style.display = "none";
+        video_btn.style.backgroundColor = "green";
+        image_btn.style.backgroundColor = "yellow";
+        video_btn.style.color = "white";
+        image_btn.style.color = "orange";
+    }
+    function show_images(){
+        video_panel.style.display = "none";
+        image_panel.style.display = "block";
+        video_btn.style.backgroundColor = "yellow";
+        image_btn.style.backgroundColor = "green";
+        video_btn.style.color = "orange";
+        image_btn.style.color = "white";
+    }
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

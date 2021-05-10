@@ -1,0 +1,74 @@
+<html>
+<head>
+
+  <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+  <script type="text/javascript">
+
+    Stripe.setPublishableKey('pk_test_4ZzD3dUkMiTnVLpwymISz9Uf');
+
+    function onSubmitDo () {
+
+      Stripe.card.createToken( document.getElementById('payment-form'), myStripeResponseHandler );
+
+      return false;
+
+    };
+    function myStripeResponseHandler ( status, response ) {
+
+      console.log( status );
+      console.log( response );
+
+      if ( response.error ) {
+        document.getElementById('payment-error').innerHTML = response.error.message;
+      } else {
+        var tokenInput = document.createElement("input");
+        tokenInput.type = "hidden";
+        tokenInput.name = "stripeToken";
+        tokenInput.value = response.id;
+        var paymentForm = document.getElementById('payment-form');
+        paymentForm.appendChild(tokenInput);
+     //   paymentForm.submit();
+        alert(response.id);
+      }
+
+   };
+
+       </script>
+
+</head>
+
+<body>
+
+  <h1>Stripe Custom Form with Stripe.js Example</h1>
+
+  <form action="/" method="POST" id="payment-form" onsubmit="return onSubmitDo()">
+
+        Cardholder Name
+        <input type="text" size="20" data-stripe="name"/>
+
+        Card Number
+        <input type="text" size="20" data-stripe="number"/>
+
+        CVC
+        <input type="text" size="4" data-stripe="cvc"/>
+
+        Expiration (MM/YYYY)
+        <input type="text" size="2" data-stripe="exp-month"/>
+        <input type="text" size="4" data-stripe="exp-year"/>
+
+        Email Address
+        <input type="text" size = "25" name="emailAddress" />
+
+        Shipping Address
+        <input type="text" size = "3" name="shippingState" data-stripe="address_state" />
+
+        <button type="submit">Pay $15 with Stripe</button>
+
+  </form>
+
+  <span style='color: red' id='payment-error'></span>
+
+</body>
+
+</html>

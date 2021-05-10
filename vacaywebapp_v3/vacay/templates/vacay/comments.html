@@ -1,0 +1,586 @@
+{% extends 'vacay/base_search.html' %}
+{% block title %}Comments for Water Cooler{% endblock %}
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+      WebFont.load({
+      google: {
+      families: ["Lato:100,300,400,700,900","Karla:regular","Cookie:regular"]
+    }
+    });
+</script>
+
+<style>
+
+html, body{
+  background:linear-gradient(0deg,rgba(20,150,250,0.3),rgba(0,100,250,0.3)), url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 400px;
+    box-shadow: 16px 16px 16px 0px rgba(0,0,0,0.5);
+    z-index: 100;
+    border-radius: 8px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.desc {
+    padding: 6px;
+    text-align: center;
+}
+
+img {
+  height: 80px;
+  width: 80px;
+}
+
+.manage {
+  border-radius: 10%;
+}
+
+.table-users {
+  border: 1px solid #327a81;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin: 2% auto;
+  background-color: white;
+  overflow-x:auto;
+}
+
+.table>tbody>tr>td{
+    vertical-align: middle;
+    horizontal-align: middle;
+}
+
+table td, table th {
+  color: #2b686e;
+  padding: 10px;
+  border: 1px solid white;
+  text-align: center;
+  vertical-align: middle;
+}
+table td {
+  text-align: center;
+  vertical-align: middle;
+}
+table td:last-child {
+  font-size: 0.95em;
+  line-height: 0.8;
+  text-align: center;
+}
+table th {
+  background-color: #04a2be;
+  font-weight: 520;
+  color:white;
+  text-align: center;
+  vertical-align: middle;
+}
+table tr:nth-child(2n) {
+  background-color: white;
+  border: 1px solid #327a81;
+}
+table tr:nth-child(2n+1) {
+  background-color: #edf7f8;
+  border: 1px solid white;
+}
+#manage-menu{
+    -webkit-padding-start: 0px;
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    width:40px;
+    background-color:#000000;
+    position: relative; /* <-- Added */
+    z-index: 100; /* <-- Added */
+}
+#manage-menu1{
+    -webkit-padding-start: 0px;
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    width:40px;
+    background-color:#000000;
+    position: relative; /* <-- Added */
+    z-index: 100; /* <-- Added */
+}
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 100px;
+  right: 10px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+#myBtn:hover {
+  background-color: blue;
+}
+#admin{
+    display:none;
+}
+
+.info p {
+  text-align:center;
+  color: #999;
+  text-transform:none;
+  font-weight:600;
+  font-size:15px;
+  margin-top:2px
+}
+
+.info i {
+  color:#F6AA93;
+}
+form h1 {
+  font-size: 25px;
+  background: #327a81 none repeat scroll 0% 0%;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:left
+}
+
+#edit {
+  border-radius: 8px;
+  max-width:550px;
+  width:auto;
+  margin:auto;
+  background:linear-gradient(0deg,rgba(20,150,250,0.6),rgba(0,100,250,0.6));
+  background-size:cover;
+  overflow: hidden;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.2);
+}
+#edit:hover {
+  background:linear-gradient(0deg,rgba(100,50,250,0.6),rgba(50,100,250,0.6));
+  background-size:cover;
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 200;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 10px;
+  width: 92%;
+  height: 42px;
+  float: left;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:blue;
+}
+
+select {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  width: 75%;
+  height: 40px;
+  float: left;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:blue;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 5px 0px 0px 5px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 10px 10px;
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+  border:0;
+  padding: 17px 25px;
+  border-radius: 0px 0px 5px 5px;
+  cursor: pointer;
+  margin-top: 40px;
+  font-size: 18px;
+}
+
+.show {
+    z-index:1000;
+    position: absolute;
+    background-color:#ffffff;
+    border: 2px solid orange;
+    box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    display: block;
+    font-size:20px;
+    border-radius:20px;
+    margin: 0;
+    list-style-type: none;
+    list-style: none;
+}
+
+.hide {
+    display: none;
+}
+
+.show li{ list-style: none; }
+.show a { border: 0 !important; text-decoration: none; }
+.show a:hover { text-decoration: underline !important; }
+
+label input {
+  display: none;/* <-- hide the default checkbox */
+}
+label span {/* <-- style the artificial checkbox */
+  height: 15px;
+  width: 15px;
+  border: 1px solid black;
+  border-radius:50%;
+  background-color:transparent;
+  margin-right:3px;
+  display: inline-block;
+  position: relative;
+}
+[type=checkbox]:checked + span:before {/* <-- style its checked state..with a ticked icon */
+  content: '\2714';
+  color:white;
+  position: absolute;
+  top: -5px;
+  left: 0;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0px;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index:1000;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 30px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 36px;
+    float:right;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+</style>
+
+<!--<meta name="mobile-web-app-capable" content="yes">-->
+<!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+
+<!--<script>-->
+  <!--function launchFullScreen(element) {-->
+  <!--if(element.requestFullScreen) {-->
+    <!--element.requestFullScreen();-->
+  <!--} else if(element.mozRequestFullScreen) {-->
+    <!--element.mozRequestFullScreen();-->
+  <!--} else if(element.webkitRequestFullScreen) {-->
+    <!--element.webkitRequestFullScreen();-->
+  <!--}-->
+<!--}-->
+
+<!--// Launch fullscreen for browsers that support it!-->
+<!--launchFullScreen(document.documentElement); // the whole page-->
+<!--</script>-->
+
+<div id="photo" style="height:auto; position:fixed; left:15%; top:15%; float:middle; transform:translate(-50%, -50%); width:100px; z-index:300; display:none;">
+    <img src="{{watercooler.photo}}" style="max-width:60px; max-height:60px; width:auto; height:auto; border-radius:50px;">
+</div>
+
+<div id="title" style="font-size:25px; font-weight:800; color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center;
+	position:fixed; left:50%; float:middle; transform:translate(-50%, -50%); width:350px; z-index:100; top:125px; display:block;">WATER COOLER</div>
+<span style="font-size:18px; font-weight:800; color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7);
+	position:fixed; left:50%; float:middle; margin-top:50px;
+	transform:translate(-50%, -50%); width:auto; z-index:100; top:105px;" id="subtitle">({{watercooler.category}})</span>
+
+<div onclick="showAlert()" id="alert" style="font-size:16px; font-weight:300; color: red; text-align:center; box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.3);
+	position:fixed; left:50%; float:middle; background-color:white; border-radius:10px; padding: 5px 10px 5px 10px;
+	transform:translate(-50%, -50%); width:200px; z-index:200; top:160px; display:none;"><i class="fa fa-bell" style="font-size:18px; color:red;"></i>
+	You have message!<br>
+	Click here to contact it.
+</div>
+
+{% if watercooler.whose == 'me' %}
+<img src="/static/vacay/images/editicon.png" style="right:20px; position:fixed; border-radius:5px; float:right; width:60px; height:60px; bottom:20px; z-index:200;"
+     onclick="javascript:window.location.href = '/editwc/{{watercooler.wc_id}}';">
+{% else %}
+<img src="/static/vacay/images/commenticon.png" style="right:20px; position:fixed; border-radius:5px; float:right; width:60px; height:60px; bottom:20px; z-index:200;"
+     onclick="javascript:window.location.href = '/add_wc_comment/{{watercooler.wc_id}}';">
+{% endif %}
+
+<img src="/static/vacay/images/logo.png" style="position:relative; width:60px; height:60px; border-radius:3%; z-index:-1; left:3%;">
+
+<div style="width:100%; height:auto;">
+    <div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-6" style="position:relative; height:82%; overflow:auto;">
+        <div style="width:25%; float:left;">
+            <center>
+                <a href="#">
+                    <img src="{{watercooler.photo}}" style="width:90px; height:90px; border-radius:50%; object-fit:cover;">
+                </a>
+            </center>
+        </div>
+        <div style="padding-left:30px; margin-top:25px; color: white; float:left; font-weight:600; font-size:20px; width:70%; text-align:left; word-break: break-all; word-wrap: break-word;">
+            {{watercooler.name}}<br>
+        </div>
+        <div style="padding-left:20px; color: #003d4d; float:left; font-weight:500; font-size:18px; width:100%; text-align:left; white-space: pre-line; word-break: break-all; word-wrap: break-word;">
+            {{watercooler.content}}<br>
+        </div>
+        {% if watercooler.link and watercooler.link != 'None' %}
+        <a href="{{watercooler.link}}">
+            <div style="padding-left:20px; color: rgb(255, 51, 204); float:left; font-weight:500; font-size:16px; text-decoration: underline; width:100%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                {{watercooler.link}}<br>
+            </div>
+        </a>
+        {% endif %}
+        <div style="position:relative; margin-top:20px; width:100%; height:auto; display:inline-block;">
+            <center>
+                <img src="/static/vacay/images/praisebackground.jpg" style="width:100%; height:auto;">
+                {% if watercooler.category == 'Praise' %}
+                <div style="position:absolute; top:3%; right:3%;">
+                    <img src="/static/vacay/images/praise.jpg" style="width:150px; height:auto; border-radius:50%;">
+                </div>
+                {% elif watercooler.category == 'Helpful Tips' %}
+                 <div style="position:absolute; top:3%; right:3%;">
+                    <img src="/static/vacay/images/helpful_tips.jpg" style="width:150px; height:auto; border-radius:50%;">
+                </div>
+                {% elif watercooler.category == 'Inspiration' %}
+                 <div style="position:absolute; top:3%; right:3%;">
+                    <img src="/static/vacay/images/inspirationimage.jpg" style="width:150px; height:auto; border-radius:50%;">
+                </div>
+                {% elif watercooler.category == 'Wellness' %}
+                 <div style="position:absolute; top:3%; right:3%;">
+                    <img src="/static/vacay/images/wellness.jpg" style="width:150px; height:auto; border-radius:50%;">
+                </div>
+                {% elif watercooler.category == 'Questions' %}
+                 <div style="position:absolute; top:3%; right:3%;">
+                    <img src="/static/vacay/images/questionsimage.jpg" style="width:150px; height:auto; border-radius:50%;">
+                </div>
+                {% endif %}
+            </center>
+        </div>
+    </div>
+
+    <h4 style="color:white; width:100%; text-align:center;">Comments</h4>
+
+    <div class="col-sm-6" style="height:82%; overflow:auto;" onscroll="scrollFunction();" id="comment-list">
+        {% if comments %}
+            <div style="width:100%; height:100%; padding-top:1%; padding-bottom:3%;">
+
+                {% for comment in comments %}
+                <div id="edit">
+                <!--<input type="hidden" id="user_id" value="{{user_id}}">-->
+                <div class="contentform">
+
+                    <div style="width:100%;">
+                        <div style="width:20%; float:left;">
+                            <a href="#">
+                                <img src="{{comment.photoUrl}}" style="width:60px; height:60px; object-fit:cover;">
+                            </a>
+                        </div>
+                        <div style="padding-left:20px; margin-top:15px; color: white; float:left; font-weight:600; font-size:18px; width:75%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                            {{comment.name}}<br>
+                        </div>
+                        <div style="padding-left:20px; color: white; float:left; font-weight:500; font-size:18px; width:100%; white-space: pre-line;
+                                text-align:left; word-break: break-all; word-wrap: break-word; margin-bottom:15px; margin-top:15px;">{{comment.text}}
+                        </div><br>
+                        {% if comment.imageUrl %}
+                        <div style="padding:10px; width:100%;">
+                            <center>
+                                <a href="#">
+                                    <img src="data:image/jpeg;base64,{{comment.imageUrl}}" style="width:100%; height:auto; background:white;">
+                                </a>
+                            </center>
+                        </div>
+                        {% endif %}
+                        <div style="width:70%; text-align:right; float:right; margin-bottom:8px; margin-top:10px; margin-right:8px;">
+                            {% if comment.whose == 'me' %}
+                            <a href="/delcomment/{{comment.comment_id}}" class="btn btn-info btn-lg" style="padding:3px 8px 3px 8px; font-size:14px; text-align:center; background-color:blue;"
+                                onclick="return confirm('Are you sure you want to delete this comment?')">
+                                <span class="glyphicon glyphicon-trash" style="padding-right:8px;"></span>Delete
+                            </a>
+                            <a href="/editcomment/{{watercooler.wc_id}}/{{comment.comment_id}}" class="btn btn-info btn-lg" style="padding:3px 8px 3px 8px; font-size:14px; text-align:center; background-color:blue;">
+                                <span class="glyphicon glyphicon-pencil" style="padding-right:8px;"></span>Edit...
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <br>
+                {% endfor %}
+            </div>
+{%else %}
+        <center>
+            <br>
+            <br>
+            <br>
+            <br><br>
+            <h3 class="my_items col-sm-offset-1" style="color:red; margin: 30px;">No Comment for the Water Cooler...</h3></center>
+
+{% endif %}
+
+    </div>
+  </div>
+</div>
+</div>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+ //   alert("Hello");
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20 || document.getElementById("comment-list").scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";                         // Top button display none;
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200){
+            document.getElementById("photo").style.display = "block";
+        }else document.getElementById("photo").style.display = "none";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+        document.getElementById("photo").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+    document.getElementById("comment-list").scrollTop = 0;
+}
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

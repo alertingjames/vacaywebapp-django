@@ -1,0 +1,631 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Add Comment to {% if employee %}Water Cooler{% else %}Info{% endif %}{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<style>
+
+html, body{
+  background: url("/static/vacay/images/loginbackground.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+.header {
+  background-color: #327a81;
+  color: white;
+  font-size: 1.5em;
+  padding: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  border: 1px solid white;
+}
+
+.manage {
+  border-radius: 10%;
+}
+
+.table-users {
+  border: 1px solid #327a81;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  width: 100%;
+  background-color: white;
+  overflow-x:auto;
+}
+
+.table>tbody>tr>td{
+    vertical-align: middle;
+    horizontal-align: middle;
+}
+
+table td, table th {
+  color: #2b686e;
+  padding: 10px;
+  border: 1px solid white;
+  text-align: center;
+  vertical-align: middle;
+}
+table td {
+  text-align: center;
+  vertical-align: middle;
+}
+table td:last-child {
+  font-size: 0.95em;
+  line-height: 1.4;
+  text-align: center;
+}
+table th {
+  background-color: #daeff1;
+  font-weight: 300;
+  text-align: center;
+  vertical-align: middle;
+}
+table tr:nth-child(2n) {
+  background-color: white;
+  border: 1px solid #327a81;
+}
+table tr:nth-child(2n+1) {
+  background-color: #edf7f8;
+  border: 1px solid white;
+}
+#manage-menu{
+    -webkit-padding-start: 0px;
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    width:40px;
+    background-color:#7be5f8;
+    position: relative; /* <-- Added */
+    z-index: 1; /* <-- Added */
+}
+
+.info p {
+  text-align:center;
+  color: #999;
+  text-transform:none;
+  font-weight:600;
+  font-size:15px;
+  margin-top:2px
+}
+
+.info i {
+  color:#F6AA93;
+}
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 100px;
+  right: 10px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+#myBtn:hover {
+  background-color: blue;
+}
+
+
+form h1 {
+  font-size: 25px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: 0;
+  text-shadow: none;
+  text-align:center;
+  font-family: verdana;
+}
+
+form h2 {
+  font-size: 20px;
+  color: rgb(255, 51, 204);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: 0;
+  text-shadow: none;
+  text-align:center;
+  font-family: 'Satisfy', Apple Chancery, cursive;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:700px;
+  width:auto;
+  height:auto;
+  margin-top: 0;
+  margin-bottom: auto;
+  margin-left:auto;
+  margin-right:auto;
+  <!--background:linear-gradient(30deg,rgba(200,150,250,0.7),rgba(50,200,250,0.7));-->
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#edit:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+select {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  width: 75%;
+  height: 40px;
+  float: left;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+textarea {
+  border-radius: 8px;
+  border: 1px solid #EEE;
+  margin: 0;
+  width: 100%;
+  height: 200px;
+  float: middle;
+  padding: 15px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 50px 0px 0px 50px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:white;
+}
+
+.contentform {
+  padding: 0px 10px 30px 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.validation {
+  display:none;
+  margin: 0 0 10px;
+  font-weight:400;
+  font-size:13px;
+  color: #DE5959;
+}
+
+#sendmessage {
+  border:1px solid #fff;
+  display:none;
+  text-align:center;
+  margin:10px 0;
+  font-weight:600;
+  margin-bottom:30px;
+  background-color: #EBF6E0;
+  color: #5F9025;
+  border: 1px solid #B3DC82;
+  padding: 13px 40px 13px 18px;
+  border-radius: 3px;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.03);
+}
+
+#sendmessage.show,.show  {
+  display:block;
+}
+
+th {color:white;}
+
+td {text-align:middle;}
+
+select {
+  border-radius: 5px 5px 5px 5px;
+  border: 1px solid #eee;
+  height: 40px;
+  width:60%;
+  opacity: 0.8;
+  margin:auto;
+  color:red;
+}
+
+#container {
+    top:400px;
+    width: 480px;
+    height: 360px;
+    position:fixed;
+    z-index:100;
+    left:50%;
+    display:none;
+    transform:translate(-50%, -50%);
+    border: 10px #333 solid;
+}
+
+label.cameraButton {
+  display: inline-block;
+  /* Styles to make it look like a button */
+  padding-top: 0.6em;
+  padding-bottom: 0.3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border: 2px solid #666;
+  border-color: #EEE #CCC #CCC #EEE;
+  border-radius:50px 50px 50px 50px;
+  font-size:14px;
+  color:white;
+  width:30%;
+  height:42px;
+  text-align:center;
+  background-color: green;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #CCC #EEE #EEE #CCC;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="image"] {
+  display: none;
+}
+
+.sidenav {
+    height: 100%;
+    width: 0px;
+    position: fixed;
+    top: 50px;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index:1000;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 30px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    font-size: 36px;
+    float:right;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--<meta name="mobile-web-app-capable" content="yes">-->
+<!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+
+<!--<script>-->
+  <!--function launchFullScreen(element) {-->
+  <!--if(element.requestFullScreen) {-->
+    <!--element.requestFullScreen();-->
+  <!--} else if(element.mozRequestFullScreen) {-->
+    <!--element.mozRequestFullScreen();-->
+  <!--} else if(element.webkitRequestFullScreen) {-->
+    <!--element.webkitRequestFullScreen();-->
+  <!--}-->
+<!--}-->
+
+<!--// Launch fullscreen for browsers that support it!-->
+<!--launchFullScreen(document.documentElement); // the whole page-->
+<!--</script>-->
+
+{% if success %}
+<h4><script>alert("Sent successfully!")</script></h4>
+{% endif %}
+
+{% if failed %}
+<h4><script>alert("Sending failed. Try again ...")</script></h4>
+{% endif %}
+
+{% if category_error %}
+<h4><script>alert("Sending failed. Select a category ...")</script></h4>
+{% endif %}
+
+<div id="photo" style="height:auto; position:fixed; left:15%; top:15%; float:middle; transform:translate(-50%, -50%); width:100px; z-index:300; display:none;">
+    <img src="{{watercooler.photo}}" style="max-width:60px; max-height:60px; width:auto; height:auto; border-radius:50px;">
+</div>
+
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle;
+	transform:translate(-50%, -50%); width:80px; height:auto; z-index:100; top:120px; display: none;" id="gif">
+
+<img src="/static/vacay/images/vacaylogo.jpg" style="position:relative; width:60px; height:60px; border-radius:50%; border:2px solid yellow; z-index:100; left:3%; top:20px;">
+
+  <form id="edit" action="/wc_comment_upload" method="post" enctype="multipart/form-data">
+	  {% csrf_token %}
+      <h1>{% if commentObj %}Edit Comment to{% else %}Add Comment to{% endif %}<br> {% if employee %}Water Cooler{% else %}Info{% endif %}</h1>
+      <h2>{{watercooler.category}}</h2>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+            <div class="form-group">
+                <div style="padding:10px; width:25%; float:left;">
+                    <center>
+                    <a href="#">
+                        <img src="{{watercooler.photo}}" style="width:60px; height:auto; max-height:80px;">
+                    </a>
+                    </center>
+                </div>
+                <div style="padding-left:20px; margin-top:30px; color: white; float:left; font-weight:600; font-size:18px; width:70%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                    {{watercooler.name}}<br>
+                </div>
+                <div style="padding-left:20px; color: white; float:left; font-weight:500; font-size:18px; width:100%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                    {{watercooler.content}}<br>
+                </div>
+
+            </div>
+            <input type="hidden" id="category" name="category" value="">
+            <input type="hidden" id="info_id" name="info_id" value="{{watercooler.wc_id}}">
+            <input type="hidden" id="image" name="image" value="{% if image %}{{image}}{% elif commentObj.imageUrl %}{{commentObj.imageUrl}}{% endif %}">
+            <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+            <div class="form-group">
+			    <p>Comment <span>*</span></p>
+                <textarea name="text"  rows="10" data-rule="required" data-msg="" required id="text" placeholder="Write something ...">{% if comment %}{{comment}}{% elif commentObj.text %}{{commentObj.text}}{% endif %}</textarea>
+			</div>
+            <script>autosize(document.getElementById("text"));</script>
+            <div class="form-group">
+                <a href="javascript:gotodrawing();" class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center; margin-left:10px;">
+                    <span class="glyphicon glyphicon-picture" style="padding-right:8px;"></span>Add drawing
+                </a>
+            </div>
+			<div class="form-group" style="margin-top:5%;">
+				<button type="submit" class="bouton-update" style="margin-bottom: 10%;" onclick="progressBar()"><i class="fa fa-send" style="margin-right:20px; font-size:20px; color:white;"></i>Submit</button>
+			</div>
+	</div>
+
+	</div>
+
+
+</form>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+ //   alert("Hello");
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("myBtn").style.display = "block";                         // Top button display none;
+        document.getElementById("logo").style.display = "none";
+        if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200){
+            document.getElementById("photo").style.display = "block";
+        }else {
+            document.getElementById("photo").style.display = "none";
+        }
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+        document.getElementById("photo").style.display = "none";
+        document.getElementById("logo").style.display = "block";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+function progressBar(){
+   var text = document.getElementById("text").value;
+   if (text.length > 0){
+       document.getElementById("gif").style.display = "block";
+   }else {
+       alert("Please fill in the blank fields ...");
+   }
+}
+
+</script>
+
+
+<script>
+// Grab elements, create settings, etc.
+var video = document.getElementById('video');
+var dataurl;
+
+// Get access to the camera!
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        video.src = window.URL.createObjectURL(stream);
+        video.play();
+    });
+}
+
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+<!--var form = document.forms.namedItem("edit");-->
+
+// Trigger photo take
+document.getElementById("snap").addEventListener("click", function() {
+
+   <!--form.style.display="block";-->
+	context.drawImage(video, 0, 0, 320, 240);
+    document.getElementById("b64").value = canvas.toDataURL();
+
+    document.getElementById("output").src   = canvas.toDataURL();
+
+    dataurl = canvas.toDataURL();
+    document.getElementById("container").style.display = "none";
+
+    var blob = dataURLtoBlob(dataurl);
+   var fd = new FormData(form);
+   fd.append("photo", blob, "thumb.jpg");
+
+});
+
+$(document).ready(function(){
+   $('#webcam').click(function(){
+       document.getElementById("container").style.display = "block";
+    });
+})
+
+document.getElementById("cancel").addEventListener("click", function() {
+    document.getElementById("container").style.display = "none";
+});
+
+</script>
+
+<script>
+    function progressBar(){
+    	var text = document.getElementById("text").value;
+    	if (text.length > 0){
+        	document.getElementById("gif").style.display = "block";
+        }else {
+            alert("Please fill in the blank fields ...");
+        }
+    }
+    function gotodrawing(){
+        var text = document.getElementById("text");
+        var comment = text.value;
+        if (comment.length == 0 || comment == 'None') comment = 'None';
+        window.location.href = "/drawing?comment=" + comment;
+    }
+</script>
+
+<!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+<!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+
+<!--<script>-->
+    <!--$( function() {-->
+    <!--$( "#edit" ).draggable();-->
+    <!--$( "#container" ).draggable();-->
+  <!--} );-->
+<!--</script>-->
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

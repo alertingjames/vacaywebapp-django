@@ -1,0 +1,317 @@
+{% extends 'vacay/base_inbox.html' %}
+{% block title %}Sent Mail Detail{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<style>
+
+html, body{
+  background: linear-gradient(0deg,rgba(20,150,250,0.6),rgba(0,100,250,0.6)), url("/static/vacay/images/profilebackground.png") no-repeat center center fixed;
+  background-size:cover;
+}
+
+form h1 {
+  font-size: 30px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:middle;
+  font-family: 'Satisfy', Apple Chancery, cursive;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:100%;
+  width:auto;
+  height:auto;
+  margin-top: 2%;
+  margin-bottom: 2% auto;
+  margin-left:auto;
+  margin-right:auto;
+  <!--background:linear-gradient(30deg,rgba(200,150,250,0.7),rgba(50,200,250,0.7));-->
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+a {
+  text-decoration:inherit
+}
+
+textarea {
+  border-radius: 10px 10px 10px 10px;
+  border: 1px solid #EEE;
+  margin: 0;
+  width: 100%;
+  height: 200px;
+  float: middle;
+  padding: 15px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 30px 20px 30px 20px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--<meta name="mobile-web-app-capable" content="yes">-->
+<!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+
+<!--<script>-->
+  <!--function launchFullScreen(element) {-->
+  <!--if(element.requestFullScreen) {-->
+    <!--element.requestFullScreen();-->
+  <!--} else if(element.mozRequestFullScreen) {-->
+    <!--element.mozRequestFullScreen();-->
+  <!--} else if(element.webkitRequestFullScreen) {-->
+    <!--element.webkitRequestFullScreen();-->
+  <!--}-->
+<!--}-->
+
+<!--// Launch fullscreen for browsers that support it!-->
+<!--launchFullScreen(document.documentElement); // the whole page-->
+<!--</script>-->
+
+{% if notloc %}
+<h4><script>alert("There is no any location requested to friend.")</script></h4>
+{% endif %}
+
+<div onclick="" id="alert" style="font-size:16px; font-weight:300; color: red; text-align:center; box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.3);
+	position:fixed; left:50%; float:middle; background-color:white; border-radius:10px; padding: 5px 10px 5px 10px;
+	transform:translate(-50%, -50%); width:200px; z-index:200; top:160px; display:none;"><i class="fa fa-bell" style="font-size:18px; color:red;"></i>
+	You have message!<br>
+	Click here to contact it.
+</div>
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle;
+	transform:translate(-50%, -50%); width:80px; height:auto; z-index:100; top:120px; display: none;" id="gif">
+
+  <form id="edit" action="/sentloc" method="post" enctype="multipart/form-data">
+	  {% csrf_token %}
+      <h1>Message Sent to Friend</h1>
+
+      <div class="container-fluid" style="margin-top:2%;">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="pan" style="max-width:500px; height:auto; margin-bottom: auto; margin-left:auto; margin-right:0; opacity:0.9; overflow: hidden;">
+                    <div class="contentform">
+                        <div class="formcontent">
+                            <div style="padding-left:20px; padding-right:8px; color: #fff; float:left; font-weight:600; font-size:18px; width:100%; text-overflow: ellipsis; text-align:left;">
+                                To: {{mail.to_mail}}
+                            </div><br>
+                            <div id="date" style="padding-left:8px; padding-right:8px; color: white; float:left; font-weight:500; font-size:14px; width:100%; text-overflow: ellipsis; text-align:right;">
+                                {{mail.request_date}}
+                            </div><br>
+                            <div style="padding: 10px; color: #fff; float:left; font-weight:500; font-size:16px; width:100%; border-radius:10px;
+                                text-align:left; height: auto; text-overflow: ellipsis; white-space: pre-line;">
+                                {{mail.text_message}}
+                            </div>
+                            <input type="hidden" name="lat" value="{{mail.lat_message}}">
+                            <input type="hidden" name="lng" value="{{mail.lon_message}}">
+                            <input type="hidden" name="mail_id" value="{{mail.id}}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="pan2" style="max-width:500px; height:auto; margin-bottom: auto; margin-left:0; margin-right:auto; opacity:0.9; overflow: hidden;">
+                    <div class="contentform">
+                        <div class="formcontent">
+                            <center>
+                                <div style="width:100%;">
+                                    <label style="color:white; padding:6px 12px 6px 12px; border-radius:8px; box-shadow:0px 0px 15px rgba(0,0,0,0.6); width:auto; height: auto;"
+                                           onclick="document.getElementById('edit').submit();">
+                                            <img src="/static/vacay/images/loc.png" style="width:30px; height:30px; margin-right:10px; margin-bottom:5px;">Requested Location</label>
+                                </div><br>
+                                {% if mail.image_message_url != '' and mail.image_message_url != 'None' %}
+                                    <a href="{% url 'view_sentmailimage' mail.id %}">
+                                        <img src="{{mail.image_message_url}}" style="width:auto; height:auto; max-width:300px; max-height:300px;">
+                                    </a>
+                                {% endif %}
+                            </center>
+                            <div style="width:100%; text-align:right; float:left; margin-bottom:8px; margin-top:8px;">
+                                <!--<a href="#" class="btn btn-info btn-lg" style="padding:3px 8px 3px 8px; font-size:14px; text-align:center;">-->
+                                    <!--<span class="glyphicon glyphicon-trash" style="padding-right:8px;"></span>Delete-->
+                                <!--</a>-->
+                                <a href="/deletebox/{{mail.id}}" class="btn btn-info btn-lg" style="padding:8px 12px 8px 12px; font-size:16px; text-align:center; margin-bottom:10%;" onclick="javascript:return confirm('Are you sure delete it?');">
+                                    <span class="glyphicon glyphicon-trash" style="padding-right:8px;"></span>Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+</form>
+
+<script>
+
+document.getElementById("date").innerHTML = getTime(parseInt(document.getElementById("date").innerHTML));
+function getTime(ms){
+    var date = new Date(ms);
+    var seconds = date.getSeconds();
+    var minutes = date.getMinutes();
+    var hours = date.getHours();
+
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1; // beware: January = 0; February = 1, etc.
+    var day = date.getDate();
+
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var timeStr = month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm;
+    return timeStr;
+}
+</script>
+
+<script>
+// Grab elements, create settings, etc.
+var video = document.getElementById('video');
+var dataurl;
+
+// Get access to the camera!
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        video.src = window.URL.createObjectURL(stream);
+        video.play();
+    });
+}
+
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+<!--var form = document.forms.namedItem("edit");-->
+
+// Trigger photo take
+document.getElementById("snap").addEventListener("click", function() {
+
+   <!--form.style.display="block";-->
+	context.drawImage(video, 0, 0, 320, 240);
+    document.getElementById("b64").value = canvas.toDataURL();
+
+    document.getElementById("output").src   = canvas.toDataURL();
+
+    dataurl = canvas.toDataURL();
+    document.getElementById("container").style.display = "none";
+
+    var blob = dataURLtoBlob(dataurl);
+   var fd = new FormData(form);
+   fd.append("photo", blob, "thumb.jpg");
+
+});
+
+$(document).ready(function(){
+   $('#webcam').click(function(){
+       document.getElementById("container").style.display = "block";
+    });
+})
+
+document.getElementById("cancel").addEventListener("click", function() {
+    document.getElementById("container").style.display = "none";
+});
+
+</script>
+
+<script>
+    function progressBar(){
+    	var subject = document.getElementById("subject").value;
+    	var body = document.getElementById("body").value;
+    	if (subject.length > 0 && body.length > 0){
+        	document.getElementById("gif").style.display = "block";
+        }else {
+            alert("Please fill in the blank fields ...");
+        }
+    }
+</script>
+
+<!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+<!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>-->
+
+<!--<script>-->
+    <!--$( function() {-->
+    <!--$( "#edit" ).draggable();-->
+    <!--$( "#container" ).draggable();-->
+  <!--} );-->
+<!--</script>-->
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

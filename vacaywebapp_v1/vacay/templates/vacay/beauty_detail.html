@@ -1,0 +1,246 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}{{service.proBeautySubCategory}}{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+      WebFont.load({
+      google: {
+      families: ["Lato:100,300,400,700,900","Karla:regular","Cookie:regular"]
+    }
+    });
+</script>
+<style>
+
+html, body{
+  background:url("/static/vacay/images/pattern.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+@font-face {
+  font-family: Futura;
+  src: url('.../FuturaStdLight.woff') format("WOFF");
+  font-weight: 300;
+}
+
+div h1 {
+  font-size: 25px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:center;
+  font-family: verdana;
+  <!--font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;-->
+  font-weight:500;
+}
+
+#form {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-bottom: 2% auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+  background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.3),rgba(100,50,250,0.5),rgba(100,50,250,0.6),rgba(100,50,250,0.5),rgba(50,100,250,0.0));
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#form:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+i {
+  color:red;
+}
+
+.contentform {
+  padding: 10px 10px 20px 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background:linear-gradient(90deg,rgba(100,50,250,0.0),rgb(0, 128, 43),rgb(0, 128, 43),rgb(0, 128, 43),rgba(50,100,250,0.0));
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom:3%;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.items {
+    color:white;
+    font-size:18px;
+    padding:8px 8px;
+    height:42px;
+}
+
+</style>
+
+<script>
+	<!--history.pushState(null, null, location.href);-->
+	<!--window.onpopstate = function () {-->
+        <!--history.go(1);-->
+    <!--};-->
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle; border-radius: 1px;
+	transform:translate(-50%, -50%); width:auto; z-index:100; top:120px; display: none;" id="gif">
+
+  <div id="form">
+	  {% csrf_token %}
+	    <h1>{{service.proBeautySubCategory}}</h1>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+            <div class="form-group">
+                <center>
+                    <div style="width:20%; float:left;">
+                        <center>
+                            <a href="https://vacayalldays.com/userloc?address={{service.providerAddress}}">
+                                <img src="{{service.providerPhotoUrl}}" style="width:100%; height:auto; border-radius:20px;">
+                            </a>
+                        </center>
+                    </div>
+                </center>
+                <div style="width:75%; float:left; padding-left:10px; padding-top:5px;  margin-left:5px; color:white; font-size:14px;">
+                    <label style="font-size:16px; font-weight:600;">{{service.providerFirstName}} {{service.providerLastName}}</label> <label style="float:right; margin-left:10px; color:white; background:orange; padding:2px 10px 2px 10px; border-radius:3px 30px 3px 30px;">{{service.providerCompany}}</label><br>
+                    {{service.providerEmail}}<br>
+                    <i class="fa fa-map-marker" style="font-size:16px; margin-right:5px; color:red;"></i>{{service.providerAddress}}<br>
+                    <center>
+                        <a href="/get_schedule/{{service.proid}}">
+                            <div style="width:auto; color:white; font-size:14px; padding:3px 12px; border:1px solid white; border-radius:20px; margin-top:5px;">Schedule</div>
+                        </a>
+                    </center>
+                </div>
+			</div>
+            <div class="form-group">
+                <center>
+                    <div style="width:100%; text-align:center;">
+                        <center>
+                            <img src="{{service.proServicePictureUrl}}" style="width:100%; height:auto; border-radius:5px;">
+                        </center>
+                    </div>
+                </center>
+			</div>
+            <div style="width:100%; text-align:right; float:left;">
+                <a href="/service_media/{{service.serviceid}}" class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center; background:green; border:1px solid white;">
+                    <span class="glyphicon glyphicon-facetime-video" style="padding-right:8px;"></span>Media
+                </a>
+                <a href="/get_products/{{service.proid}}" class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center; margin-left:10px; background:green; border:1px solid white;">
+                    <span class="glyphicon glyphicon-shopping-cart" style="padding-right:8px;"></span>Buy Products
+                </a>
+            </div><br><br>
+			<div class="form-group" style="margin-top:10px;">
+                <div style="width:100%;">
+                    <div id="category" class="items" style="float:left; width:auto; text-align:center; white; font-weight:600;
+                        font-family: 'Satisfy', Apple Chancery, cursive; font-size:22px;">{{service.proBeautyCategory}}</div>
+                    <div id="price" style="width:auto; text-align:center; display:inline-block; float:right; font-size:16px; padding:3px 20px 3px 20px; color:white;
+                        font-weight:600; border-radius:50px 5px 50px 5px; border:1px solid white;">{% if '$' in service.proServicePrice %}{{service.proServicePrice}}{% else%}$ {{service.proServicePrice}}{% endif %}</div>
+                </div>
+			</div>
+            <div style="padding:8px; color: #fff; font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+                      font-weight:300; font-size:18px; width:100%; margin-top:5px;  border-radius:5px; border:1px solid #fff;" id="desc">
+                {{service.proServiceDescription}}
+            </div>
+            <div class="form-group" style="margin-top:15%;">
+                <a href="/brequest/{{service.serviceid}}">
+                    <button type="submit" class="bouton-update">Accept & Request</button>
+                </a>
+			</div>
+	    </div>
+
+	</div>
+
+  </div>
+
+<script>
+    function show_alert(){
+        document.getElementById("alert").style.display = "block";
+    }
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

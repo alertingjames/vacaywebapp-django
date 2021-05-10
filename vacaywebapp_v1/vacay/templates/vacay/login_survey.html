@@ -1,0 +1,378 @@
+{% extends 'vacay/base.html' %}
+{% block title %}Login Survey{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+      WebFont.load({
+      google: {
+      families: ["Lato:100,300,400,700,900","Karla:regular","Cookie:regular"]
+    }
+    });
+</script>
+<style>
+
+html, body{
+  background: url("/static/vacay/images/folk.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+form h1 {
+  font-size: 25px;
+  color: rgb(255, 255, 255);
+  padding: 8px 12px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  font-weight:600;
+  text-shadow: none;
+  text-align:middle;
+  font-family: verdana;
+}
+
+form h2 {
+  font-size: 22px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:middle;
+  font-family: verdana;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:600px;
+  width:auto;
+  height:auto;
+  margin-bottom:auto%;
+  margin-left:auto;
+  margin-right:auto;
+  background:linear-gradient(0deg,rgba(255,255,255,0.0), rgba(255,255,255,0.3), rgba(255,255,255,0.3), rgba(255,255,255,0.3), rgba(255,255,255,0.3), rgba(255,255,255,0.0));
+  opacity:0.9;
+  overflow: hidden;
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:0px;
+}
+h2 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:0px
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:blue;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.contentform {
+  padding-bottom:20px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background-color: #009933;
+  color: #FFF;
+  text-align: center;
+  width: 95%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom:5%;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  box-sizing: border-box;
+}
+
+.checkbox {
+    position: relative;
+    display: block;
+    width: auto;
+    color:white;
+    margin-top:10px;
+    background:#52527a;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+input[type="checkbox"] {
+    width: auto;
+    opacity: 0.00000001;
+    position: absolute;
+    left: 0;
+    margin-left: -20px;
+}
+.helper {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    user-select: none;
+    color: #ffffff;
+}
+.helper:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 4px;
+    width: 22px;
+    height: 22px;
+    transition: transform 0.28s ease;
+    border-radius: 3px;
+    border: 2px solid #ffffff;
+}
+.helper:after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 5px;
+    border-bottom: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    -webkit-transform: rotate(-45deg) scale(0);
+    -moz-transform: rotate(-45deg) scale(0);
+    -ms-transform: rotate(-45deg) scale(0);
+    transform: rotate(-45deg) scale(0);
+    position: absolute;
+    top: 12px;
+    left: 10px;
+}
+input[type="checkbox"]:checked ~ .helper::before {
+    color: #ffffff;
+}
+
+input[type="checkbox"]:checked ~ .helper::after {
+    -webkit-transform: rotate(-45deg) scale(1);
+    -moz-transform: rotate(-45deg) scale(1);
+    -ms-transform: rotate(-45deg) scale(1);
+    transform: rotate(-45deg) scale(1);
+}
+
+.checkbox label {
+    min-height: 24px;
+    padding-left: 35px;
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+    font-size:18px;
+    vertical-align: sub;
+}
+input[type="checkbox"]:focus + label::before {
+    outline: rgb(59, 153, 252) auto 5px;
+}
+
+#frame {
+    background:linear-gradient(0deg,rgba(255,255,255,0.0),rgba(255,255,255,0.6),rgba(255,255,255,0.6),rgba(255,255,255,0.6),rgba(255,255,255,0.6),rgba(255,255,255,0.6));
+    padding:10px;
+    margin:5px;
+    border-radius:10px;
+    margin-top:30px;
+}
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% if note %}
+<script>alert("Please click on any boxes to apply");</script>
+{% endif %}
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle;
+	transform:translate(-50%, -50%); width:80px; z-index:100; top:120px; display: none;" id="gif">
+
+  <form id="edit" action="/to_update_profile" method="post" enctype="multipart/form-data">
+	  {% csrf_token %}
+      <center>
+          <h2>Why are you joining VaCay?</h2>
+          <div style="font-size:16px; color:white;">
+              (Click on any boxes to apply)
+          </div>
+      </center>
+
+    <div class="contentform">
+        <input type="hidden" id="s1" name="s1" value="">
+        <input type="hidden" id="s2" name="s2" value="">
+        <input type="hidden" id="s3" name="s3" value="">
+        <input type="hidden" id="s4" name="s4" value="">
+        <input type="hidden" id="s5" name="s5" value="">
+        <input type="hidden" name="registered" value="{% if registered == 'true' %}true{% else %}false{% endif %}">
+		<div class="formcontent">
+            <div class="form-group" style="width:auto; margin-bottom:20px;">
+				<div id="frame">
+                    <div class="checkbox" style="margin-top:0; border-radius:10px; border:1px solid white; padding:20px;">
+                        <label>
+                            <input type="checkbox" name="surv1" value="surv1" id="surv1" onchange="checkevent();">
+                            <i class="helper" style="margin:20px 20px 20px 10px;"></i>I am looking to date someone.
+                        </label>
+                    </div>
+                    <br>
+                    <div class="checkbox" style="margin-top:0; border-radius:10px; border:1px solid white; padding:20px;">
+                        <label>
+                            <input type="checkbox" name="surv2" value="surv2" id="surv2" onchange="checkevent2();">
+                            <i class="helper" style="margin:20px 20px 20px 10px;"></i>I want to make new friends.
+                        </label>
+                    </div><br>
+                    <div class="checkbox" style="margin-top:0; border-radius:10px; border:1px solid white; padding:20px;">
+                        <label>
+                            <input type="checkbox" name="surv3" value="surv3" id="surv3" onchange="checkevent3();">
+                            <i class="helper" style="margin:20px 20px 20px 10px;"></i>I want to make friends that want to go to cool restaurants.
+                        </label>
+                    </div><br>
+                        <div class="checkbox" style="margin-top:0; border-radius:10px; border:1px solid white; padding:20px;">
+                        <label>
+                            <input type="checkbox" name="surv4" value="surv4" id="surv4" onchange="checkevent4();">
+                            <i class="helper" style="margin:20px 20px 20px 10px;"></i>I want to make friends that'll do the same activities as me.
+                        </label>
+                    </div><br>
+                    <div class="checkbox" style="margin-top:0; border-radius:10px; border:1px solid white; padding:20px;" hidden>
+                        <label>
+                            <input type="checkbox" name="surv5" value="surv5" id="surv5" onchange="checkevent5();">
+                            <i class="helper" style="margin:30px 20px 0px 10px;"></i>I'm busy and want my pampering to come to me or my hotel.
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" style="text-align:center; margin-top:6%;">
+				<button type="submit" class="bouton-update" onclick="progressBar()">OK</button>
+                {% if registered == 'true' %}
+                    <a href="/home">
+                        <div style="color:white; font-size:16px; text-decoration: underline; margin-bottom:5%; float:right; margin-right:20px;">Skip updating profile</div>
+                    </a>
+                {% endif %}
+			</div>
+	    </div>
+	</div>
+
+</form>
+
+<script>
+
+// document.body.scrollTop = document.body.scrollHeight;
+
+var a = document.getElementById("surv1");
+var b = document.getElementById("surv2");
+var c = document.getElementById("surv3");
+var d = document.getElementById("surv4");
+var e = document.getElementById("surv5");
+
+var aa = document.getElementById("s1");
+var bb = document.getElementById("s2");
+var cc = document.getElementById("s3");
+var dd = document.getElementById("s4");
+var ee = document.getElementById("s5");
+
+function checkevent(){
+    if (a.checked){
+        aa.value = "I am looking to date someone." ;
+    }else {
+        aa.value = "" ;
+    }
+}
+
+function checkevent2(){
+    if (b.checked){
+        bb.value = "I want to make new friends." ;
+    }else {
+        bb.value = "" ;
+    }
+}
+
+function checkevent3(){
+    if (c.checked){
+        cc.value = "I want to make friends that want to go to cool restaurants." ;
+    }else {
+        cc.value = "" ;
+    }
+}
+
+function checkevent4(){
+    if (d.checked){
+        dd.value = "I want to make friends that'll do the same activities as me." ;
+    }else {
+        dd.value = "" ;
+    }
+}
+
+function checkevent5(){
+    if (e.checked){
+        ee.value = "I'm busy and want my pampering to come to me or my hotel." ;
+    }else {
+        ee.value = "" ;
+    }
+}
+</script>
+
+<script>
+    function progressBar(){
+        if (aa.value.length > 0 || bb.value.length > 0 || cc.value.length > 0 || dd.value.length > 0 || ee.value.length >0)
+            document.getElementById("gif").style.display = "block";
+        else alert("Please click on any boxes to apply");
+    }
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

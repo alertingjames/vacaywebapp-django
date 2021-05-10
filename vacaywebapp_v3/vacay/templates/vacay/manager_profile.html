@@ -1,0 +1,378 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}My Profile{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<style>
+
+html, body{
+  background: url("/static/vacay/images/homebg.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+img {
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+}
+
+.info p {
+  text-align:center;
+  color: #999;
+  text-transform:none;
+  font-weight:600;
+  font-size:15px;
+  margin-top:2px
+}
+
+.info i {
+  color:#F6AA93;
+}
+form h1 {
+  font-size: 22px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:middle;
+  font-family: verdana;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-bottom: auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+  background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.3),rgba(100,50,250,0.3),rgba(100,50,250,0.4),rgba(100,50,250,0.4),rgba(100,50,250,0.3),rgba(50,100,250,0.0));
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#edit:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+  text-align:left;
+}
+
+select {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.gif-case{
+    margin-left:40px;margin-top:30px; max-width:356px; width:auto; height:auto; background: white url("/static/vacay/images/homebg.jpg");
+    background-size:100%,100%; border-radius: 2%; padding:53px;
+    background-size:cover;
+}
+
+.gif-case:hover {
+  background-image: url("/static/vacay/images/chicagoimage.jpg");
+  background-size:100%,100%;
+  background-size:cover;
+}
+
+textarea {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #EEE;
+  margin: 0;
+  width: 75%;
+  height: 130px;
+  float: left;
+  padding: 15px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 50px 0px 0px 50px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 30px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+
+  margin-bottom:10%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.validation {
+  display:none;
+  margin: 0 0 10px;
+  font-weight:400;
+  font-size:13px;
+  color: #DE5959;
+}
+
+#sendmessage {
+  border:1px solid #fff;
+  display:none;
+  text-align:center;
+  margin:10px 0;
+  font-weight:600;
+  margin-bottom:30px;
+  background-color: #EBF6E0;
+  color: #5F9025;
+  border: 1px solid #B3DC82;
+  padding: 13px 40px 13px 18px;
+  border-radius: 3px;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.03);
+}
+
+#sendmessage.show,.show  {
+  display:block;
+}
+
+th {color:white;}
+
+td {text-align:middle;}
+
+#container {
+    top:400px;
+    width: 480px;
+    height: 360px;
+    position:fixed;
+    z-index:100;
+    left:50%;
+    display:none;
+    transform:translate(-50%, -50%);
+    border: 10px #333 solid;
+}
+
+label.cameraButton {
+  display: inline-block;
+  /* Styles to make it look like a button */
+  padding-top: 0.6em;
+  padding-bottom: 0.3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border: 2px solid #666;
+  border-color: #EEE #CCC #CCC #EEE;
+  border-radius:50px 50px 50px 50px;
+  font-size:16px;
+  color:white;
+  width:50%;
+  height:45px;
+  text-align:middle;
+  background-color: green;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #CCC #EEE #EEE #CCC;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="image"] {
+  display: none;
+}
+
+#city {
+  border-radius: 0px 0px 0px 0px;
+  border: 1px solid #eee;
+  width: 78%;
+  height: 42px;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+#map {
+  border-radius: 0px 0px 0px 0px;
+  border: 0px solid #eee;
+  width: 12%;
+  height: 42px;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+  background-image: url(/static/vacay/images/loc.png); /* 16px x 16px */
+  background-color: transparent; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position: 0px 0px;  /*
+}
+
+label input {
+  display: none;/* <-- hide the default checkbox */
+}
+label span {/* <-- style the artificial checkbox */
+  height: 25px;
+  width: 25px;
+  margin-right:20px;
+  border: 1px solid white;
+  display: inline-block;
+  position: relative;
+}
+[type=checkbox]:checked + span:before {/* <-- style its checked state..with a ticked icon */
+  content: '\2714';
+  position: absolute;
+  top: 0px;
+  left: 5px;
+}
+
+#checkbox-panel {
+    padding-top:10px;
+    background:linear-gradient(90deg, rgba(0, 255, 0, 0.0),rgba(153, 102, 0, 0.8), rgba(0, 255, 0, 0.0));
+}
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+  <form id="edit" action="#" method="post" enctype="multipart/form-data">
+	  {% csrf_token %}
+	    <h1>My Profile</h1>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+            <div class="form-group" style="margin-bottom:20px;">
+				<center>
+                    <img src="{{me.adminImageUrl}}" style="max-width:160px; width:auto; height:auto; max-height:200px;
+				 margin-top:10px; margin-bottom:10px; border-radius: 5%;" id="output">
+                </center>
+                <center>
+                    <div style="font-size:22px; font-weight:600; color:white;">{{me.adminName}}</div><br>
+                    <div style="font-size:18px; color:white;">{{me.adminEmail}}</div>
+                </center>
+            </div>
+            {% if me.adminCompany %}
+            <div class="form-group">
+                <p>Company <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-building"></i></span>
+                <input type="text" name="company" data-rule="required" data-msg="" required id="company" value="{{me.proCompany}}" readonly/>
+                <div class="validation"></div>
+			</div>
+            {% endif %}
+            <div class="form-group">
+                <p>Password <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-lock"></i></span>
+                <input type="text" name="password" data-rule="required" data-msg="" required id="password" value="{{me.adminPassword}}" readonly/>
+                <div class="validation"></div>
+			</div>
+            {% if me.adminLogoImageUrl %}
+            <div class="form-group">
+                <p>Logo <span>*</span></p>
+                <span class="icon-case"><i class="fa fa-fire"></i></span>
+                <center>
+                    <img src="{{me.adminLogoImageUrl}}" style="width:100px: height:auto; border-radius:20px; border:1.5px solid yellow;">
+                </center>
+			</div>
+            {% endif %}
+
+            <div class="gif-case">
+                <iframe src="https://www.youtube.com/embed/{% if me.adminBroadmoor == '0' %}pEV_1Ll2LcM{% elif me.adminBroadmoor == '1' %}rYwAQ-tboz0{% elif me.adminBroadmoor == '2' %}i2jtcdD16Kc{% endif %}?autoplay=1" autobuffer width="250" height="200" style="border-radius: 1.5%;" frameborder="10" allowfullscreen></iframe>
+            </div>
+
+	    </div>
+
+	</div>
+
+  </form>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,451 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}VaCay Jobs{% endblock %}
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta charset="utf-8">
+<meta content="stuff, to, help, search, engines, not" name="keywords">
+<meta content="What this page is about." name="description">
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+      WebFont.load({
+      google: {
+      families: ["Lato:100,300,400,700,900","Karla:regular","Cookie:regular"]
+    }
+    });
+</script>
+
+<style>
+
+html, body{
+  background: linear-gradient(0deg,rgba(20,150,250,0.3),rgba(0,100,250,0.3)), url("/static/vacay/images/homebg.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 10px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+#myBtn:hover {
+  background-color: blue;
+}
+#admin{
+    display:none;
+}
+
+h1 {
+  font-size: 21px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  text-shadow: none;
+  text-align:center;
+  color: #666;
+}
+
+.form {
+  border-radius: 10px;
+  max-width:550px;
+  width:100%;
+  margin:auto;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.contentform {
+  padding: 0px;
+}
+
+div.home-large-btn {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-color: #EEE #CCC #CCC #EEE;
+  background-color: white;
+  text-align: center;
+  width: 100%;
+  height:230px;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.btn-text {
+    position: absolute;
+    top: 80%;
+    left: 60%;
+    width:100%;
+    font-size:25px;
+    color:white;
+    font-weight:800;
+    transform: translate(-50%, -50%);
+    text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7);
+}
+
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div id="title" style="font-size:25px; font-weight:800; color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center;
+	position:fixed; left:50%; float:middle; transform:translate(-50%, -50%); width:350px; z-index:100; top:80px; display:none;">WHAT DO YOU WANT TO DO?</div>
+
+<img src="/static/vacay/images/vacaylogo.jpg" style="position:relative; width:60px; height:60px; border-radius:50%; border:2px solid yellow; z-index:100; left:3%;">
+
+<div style="width:100%; height:84%;">
+    <div style="font-size:25px; font-weight:800; margin-bottom:30px;
+        color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center; width:100%;">WHAT DO YOU WANT TO DO?</div>
+    <div class="container-fluid" style="margin-top:5%;">
+        <div class="row">
+            <div class="col-sm-3" style="padding-bottom:15px;">
+                <div class="form">
+                <!--<input type="hidden" id="user_id" value="{{user_id}}">-->
+                    <div class="contentform">
+                        <div class="form-group">
+                            <div class="home-large-btn" onclick="run();">
+                                <center>
+                                    <img src="/static/vacay/images/running.jpg" style="width:100%; height:100%; border-radius:8px;">
+                                    <div class="btn-text">RUN</div>
+                                    <img src="/static/vacay/images/runbutton.png" style="width:80px; height:auto; position:absolute; top:10px; left:10px;">
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3" style="padding-bottom:15px;">
+                <div class="form">
+                <!--<input type="hidden" id="user_id" value="{{user_id}}">-->
+                    <div class="contentform">
+                        <div class="form-group">
+                            <div class="home-large-btn" onclick="golf();">
+                                <center>
+                                    <img src="/static/vacay/images/golfmatching.jpg" style="width:100%; height:100%; border-radius:8px;">
+                                    <div class="btn-text">GOLF</div>
+                                    <img src="/static/vacay/images/golfbutton.png" style="width:80px; height:auto; position:absolute; top:10px; right:10px;">
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3" style="padding-bottom:15px;">
+                <div class="form">
+                <!--<input type="hidden" id="user_id" value="{{user_id}}">-->
+                    <div class="contentform">
+                        <div class="form-group">
+                            <div class="home-large-btn" onclick="tennis();">
+                                <center>
+                                    <img src="/static/vacay/images/tennismatch.jpg" style="width:100%; height:100%; border-radius:8px;">
+                                    <div class="btn-text">TENNIS</div>
+                                    <img src="/static/vacay/images/tennisbutton.png" style="width:80px; height:auto; position:absolute; top:10px; right:10px;">
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3" style="padding-bottom:15px;">
+                <div class="form">
+                <!--<input type="hidden" id="user_id" value="{{user_id}}">-->
+                    <div class="contentform">
+                        <div class="form-group">
+                            <div class="home-large-btn" onclick="ski();">
+                                <center>
+                                    <img src="/static/vacay/images/skiings.jpg" style="width:100%; height:100%; border-radius:8px;">
+                                    <div class="btn-text">SKI & SNOWBOARD</div>
+                                    <img src="/static/vacay/images/skibutton.jpg" style="width:80px; height:auto; position:absolute; top:10px; left:10px;">
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3" style="padding-bottom:15px;">
+                <div class="form">
+                <!--<input type="hidden" id="user_id" value="{{user_id}}">-->
+                    <div class="contentform">
+                        <div class="form-group">
+                            <div class="home-large-btn" onclick="biking();">
+                                <center>
+                                    <img src="/static/vacay/images/bikingimage.jpg" style="width:100%; height:100%; border-radius:8px;">
+                                    <div class="btn-text">BIKING</div>
+                                    <img src="/static/vacay/images/bikingicon2.png" style="width:80px; height:auto; position:absolute; top:10px; right:10px;">
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3" style="padding-bottom:15px;">
+                <div class="form">
+                <!--<input type="hidden" id="user_id" value="{{user_id}}">-->
+                    <div class="contentform">
+                        <div class="form-group">
+                            <div class="home-large-btn" onclick="fishing();">
+                                <center>
+                                    <img src="/static/vacay/images/fishingimage.jpg" style="width:100%; height:100%; border-radius:8px;">
+                                    <div class="btn-text">FISHING</div>
+                                    <img src="/static/vacay/images/fishingicon2.png" style="width:80px; height:auto; position:absolute; top:10px; left:10px;">
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3" style="padding-bottom:15px;">
+                <div class="form">
+                <!--<input type="hidden" id="user_id" value="{{user_id}}">-->
+                    <div class="contentform">
+                        <div class="form-group">
+                            <div class="home-large-btn" onclick="surfing();">
+                                <center>
+                                    <img src="/static/vacay/images/surfingimage.jpg" style="width:100%; height:100%; border-radius:8px;">
+                                    <div class="btn-text" style="left:50%;">SURFING/KITESURFING</div>
+                                    <img src="/static/vacay/images/kitesurfingicon.png" style="width:80px; height:auto; position:absolute; top:10px; left:10px;">
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3" style="padding-bottom:15px;">
+                <div class="form">
+                <!--<input type="hidden" id="user_id" value="{{user_id}}">-->
+                    <div class="contentform">
+                        <div class="form-group">
+                            <div class="home-large-btn" onclick="exploring();">
+                                <center>
+                                    <img src="/static/vacay/images/exploringimage.jpg" style="width:100%; height:100%; border-radius:8px;">
+                                    <div class="btn-text">EXPLORING</div>
+                                    <img src="/static/vacay/images/exploringicon2.png" style="width:100px; height:auto; position:absolute; top:10px; left:10px;">
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="lat">
+<input type="hidden" id="lng">
+<input type="hidden" id="city">
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        document.getElementById("myBtn").style.display = "block";
+        document.getElementById("title").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+        document.getElementById("title").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+
+<script>
+    var lat = document.getElementById("city");
+    var lng = document.getElementById("lat");
+    var city = document.getElementById("lng");
+    var param = '';
+    function run(){
+        param = {'lat':lat.value, 'lng':lng.value, 'city':city.value, 'activity':'Running'};
+        post('/actmenu', param);
+    }
+    function tennis(){
+        param = {'lat':lat.value, 'lng':lng.value, 'city':city.value, 'activity':'Tennis'};
+        post('/actmenu', param);
+    }
+    function golf(){
+        param = {'lat':lat.value, 'lng':lng.value, 'city':city.value, 'activity':'Golf'};
+        post('/actmenu', param);
+    }
+    function ski(){
+        param = {'lat':lat.value, 'lng':lng.value, 'city':city.value, 'activity':'Skiing'};
+        post('/actmenu', param);
+    }
+    function biking(){
+        param = {'lat':lat.value, 'lng':lng.value, 'city':city.value, 'activity':'Biking'};
+        post('/actmenu', param);
+    }
+    function fishing(){
+        param = {'lat':lat.value, 'lng':lng.value, 'city':city.value, 'activity':'Fishing'};
+        post('/actmenu', param);
+    }
+    function surfing(){
+        param = {'lat':lat.value, 'lng':lng.value, 'city':city.value, 'activity':'Surfing/Kitesurfing'};
+        post('/actmenu', param);
+    }
+    function exploring(){
+        param = {'lat':lat.value, 'lng':lng.value, 'city':city.value, 'activity':'Exploring'};
+        post('/actmenu', param);
+    }
+
+    function post(path, params, method) {
+        method = method || "post"; // Set method to post by default if not specified.
+
+        // The rest of this code assumes you are not using a library.
+        // It can be made less wordy if you use one.
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for(var key in params) {
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js"></script>
+<script>
+
+var geocoder;
+var map;
+var marker;
+var infowindow;
+var addr;
+var latLng;
+
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (p) {
+        geocoder = new google.maps.Geocoder();
+        latLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+        if (geocoder){
+            codeLatLng(p.coords.latitude, p.coords.longitude);
+        }
+    });
+} else {
+    alert('Geo Location feature is not supported in this browser.');
+}
+
+function codeLatLng(lat, lng) {
+    var latlng = new google.maps.LatLng(lat, lng);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        if (results[1]) {
+        //    alert(results[0].formatted_address);
+            for (var i=0; i<results[0].address_components.length; i++) {
+                for (var b=0;b<results[0].address_components[i].types.length;b++) {
+                    if (results[0].address_components[i].types[b] == "administrative_area_level_1") {
+
+                        city= results[0].address_components[i];
+                        break;
+                    }
+                }
+            }
+    //        alert(city.long_name);
+            document.getElementById('city').value = city.long_name;
+            document.getElementById('lat').value = lat;
+            document.getElementById('lng').value = lng;
+
+        } else {
+          alert("No results found");
+          document.getElementById('city').value = '';
+          document.getElementById('lat').value = '';
+          document.getElementById('lng').value = '';
+        }
+      } else {
+        alert("Geocoder failed due to: " + status);
+        document.getElementById('city').value = '';
+        document.getElementById('lat').value = '';
+        document.getElementById('lng').value = '';
+      }
+  });
+}
+
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDd_XMkq9RDkn5OSUFzebyGEKcnjfzNzaQ&libraries=places&callback=initAutocomplete" async defer></script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

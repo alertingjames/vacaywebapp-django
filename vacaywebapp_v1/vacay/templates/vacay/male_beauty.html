@@ -1,0 +1,335 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Men's Beauty!{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+      WebFont.load({
+      google: {
+      families: ["Lato:100,300,400,700,900","Karla:regular","Cookie:regular"]
+    }
+    });
+</script>
+<style>
+
+html, body{
+  background:linear-gradient(0deg,rgba(20,150,250,0.3),rgba(0,100,250,0.3)), url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+@font-face {
+  font-family: Futura;
+  src: url('.../FuturaStdLight.woff') format("WOFF");
+  font-weight: 300;
+}
+
+form h1 {
+  font-size: 30px;
+  color: #fff;
+  text-shadow: 2px 2px 0px rgba(153, 115, 0, 0.7);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-align:center;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+  font-weight:600;
+}
+
+#form {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-bottom: 2% auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+  padding-bottom: 20px;
+  background:linear-gradient(0deg,rgba(0, 179, 179,0.0),rgba(0, 102, 102,0.8),rgba(0, 102, 102,0.8),rgba(0, 102, 102,0.5),rgba(0, 102, 102,0.8),rgba(0, 102, 102,0.8),rgba(0, 102, 102,0.8),rgba(0, 102, 102,0.2),rgba(0, 179, 179,0.0));
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#form:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: rgb(241, 177, 14);
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 50px 0px 0px 50px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 8px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom:3%;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+div.home-btn {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-color: #EEE #CCC #CCC #EEE;
+  font-size:12px;
+  color:rgb(0, 153, 153);
+  font-weight:700;
+  background:linear-gradient(30deg,rgba(255, 230, 255,0.7),rgba(204, 238, 255,0.7));
+  text-align: center;
+  width: 32%;
+  height:70px;
+  padding: 10px 15px;
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+}
+
+div.home-large-btn {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-color: #EEE #CCC #CCC #EEE;
+  background-color: white;
+  text-align: center;
+  width: 49%;
+  height:200px;
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.btn-text {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    width:100%;
+    font-size:30px;
+    color:white;
+    font-weight:350;
+    transform: translate(-50%, -50%);
+    font-family: Cookie;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #CCC #EEE #EEE #CCC;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="image"] {
+  display: none;
+}
+
+</style>
+
+<script>
+	<!--history.pushState(null, null, location.href);-->
+	<!--window.onpopstate = function () {-->
+        <!--history.go(1);-->
+    <!--};-->
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle; border-radius: 1px;
+	transform:translate(-50%, -50%); width:auto; z-index:100; top:120px; display: none;" id="gif">
+
+  <form id="form">
+	  {% csrf_token %}
+	    <h1>BEAUTY TO YOU!</h1>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+			<div class="form-group">
+                <center>
+                    <div style="width:100%; text-align:center; max-height:220px;">
+                        <div class="home-large-btn" id="haircut" onclick="mhaircut()">
+                            <center>
+                                <img src="/static/vacay/images/haircuts.png" style="width:100%; height:100%; border-radius:8px;">
+                            </center>
+                        </div>
+                        <div class="home-large-btn" id="hotshave" onclick="mhotshave()">
+                            <center>
+                                <img src="/static/vacay/images/hot_shave.png" style="width:100%; height:100%; border-radius:8px;">
+                            </center>
+                        </div>
+                    </div>
+                    <div style="width:100%; text-align:center; margin-top:5px;">
+                        <div class="home-large-btn" id="facial" onclick="mfacial()">
+                            <center>
+                                <img src="/static/vacay/images/facials.png" style="width:100%; height:100%; border-radius:8px;">
+                            </center>
+                        </div>
+                        <div class="home-large-btn" id="massage" onclick="mmassage()">
+                            <center>
+                                <img src="/static/vacay/images/massages.png" style="width:100%; height:100%; border-radius:8px;"><br>
+                            </center>
+                        </div>
+                    </div>
+                    <div style="width:100%; text-align:center; margin-top:5px;">
+                        <div class="home-large-btn" id="wax" onclick="mwax()">
+                            <center>
+                                <img src="/static/vacay/images/waxs.png" style="width:100%; height:100%; border-radius:8px;">
+                            </center>
+                        </div>
+                        <div class="home-large-btn" id="manicure" onclick="mmanicure()">
+                            <center>
+                                <img src="/static/vacay/images/manicure_pedicure.png" style="width:100%; height:100%; border-radius:8px;"><br>
+                            </center>
+                        </div>
+                    </div>
+                </center>
+			</div>
+	    </div>
+
+	</div>
+
+  </form>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC1e8-93-ia4seBJlMR7_BPt-pxnWGrgNA",
+    databaseURL: "https://vacay-42bcd.firebaseio.com",
+    projectId: "vacay-42bcd",
+    storageBucket: "vacay-42bcd.appspot.com"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script src="/static/vacay/noti_alert.js"></script>
+
+<script>
+    function mhaircut(){
+        window.location.href = "https://vacayalldays.com/beauty?category=mhaircut";
+    }
+    function mhotshave(){
+        window.location.href = "https://vacayalldays.com/beauty?category=mhotshave";
+    }
+    function mmanicure(){
+        window.location.href = "https://vacayalldays.com/beauty?category=mmanicure";
+    }
+    function mmassage(){
+        window.location.href = "https://vacayalldays.com/beauty?category=mmassage";
+    }
+    function mwax(){
+		window.location.href = "https://vacayalldays.com/beauty?category=mwax";
+	}
+	function mfacial(){
+		window.location.href = "https://vacayalldays.com/beauty?category=mfacial";
+	}
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,339 @@
+{% extends 'vacay/base_inbox.html' %}
+{% block title %}My Friends{% endblock %}
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta charset="utf-8">
+<meta content="stuff, to, help, search, engines, not" name="keywords">
+<meta content="What this page is about." name="description">
+<style>
+
+html, body{
+  background: linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.2),rgba(100,50,250,0.2),rgba(100,50,250,0.0)),
+    url("/static/vacay/images/datingbg.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 10px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+#myBtn:hover {
+  background-color: blue;
+}
+#admin{
+    display:none;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:550px;
+  width:auto;
+  max-height:250px;
+  margin:auto;
+  background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.3),rgba(100,50,250,0.3),rgba(100,50,250,0.4),rgba(100,50,250,0.4),rgba(50,100,250,0.2));
+  background-size:cover;
+  overflow: hidden;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+#edit:hover {
+  background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.4),rgba(100,50,250,0.4),rgba(100,50,250,0.4),rgba(100,50,250,0.4),rgba(50,100,250,0.3));
+  background-size:cover;
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 200;
+  line-height: 2;
+  color:#fff;
+}
+
+form h1 {
+  font-size: 21px;
+  background: #327a81 none repeat scroll 0% 0%;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:left
+}
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.contentform {
+  padding: 10px;
+}
+
+#style::-webkit-scrollbar-track
+   {
+	   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.0);
+	   background: transparent;
+   }
+
+#style::-webkit-scrollbar
+  {
+	  width: 5px;
+	  background: transparent;
+  }
+
+#style::-webkit-scrollbar-thumb
+  {
+	  background: red;
+	  border-radius:10px;
+}
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--<meta name="mobile-web-app-capable" content="yes">-->
+<!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+
+<!--<script>-->
+  <!--function launchFullScreen(element) {-->
+  <!--if(element.requestFullScreen) {-->
+    <!--element.requestFullScreen();-->
+  <!--} else if(element.mozRequestFullScreen) {-->
+    <!--element.mozRequestFullScreen();-->
+  <!--} else if(element.webkitRequestFullScreen) {-->
+    <!--element.webkitRequestFullScreen();-->
+  <!--}-->
+<!--}-->
+
+<!--// Launch fullscreen for browsers that support it!-->
+<!--launchFullScreen(document.documentElement); // the whole page-->
+<!--</script>-->
+
+<a href="javascript:void(0);" onclick="javascript:document.getElementById('userlist').style.display='block';">
+    <div style="background:blue; padding:3px 15px; box-shadow:0 0 20px rgba(0, 0, 0, 0.9); color: white; font-size:16px; font-weight:600;
+                        right:20px; position:fixed; border-radius:50px 8px 50px 8px; float:right; width:auto; height:auto; top:100px; z-index:200;">Contactors</div>
+</a>
+
+<div id="title" style="font-size:25px; font-weight:800; color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center;
+	position:fixed; left:50%; float:middle; transform:translate(-50%, -50%); width:350px; z-index:100; top:92px; display:none;">MY FRIENDS</div>
+
+<div id="imageFrame" style="text-align:center; box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.6);
+	position:fixed; left:50%; float:middle; background-color:white; border-radius:10px; padding: 10px;
+	transform:translate(-50%, -50%); width:auto; height:auto; z-index:200; top:400px; display:none;">
+    <img src="/static/vacay/images/cancel.png" style="width:30px; height:30px; float:right;" onclick="javascript:document.getElementById('imageFrame').style.display='none';"><br>
+	<img src="" style="width:350px; height:350px;" id="image">
+</div>
+
+<img src="/static/vacay/images/vacaylogo.jpg" style="position:relative; width:60px; height:60px; border-radius:50%; border:2px solid yellow; z-index:100; left:3%;">
+
+<form id="userlist" action="javascript:void(0);" method="post" style="font-size:16px; font-weight:300; color: black; box-shadow: 0px 0px 100px rgba(0, 0, 0, 1.0);
+	position:fixed; left:50%; float:middle; background-color:white; border-radius:10px; padding: 8px 15px 15px 15px;
+	transform:translate(-50%, -50%); max-width:600px; width:auto; min-width:340px; z-index:1000; top:330px; display:none;">
+    {% csrf_token %}
+    <img src="/static/vacay/images/cancel.png" style="width:25px; height:25px; float:right; margin-top:5px;" onclick="javascript:document.getElementById('userlist').style.display='none';">
+    <div style="font-size:20px; font-weight:500; margin-top:10px;"><i class="fa fa-handshake-o" style="font-size:22px; color:green; padding-right:10px;"></i>Contactors</div>
+	<div style="width:100%; text-align:center;">
+        {% if contactors %}
+        <div style="margin-top:5px; margin-bottom:5px; width:100%;">
+            <i class="fa fa-search" style="font-size:25px; float:left; color:black;"></i>
+            <input type="text" placeholder="Search..." style="float:left; margin-left:10px; width:80%; padding:5px 10px;" id="search" onkeyup="filter()">
+        </div>
+        <div style="display:inline-block; height:350px; overflow-y:auto; width:100%;" id="style">
+            <ul id="list" class="contentform">
+                {% for user in contactors %}
+                    <li class="form-group">
+                        <div style="width:100%; text-align:left; color: black; font-family: verdana; font-size: 120%; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">
+                            <img src="{{user.photo}}" style="float:left; width:60px; border-radius:50%; margin-right:10px;"><div id="name" style="float:left; margin-top:5px;">{{user.name}}<br>{{user.email}}</div>
+                        </div>
+                        <div style="width:100%; text-align:right; margin-bottom:5px;">
+                            <a href="{% url 'inboxcontactor' user.id %}" class="btn btn-info btn-lg" style="padding:5px 10px 5px 10px; font-size:14px; text-align:center; background:green; border:1px solid #eee;">
+                                <span class="glyphicon glyphicon-envelope" style="padding-right:10px;"></span>Mail
+                            </a>
+                        </div>
+                        <div style="background: #04a2be; width:100%; height:2px;"></div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <center><div id="nofriend" style="color:red; margin:30px;">No contactor...</div></center>
+        {% endif %}
+    </div>
+</form>
+
+<script>
+    var list = document.getElementById("list");
+    var lis = list.querySelectorAll( "#style > ul > li" );
+    var users = [];
+    var users2 = [];
+    for(var i=0; i<lis.length; i++){
+       users.push(lis[i]);
+       users2.push(lis[i]);
+    }
+    function filter(){
+        var keyword = document.getElementById("search").value;
+        if(keyword.length > 0){
+            list.innerHTML = "";
+            for(var i=0; i<users.length; i++){
+                var name = users[i].querySelector("div[id='name']");
+                var email = users[i].querySelector("div[id='email']");
+                if(name.innerHTML.toLowerCase().includes(keyword.toLowerCase())){
+                    list.appendChild(users[i]);
+                }
+                else if(email.innerHTML.toLowerCase().includes(keyword.toLowerCase())){
+                    list.appendChild(users[i]);
+                }
+                else {
+       //             list.appendChild(users[i]);
+                }
+            }
+        }else{
+            list.innerHTML = "";
+            for(var i=0; i<users2.length; i++){
+                list.appendChild(users2[i]);
+            }
+        }
+    }
+</script>
+
+{% if friends %}
+<div style="width:100%; height:auto;">
+    <div style="font-size:25px; font-weight:800; margin-bottom:30px;
+        color: #F7D479; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center; width:100%;">MY FRIENDS</div>
+    <div class="container-fluid" style="margin-top:2%;">
+        <div class="row">
+            {% for friend in friends %}
+            <div class="col-sm-4" style="padding-bottom:15px;">
+                <div id="edit">
+                    <!--<input type="hidden" id="user_id" value="{{user_id}}">-->
+                    <div class="contentform">
+                        <div style="width:100%;">
+                            <div style="padding-top:10px; width:25%; float:left;">
+                                <center>
+                                    <a href="#">
+                                        <div style="width:100px; height:100px; border-radius:50%; box-shadow:0px 0px 15px rgba(0,0,0,0.5); padding-top:5px;">
+                                            <img src="{{friend.photo_url}}" style="max-width:90px; width:auto; height:auto; max-height:120px; border-radius:50%;" onclick="javascript:show_picture(this);">
+                                        </div>
+                                    </a>
+                                </center>
+                            </div>
+                            <div style="padding-left:30px; color: white; float:left; font-weight:600; font-size:18px; width:65%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                                {{friend.first_name}} {{friend.last_name}}<br>
+                            </div>
+                            <div style="padding-left:30px; padding-right:8px; color: white; float:left; font-weight:400; font-size:12px; width:40%; text-align:left; white-space: pre-line; word-break: break-all; word-wrap: break-word;">
+                                {{friend.age}}<br>{{friend.address}}<br>{{friend.relationship}}
+                            </div>
+                            <div style="padding-left:8px; padding-right:8px; color: white; float:left; font-weight:400; font-size:12px; width:35%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                                {{friend.education}}<br>{{friend.job}}<br>{{friend.em_millennial}}
+                            </div>
+                            <div id="interests" style="padding:8px; color: white; float:left; font-weight:400; font-size:12px; width:100%; text-align:left; white-space: nowrap; overflow:hidden; text-overflow: ellipsis;">
+                                {{friend.interests}}
+                            </div>
+                            <div style="width:100%; text-align:right; float:left; margin-bottom:8px;">
+                                <a href="{% url 'tobox' friend.id %}" class="btn btn-info btn-lg"
+                                    style="padding:5px 10px 5px 10px; font-size:16px; text-align:center; background:green; border:1px solid #eee;">
+                                    <span class="glyphicon glyphicon-envelope" style="padding-right:10px;"></span>Mail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
+<script>
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        document.getElementById("myBtn").style.display = "block";
+        document.getElementById("title").style.display = "block";
+    } else {
+        document.getElementById("myBtn").style.display = "none";
+        document.getElementById("title").style.display = "none";
+    }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+
+function show_picture(obj){
+    document.getElementById("imageFrame").style.display = "block";
+    document.getElementById("image").src = obj.src;
+}
+</script>
+
+{%else %}
+        <center>
+            <br>
+            <br>
+            <br>
+            <br><br>
+            <h3 class="my_items col-sm-offset-1" style="color:red; margin: 30px;">No Friends...</h3></center>
+
+{% endif %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

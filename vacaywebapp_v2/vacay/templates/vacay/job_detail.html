@@ -1,0 +1,680 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Job Detail{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+      WebFont.load({
+      google: {
+      families: ["Lato:100,300,400,700,900","Karla:regular","Cookie:regular"]
+    }
+    });
+</script>
+
+<style>
+
+html, body{
+  background: url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+.header {
+  background-color: #327a81;
+  color: white;
+  font-size: 1.5em;
+  padding: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  border: 1px solid white;
+}
+
+img {
+  border-radius: 5%;
+  height: 80px;
+  width: 80px;
+}
+
+.manage {
+  border-radius: 10%;
+}
+
+.table-users {
+  border: 1px solid #327a81;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  width: 100%;
+  background-color: white;
+  overflow-x:auto;
+}
+
+.table>tbody>tr>td{
+    vertical-align: middle;
+    horizontal-align: middle;
+}
+
+table td, table th {
+  color: #2b686e;
+  padding: 10px;
+  border: 1px solid white;
+  text-align: center;
+  vertical-align: middle;
+}
+table td {
+  text-align: center;
+  vertical-align: middle;
+}
+table td:last-child {
+  font-size: 0.95em;
+  line-height: 1.4;
+  text-align: center;
+}
+table th {
+  background-color: #daeff1;
+  font-weight: 300;
+  text-align: center;
+  vertical-align: middle;
+}
+table tr:nth-child(2n) {
+  background-color: white;
+  border: 1px solid #327a81;
+}
+table tr:nth-child(2n+1) {
+  background-color: #edf7f8;
+  border: 1px solid white;
+}
+#manage-menu{
+    -webkit-padding-start: 0px;
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    width:40px;
+    background-color:#7be5f8;
+    position: relative; /* <-- Added */
+    z-index: 1; /* <-- Added */
+}
+
+.info p {
+  text-align:center;
+  color: #999;
+  text-transform:none;
+  font-weight:600;
+  font-size:15px;
+  margin-top:2px
+}
+
+.info i {
+  color:#F6AA93;
+}
+h1 {
+  font-size: 22px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:middle;
+  font-family: verdana;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-bottom: auto;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top:2%;
+ // background:linear-gradient(0deg,rgba(255,255,255,0.0),rgba(255,255,255,0.9),rgba(255,255,255,0.9),rgba(255,255,255,0.9),rgba(255,255,255,0.9),rgba(255,255,255,0.9),rgba(250,255,250,0.0));
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#edit:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+select {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+textarea {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #EEE;
+  margin: 0;
+  width: 75%;
+  height: 130px;
+  float: left;
+  padding: 15px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 50px 0px 0px 50px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+
+  margin-bottom:10%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.validation {
+  display:none;
+  margin: 0 0 10px;
+  font-weight:400;
+  font-size:13px;
+  color: #DE5959;
+}
+
+#sendmessage {
+  border:1px solid #fff;
+  display:none;
+  text-align:center;
+  margin:10px 0;
+  font-weight:600;
+  margin-bottom:30px;
+  background-color: #EBF6E0;
+  color: #5F9025;
+  border: 1px solid #B3DC82;
+  padding: 13px 40px 13px 18px;
+  border-radius: 3px;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.03);
+}
+
+#sendmessage.show,.show  {
+  display:block;
+}
+
+th {color:white;}
+
+td {text-align:middle;}
+
+#container {
+    top:400px;
+    width: 480px;
+    height: 360px;
+    position:fixed;
+    z-index:100;
+    left:50%;
+    display:none;
+    transform:translate(-50%, -50%);
+    border: 10px #333 solid;
+}
+
+label.cameraButton {
+  display: inline-block;
+  /* Styles to make it look like a button */
+  padding-top: 0.6em;
+  padding-bottom: 0.3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border: 2px solid #666;
+  border-color: #EEE #CCC #CCC #EEE;
+  border-radius:50px 50px 50px 50px;
+  font-size:16px;
+  color:white;
+  width:50%;
+  height:45px;
+  text-align:middle;
+  background-color: green;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #CCC #EEE #EEE #CCC;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="image"] {
+  display: none;
+}
+
+#city {
+  border-radius: 0px 0px 0px 0px;
+  border: 1px solid #eee;
+  width: 78%;
+  height: 42px;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+#map {
+  border-radius: 0px 0px 0px 0px;
+  border: 0px solid #eee;
+  width: 12%;
+  height: 42px;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+  background-image: url(/static/vacay/images/loc.png); /* 16px x 16px */
+  background-color: transparent; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position: 0px 0px;  /*
+}
+
+label input {
+  display: none;/* <-- hide the default checkbox */
+}
+label span {/* <-- style the artificial checkbox */
+  height: 25px;
+  width: 25px;
+  margin-right:20px;
+  border: 1px solid white;
+  display: inline-block;
+  position: relative;
+}
+[type=checkbox]:checked + span:before {/* <-- style its checked state..with a ticked icon */
+  content: '\2714';
+  position: absolute;
+  top: 0px;
+  left: 5px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+#checkbox-panel {
+    padding-top:10px;
+    background:linear-gradient(90deg, rgba(0, 255, 0, 0.0),rgba(153, 102, 0, 0.8), rgba(0, 255, 0, 0.0));
+}
+
+</style>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.5.1.js">
+</script>
+<script src="https://connect.facebook.net/en_US/all.js">
+</script>
+
+<script>
+FB.init({
+appId : '330186107386044'
+});
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<div style="width:100%; height;auto; padding-top:2%;">
+    <h1>Apply or Share with your friends! If they are hired, you'll get $3000 VaCay Bucks!</h1>
+    <div class="container-fluid" style="margin-top:2%;">
+        <div class="row">
+            <div class="col-sm-4" style="max-height:78%; height:auto; overflow:scroll;">
+                <form id="edit" action="#" method="post" enctype="multipart/form-data">
+	                {% csrf_token %}
+	                <!--<h1>Apply or Share with your friends! If they are hired, you'll get $3000 VaCay Bucks!</h1>-->
+                    <div class="contentform">
+                        <div class="formcontent">
+                            <div class="form-group">
+				                <div style="width:100%;">
+                                    <div style="width:100%;">
+                                        <div id="company" style="padding:3px 15px 3px 15px; color: #04a2be; float:right;
+                                            font-weight:800; font-size:18px; max-width:100%; width:auto; border-radius:50px 8px 50px 8px; border:2px solid #04a2be;">
+                                            {{job.admincompany}}
+                                        </div><br>
+                                    </div><br>
+                                <div style="padding:10px; width:25%; float:left;">
+                                    <center>
+                                        <a href="#">
+                                            <img src="{{job.adminlogo}}" style="max-width:90px; width:auto; height:auto; max-height:120px;">
+                                        </a>
+                                    </center>
+                                </div>
+                                <div id="title" style="padding-left:20px; color: #04a2be; float:left; font-weight:600; font-size:20px; width:75%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                                    {{job.title}}
+                                </div>
+                                <div id="req" style="padding-left:30px; padding-right:8px; color: #04a2be; float:left; font-weight:500; font-size:14px; width:75%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                                    {{job.req}}
+                                </div>
+                                <div style="padding-left:30px; padding-right:8px; color: #04a2be; float:left; font-weight:500; font-size:14px; width:75%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                                    <label style="color:rgb(255, 51, 204);float:right;">{{job.postdate}}</label>
+                                </div>
+                                <div style="padding-left:30px; padding-right:8px; color: #04a2be; float:left; font-weight:500; font-size:14px; width:75%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                                    Department: <label style="font-size:16px;">{{job.department}}</label>
+                                </div>
+                                <div style="padding-left:8px; padding-right:8px; color: blue; float:left; font-weight:500; font-size:16px; width:75%; text-align:left; word-break: break-all; word-wrap: break-word;">
+                                    <i class="fa fa-map-marker" style="font-size:16px; margin-right:5px; color:red;"></i>{{job.location}}
+                                </div>
+                                <div style="width:100%; text-align:right; float:left; margin-bottom:8px;">
+                                    <a href="/job_media/{{job.job_id}}" class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center;">
+                                        <span class="glyphicon glyphicon-facetime-video" style="padding-right:8px;"></span>Media
+                                    </a>
+                                    <div class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center;" onclick="show_sharebuttons()">
+                                        <span class="glyphicon glyphicon-share" style="padding-right:8px;"></span>Share
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-4" style="max-height:78%; height:auto; overflow:scroll;">
+                <div class="contentform">
+                    <div class="formcontent">
+                        <div style="padding:8px; color: #04a2be; float:left; font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+                        font-weight:300; font-size:18px; width:100%; margin-top:10px;  border-radius:5px; border:2px solid #04a2be;" id="desc">
+                            {{job.description}}
+                        </div>
+                        <div id="extra" style="padding:8px; color: #04a2be; float:left; font-weight:500; font-size:14px; width:100%; margin-top:10px;">
+                            {{job.empty}}
+                        </div><br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4" style="max-height:78%; height:auto; overflow:scroll;">
+                <div class="contentform">
+                    <div class="formcontent">
+                        <input type="hidden" id="job_id" value="{{job.job_id}}">
+                    <div style="padding:8px; color: #04a2be; float:left; font-weight:500; font-size:14px; width:100%; margin-top:10px;" id="share-panel">
+                        <center>
+                            <div style="color: #04a2be; font-weight:500; font-size:14px; width:100%;">Share job info</div>
+                            <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" style="width:50px;height:auto;" onclick="share_to_fb2()"/>
+                        <a href="http://www.linkedin.com/shareArticle?mini=true&url=https://www.vacayalldays.com/vacay_job_detail_{{job.job_id}}&title=VaCay Job: {{job.title}}%C2%B6 {{job.description}}" target="_blank">
+                            <img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" style="width:50px;height:auto; margin-left:5px;"/>
+                        </a>
+                            <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" style="width:50px;height:auto; margin-left:5px;" onclick="share_to_tw()"/>
+                            <a href="https://plus.google.com/share?url=https://www.vacayalldays.com/vacay_job_detail_{{job.job_id}}" target="_blank">
+                                <img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" style="width:50px;height:auto; margin-left:5px;" />
+                            </a>
+                            <!--<img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" style="width:50px;height:auto; margin-left:5px;" onclick="mail_sharing()"/>-->
+                        <a href="mailto:?Subject=Hi, Please care this job&amp;Body=VaCay Job Title: {{job.title}}%C2%B6 Description: {{job.description}} https://www.vacayalldays.com/vacay_job_detail_{{job.job_id}}">
+                            <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" style="width:50px;height:auto; margin-left:5px;"/>
+                        </a>
+                            </center>
+                    </div><br>
+                    {% if survey %}
+                    <a href="{{job.survey}}" target="_blank">
+                        <div style="padding:30px; color: white; font-weight:500; float:left; font-size:14px; width:100%; height:auto; text-align:center; margin-top:15px;
+                            margin-bottom:20px; background:linear-gradient(90deg, rgba(0, 255, 0, 0.1), rgba(51, 153, 255, 0.8), rgba(255, 153, 221, 0.8), rgba(0, 255, 0, 0.1));">
+                            <img src="/static/vacay/images/surveymonkeyicon.png" style="width:50px; height:40px; float:left;">
+                            <div style="float:left; text-align:center; word-break: break-all; word-wrap: break-word; width:80%;">
+                                Click here to fill out associated <label style="color:red;">Survey</label> to<br> {{adminEmail}}
+                            </div>
+                        </div>
+                    </a>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <!--<form id="edit" action="#" method="post" enctype="multipart/form-data">-->
+	  <!--{% csrf_token %}-->
+	    <!--<h1>Apply or Share with your friends! If they are hired, you'll get $3000 VaCay Bucks!</h1>-->
+
+    <!--<div class="contentform">-->
+
+		<!--<div class="formcontent">-->
+            <!--<div class="form-group">-->
+				<!--<div style="width:100%;">-->
+                    <!--<div style="width:100%;">-->
+                        <!--<div id="company" style="padding:3px 15px 3px 15px; color: #04a2be; float:right; font-weight:800; font-size:18px; max-width:100%; width:auto; border-radius:50px 8px 50px 8px; border:2px solid #04a2be;">-->
+                            <!--{{job.admincompany}}-->
+                        <!--</div>-->
+                    <!--</div><br>-->
+                    <!--<div style="padding:10px; width:25%; float:left;">-->
+                        <!--<center>-->
+                            <!--<a href="#">-->
+                                <!--<img src="{{job.adminlogo}}" style="max-width:90px; width:auto; height:auto; max-height:120px;">-->
+                            <!--</a>-->
+                        <!--</center>-->
+                    <!--</div>-->
+                    <!--<div id="title" style="padding-left:20px; color: #04a2be; float:left; font-weight:600; font-size:20px; width:75%; text-align:left; word-break: break-all; word-wrap: break-word;">-->
+                        <!--{{job.title}}-->
+                    <!--</div>-->
+                    <!--<div id="req" style="padding-left:30px; padding-right:8px; color: #04a2be; float:left; font-weight:500; font-size:14px; width:75%; text-align:left; word-break: break-all; word-wrap: break-word;">-->
+                        <!--{{job.req}}-->
+                    <!--</div>-->
+                    <!--<div style="padding-left:30px; padding-right:8px; color: #04a2be; float:left; font-weight:500; font-size:14px; width:75%; text-align:left; word-break: break-all; word-wrap: break-word;">-->
+                        <!--<label style="color:rgb(255, 51, 204);float:right;">{{job.postdate}}</label>-->
+                    <!--</div>-->
+                    <!--<div style="padding-left:30px; padding-right:8px; color: #04a2be; float:left; font-weight:500; font-size:14px; width:75%; text-align:left; word-break: break-all; word-wrap: break-word;">-->
+                        <!--Department: <label style="font-size:16px;">{{job.department}}</label>-->
+                    <!--</div>-->
+                    <!--<div style="padding-left:8px; padding-right:8px; color: blue; float:left; font-weight:500; font-size:16px; width:75%; text-align:left; word-break: break-all; word-wrap: break-word;">-->
+                        <!--<i class="fa fa-map-marker" style="font-size:16px; margin-right:5px; color:red;"></i>{{job.location}}-->
+                    <!--</div>-->
+                    <!--<div style="width:100%; text-align:right; float:left; margin-bottom:8px;">-->
+                        <!--<a href="/job_media/{{job.job_id}}" class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center;">-->
+                            <!--<span class="glyphicon glyphicon-facetime-video" style="padding-right:8px;"></span>Media-->
+                        <!--</a>-->
+                        <!--<div class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center;" onclick="show_sharebuttons()">-->
+                            <!--<span class="glyphicon glyphicon-share" style="padding-right:8px;"></span>Share-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<div style="padding:8px; color: #04a2be; float:left; font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;-->
+                        <!--font-weight:300; font-size:18px; width:100%; margin-top:10px;  border-radius:5px; border:2px solid #04a2be;" id="desc">-->
+                        <!--{{job.description}}-->
+                    <!--</div>-->
+                    <!--<div id="extra" style="padding:8px; color: #04a2be; float:left; font-weight:500; font-size:14px; width:100%; margin-top:10px;">-->
+                        <!--{{job.empty}}-->
+                    <!--</div><br>-->
+                    <!--<input type="hidden" id="job_id" value="{{job.job_id}}">-->
+                    <!--<div style="padding:8px; color: #04a2be; float:left; font-weight:500; font-size:14px; width:100%; margin-top:10px;" id="share-panel">-->
+                        <!--<center>-->
+                            <!--<div style="color: #04a2be; font-weight:500; font-size:14px; width:100%;">Share job info</div>-->
+                            <!--<img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" style="width:50px;height:auto;" onclick="share_to_fb2()"/>-->
+                        <!--<a href="http://www.linkedin.com/shareArticle?mini=true&url=https://www.vacayalldays.com/vacay_job_detail_{{job.job_id}}&title=VaCay Job: {{job.title}}%C2%B6 {{job.description}}" target="_blank">-->
+                            <!--<img src="https://simplesharebuttons.com/images/somacro/linkedin.png" alt="LinkedIn" style="width:50px;height:auto; margin-left:5px;"/>-->
+                        <!--</a>-->
+                            <!--<img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" style="width:50px;height:auto; margin-left:5px;" onclick="share_to_tw()"/>-->
+                            <!--<a href="https://plus.google.com/share?url=https://www.vacayalldays.com/vacay_job_detail_{{job.job_id}}" target="_blank">-->
+                                <!--<img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" style="width:50px;height:auto; margin-left:5px;" />-->
+                            <!--</a>-->
+                            <!--&lt;!&ndash;<img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" style="width:50px;height:auto; margin-left:5px;" onclick="mail_sharing()"/>&ndash;&gt;-->
+                        <!--<a href="mailto:?Subject=Hi, Please care this job&amp;Body=VaCay Job Title: {{job.title}}%C2%B6 Description: {{job.description}} https://www.vacayalldays.com/vacay_job_detail_{{job.job_id}}">-->
+                            <!--<img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" style="width:50px;height:auto; margin-left:5px;"/>-->
+                        <!--</a>-->
+                            <!--</center>-->
+                    <!--</div><br>-->
+                    <!--{% if survey %}-->
+                    <!--<a href="{{job.survey}}" target="_blank">-->
+                        <!--<div style="padding:30px; color: white; font-weight:500; float:left; font-size:14px; width:100%; height:auto; text-align:center; margin-top:15px;-->
+                            <!--margin-bottom:20px; background:linear-gradient(90deg, rgba(0, 255, 0, 0.1), rgba(51, 153, 255, 0.8), rgba(255, 153, 221, 0.8), rgba(0, 255, 0, 0.1));">-->
+                            <!--<img src="/static/vacay/images/surveymonkeyicon.png" style="width:50px; height:40px; float:left;">-->
+                            <!--<div style="float:left; text-align:center; word-break: break-all; word-wrap: break-word; width:80%;">-->
+                                <!--Click here to fill out associated <label style="color:red;">Survey</label> to<br> {{adminEmail}}-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                    <!--{% endif %}-->
+
+                <!--</div>-->
+            <!--</div>-->
+	    <!--</div>-->
+
+	<!--</div>-->
+
+  <!--</form>-->
+
+<script>
+    var surflag = false;
+    function show_onmap(){
+        var city = document.getElementById('city');
+        window.location.href = "/userloc?address=" + city.value.replace(' ', '+');
+    }
+    function show_sharebuttons(){
+        document.body.scrollTop = 5000;
+        document.documentElement.scrollTop = 5000;
+    }
+    var job_id = document.getElementById("job_id").value;
+    var url = '/vacay_job_detail_' + job_id;
+    function share_to_fb(){
+        FB.ui(
+        {
+            method: 'feed',
+            name: 'vacaywebapp',
+            link: window.location.href,
+            caption: 'Please review our VaCay company job info',
+            source: 'https://cayley.pythonanywhere.com/pictures/Best_Movie_for_Recruiting2.webm',
+            picture: '/static/vacay/images/vacaylogo.jpg',
+            description: document.getElementById("desc").innerHTML,
+            message:''
+        },
+        function (response) {
+            if (response && response.post_id) {
+                alert('success');
+            } else {
+                alert('error');
+            }
+        });
+    }
+    function share_to_fb2(){
+        window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url) + '&t=' + 'VaCay Job: ' + encodeURIComponent(url));
+    }
+    function share_to_tw(){
+        var text = "VaCay Job: " + document.getElementById("title").innerHTML + "\n" + "Please redirect to this link to read more about the job info ...";
+        window.open('http://twitter.com/share?url='+encodeURIComponent(url)+'&text='+encodeURIComponent(text), '', 'left=0,top=0,width=550,height=450,personalbar=0,toolbar=0,scrollbars=0,resizable=0');
+    }
+</script>
+
+<script language="javascript">
+    function tweetCurrentPage()
+    {
+        window.open("https://twitter.com/share?url="+escape(window.location.href)+"&text="+document.title, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600');
+        return false;
+    }
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

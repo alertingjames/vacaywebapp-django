@@ -1,0 +1,367 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Retail Product Detail{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+      WebFont.load({
+      google: {
+      families: ["Lato:100,300,400,700,900","Karla:regular","Cookie:regular"]
+    }
+    });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<style>
+
+html, body{
+  background: linear-gradient(0deg,rgba(20,150,250,0.4),rgba(0,100,250,0.4)), url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+@font-face {
+  font-family: Futura;
+  src: url('.../FuturaStdLight.woff') format("WOFF");
+  font-weight: 300;
+}
+
+div h1 {
+  font-size: 25px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:center;
+  font-family: verdana;
+  <!--font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;-->
+  font-weight:500;
+}
+
+#form {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin:auto;
+  margin-top:1%;
+  background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.3),rgba(100,50,250,0.5),rgba(100,50,250,0.6),rgba(100,50,250,0.5),rgba(50,100,250,0.0));
+  opacity:0.9;
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 21px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  text-shadow: none;
+  text-align:center;
+  margin:50px 0px 0px 0px
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:550px;
+  width:auto;
+  margin:auto;
+  height:auto;
+  background-image: url("/static/vacay/images/pattern4.jpg");
+  background-size:cover;
+  overflow: hidden;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.2);
+}
+#edit:hover {
+  background-image: url("/static/vacay/images/pattern1.jpg");
+  background-size:cover;
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+textarea {
+  border-radius: 5px;
+  border: 1px solid #EEE;
+  margin: 0;
+  width: 100%;
+  height: 100px;
+  float: middle;
+  padding: 15px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+input {
+  border-radius: 5px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: auto;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+i {
+  color:red;
+}
+
+.contentform {
+  padding: 10px 10px 20px 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background:linear-gradient(90deg,rgba(100,50,250,0.2),rgba(100,50,250,0.9),rgba(100,50,250,0.9),rgba(100,50,250,0.2));
+  color: #FFF;
+  text-align: center;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom:3%;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.items {
+    color:white;
+    font-size:18px;
+    padding:8px 8px;
+    height:42px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+
+#myBtn {
+  display: none;
+  position: fixed;
+  bottom: 80px;
+  right: 10px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background-color: red;
+  color: white;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+#myBtn:hover {
+  background-color: blue;
+}
+#admin{
+    display:none;
+}
+
+#sizes {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#sizes td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#sizes tr:nth-child(even){background-color: #f2f2f2;}
+
+#sizes tr:hover {background-color: #ddd;}
+
+#sizes th {
+    padding:12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+</style>
+
+<script>
+	<!--history.pushState(null, null, location.href);-->
+	<!--window.onpopstate = function () {-->
+        <!--history.go(1);-->
+    <!--};-->
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle; border-radius: 1px;
+	transform:translate(-50%, -50%); width:auto; z-index:100; top:120px; display: none;" id="gif">
+
+<div style="width:100%; height;auto; padding-top:2%;">
+    <h1>{{retail.name}}</h1>
+    <div class="container-fluid" style="margin-top:2%;">
+        <div class="row">
+            <div class="col-sm-4" style="max-height:78%; height:auto; overflow:scroll;">
+                <div id="form">
+	            {% csrf_token %}
+                    <div class="contentform">
+                        <div class="formcontent">
+                            <div class="form-group">
+                                <center>
+                                    <div style="width:100%; text-align:center; position:relative;">
+                                        <center>
+                                            <img src="{{retail.image}}" style="width:100%; height:auto; border-radius:5px;">
+                                        </center>
+                                    </div>
+                                </center>
+			                </div>
+                            <div style="width:100%; float:left;">
+                                <a href="/retail_media/{{retail.retailid}}" class="btn btn-info btn-lg" style="padding:5px 8px 5px 8px; font-size:16px; text-align:center; background:green; border:1px solid white;">
+                                    <span class="glyphicon glyphicon-facetime-video" style="padding-right:8px;"></span>Media
+                                </a>
+                            </div><br>
+			                <div class="form-group" style="margin-top:10px; float:left;">
+                                <div style="width:100%;">
+                                    <div id="category" class="items" style="float:left; width:auto; text-align:center; white; font-weight:600;
+                                        font-family: 'Satisfy', Apple Chancery, cursive; font-size:22px;">{{retail.category}}</div>
+                                    <div id="inventory" style="width:auto; text-align:center; display:inline-block; float:right; font-size:16px; padding:3px 20px 3px 20px; color:white;
+                                        font-weight:600; border-radius:50px 50px 50px 50px; border:1px solid white;">
+                                        Inventory #  {{retail.inventorynum}}
+                                    </div>
+                                </div>
+			                </div>
+                            <br>
+	                    </div>
+	                </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4" style="max-height:78%; height:auto; overflow:scroll;">
+                <div class="form-group">
+                    <center>
+                        <div style="width:100px; height:auto; float:left; opacity:1.0;">
+                            <center>
+                                <img src="{{retail.adminLogo}}" style="width:100%; height:auto; border-radius:20px;">
+                            </center>
+                        </div>
+                    </center>
+                    <div style="width:70%; float:left; padding-left:10px; padding-top:30px;  margin-left:5px; color:white; font-size:16px;">
+                        {{retail.adminEmail}}
+                    </div>
+                </div>
+                <div style="width:100%; padding-top:1%;">
+                    {% if sizes %}
+                    <div>
+                        <table id="sizes">
+                            <tr>
+                                <th>Size</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                            </tr>
+                            {% for size in sizes %}
+                            <tr>
+                                <td>{{size.size}}</td>
+                                <td>{% if '$' in size.price %}{{size.price}}{% else %}$ {{size.price}}{% endif %}</td>
+                                <td>{{size.quantity}}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    {%else %}
+                    <center>
+                        <br>
+                        <br>
+                        <br>
+                        <h4 class="my_items col-sm-offset-1" style="color:red; margin: 30px;">No Product Detail of Size...</h4></center>
+                    {% endif %}
+                    <br>
+                </div>
+            </div>
+            <div class="col-sm-4" style="max-height:78%; height:auto; overflow:scroll;">
+                <div style="padding:15px; color: #fff; font-family: 'Century Gothic', CenturyGothic, AppleGothic, sans-serif;
+                         font-weight:300; font-size:18px; width:100%; margin-top:5px;" id="desc">
+                    {{retail.additional}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<script>
+   // When the user scrolls down 20px from the top of the document, show the button
+   window.onscroll = function() {scrollFunction()};
+
+   function scrollFunction() {
+        if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+            document.getElementById("myBtn").style.display = "block";
+            document.getElementById("title").style.display = "block";
+        } else {
+             document.getElementById("myBtn").style.display = "none";
+             document.getElementById("title").style.display = "none";
+        }
+   }
+
+   // When the user clicks on the button, scroll to the top of the document
+   function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+   }
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

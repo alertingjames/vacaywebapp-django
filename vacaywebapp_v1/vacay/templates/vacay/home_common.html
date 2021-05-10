@@ -1,0 +1,316 @@
+{% extends 'vacay/base_home.html' %}
+{% block title %}Welcome{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<style>
+
+html, body{
+  background: linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.2),rgba(100,50,250,0.2),rgba(100,50,250,0.0)),
+    url("/static/vacay/images/datingbg.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+form h1 {
+  font-size: 25px;
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  color: #F7D479;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7);
+  text-align:center;
+  font-weight:600;
+  font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+}
+
+#form {
+  border-radius: 5px;
+  max-width:100%;
+  width:auto;
+  height:auto;
+  margin-bottom: 2% auto;
+  margin-left:auto;
+  margin-right:auto;
+  padding-top:2%;
+  opacity:0.9;
+  overflow: hidden;
+}
+
+h1 {
+  text-align:center;
+  color: #F7D479;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.contentform {
+  max-width:500px;
+  float:middle;
+  margin:auto;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  box-sizing: border-box;
+  padding: 0px;
+}
+
+div.home-btn {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-color: #EEE #CCC #CCC #EEE;
+  font-size:12px;
+  color:rgb(0, 153, 153);
+  font-weight:700;
+  background:linear-gradient(30deg,rgba(255, 230, 255,0.7),rgba(204, 238, 255,0.7));
+  text-align: center;
+  width: 23.5%;
+  height:70px;
+  padding: 10px 15px;
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.home-large-btn {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-color: #EEE #CCC #CCC #EEE;
+  background-color: white;
+  text-align: center;
+  width: 48%;
+  height:220px;
+  border-radius: 10px 10px 10px 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.btn-text {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    width:100%;
+    font-size:20px;
+    color:white;
+    padding:5px;
+    font-weight:350;
+    background: linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.3),rgba(100,50,250,0.3),rgba(100,50,250,0.0));
+    transform: translate(-50%, -50%);
+}
+
+</style>
+
+<script>
+	history.pushState(null, null, location.href);
+	window.onpopstate = function () {
+        history.go(1);
+    };
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% if note %}
+<h4><script>alert("You haven't been registered. Please register...")</script></h4>
+    {% endif %}
+
+{% if error %}
+<h4><script>alert("Server failed. Try again ...")</script></h4>
+    {% endif %}
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle; border-radius: 1px;
+	transform:translate(-50%, -50%); width:auto; z-index:100; top:120px; display: none;" id="gif">
+
+<div onclick="showNotification()" id="alert" style="font-size:16px; font-weight:300; color: red; text-align:center; box-shadow: 0px 0px 100px rgba(0, 0, 0, 1.0);
+	position:fixed; left:50%; float:middle; background-color:white; border-radius:10px; padding: 5px 10px 5px 10px;
+	transform:translate(-50%, -50%); width:200px; z-index:100; top:100px; display:none;"><i class="fa fa-bell" style="font-size:18px; color:red;"></i>
+	You have a message!<br>
+	Click here to view it.
+</div>
+
+<form id="form">
+	  {% csrf_token %}
+	    <h1 style="font-size:25px; font-weight:800; margin-bottom:30px;
+        color: #ffe680; text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.7); text-align:center; width:100%;">WHAT DO YOU WANT TO DO?</h1>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+            <div class="form-group">
+                <center>
+                    <div style="width:100%; text-align:center; max-height:70px;">
+                        <div class="home-btn" id="inbox" onclick="inbox()">
+                            <center>
+                                <img src="/static/vacay/images/mailbox.png" style="width:30px; height:auto;"><br>
+                                INBOX
+                            </center>
+                        </div>
+                        <div class="home-btn" id="weather" onclick="weather()" style="font-size:10px;">
+                            <center>
+                                <img src="/static/vacay/images/weather.png" style="width:40px; height:auto;"><br>
+                                WHEATHER
+                            </center>
+                        </div>
+                        <div class="home-btn" id="nearby" onclick="nearby()">
+                            <center>
+                                <img src="/static/vacay/images/nearbyplacesicon.png" style="width:30px; height:auto;"><br>
+                                NEARBY
+                            </center>
+                        </div>
+                        <div class="home-btn" id="info" onclick="info()">
+                            <center>
+                                <img src="/static/vacay/images/tipsicon.png" style="width:30px; height:auto;"><br>
+                                TIPS
+                            </center>
+                        </div>
+                    </div>
+                    <div style="width:100%; text-align:center; margin-top:5px; max-height:70px; display:none;">
+                        <div class="home-btn" id="watercooler" onclick="watercooler()">
+                            <center>
+                                <img src="/static/vacay/images/watercooler.png" style="width:30px; height:auto;">
+                                <div style="font-size:10px;">WATER COOLER</div>
+                            </center>
+                        </div>
+                        <div class="home-btn" id="job" onclick="get_jobs()">
+                            <center>
+                                <img src="/static/vacay/images/job.png" style="width:30px; height:auto;"><br>
+                                JOB
+                            </center>
+                        </div>
+                        <div class="home-btn" id="announce" onclick="get_announces()">
+                            <center>
+                                <img src="/static/vacay/images/announcements.png" style="width:30px; height:auto;"><br>
+                                ANNOUNCE
+                            </center>
+                        </div>
+                    </div>
+                </center>
+			</div>
+            <input type="hidden" id="me_email" name="me_email" value="{{me_email}}">
+			<div class="form-group" style="">
+                <center>
+                    <div style="width:100%; text-align:center; max-height:220px;">
+                        <div class="home-large-btn" id="meet" onclick="meet()">
+                            <center>
+                                <img src="/static/vacay/images/meetimage.jpg" style="width:100%; height:100%; border-radius:8px;">
+                                <div class="btn-text">LET'S MEET</div>
+                            </center>
+                        </div>
+                        <div class="home-large-btn" id="beauty" onclick="beauty();" style="display:none;">
+                            <center>
+                                <img src="/static/vacay/images/beautyservicebackground.jpg" style="width:100%; height:100%; border-radius:8px;">
+                                <div class="btn-text">ON DEMAND<br>SERVICES</div>
+                            </center>
+                        </div>
+                        <div class="home-large-btn" id="tips" onclick="info()">
+                            <center>
+                                <img src="/static/vacay/images/tipsimage.jpg" id="tipsimage" style="width:100%; height:100%; border-radius:8px;">
+                                <div class="btn-text">TIPS</div>
+                            </center>
+                        </div>
+                    </div>
+                    <div style="width:100%; text-align:center; margin-top:5px;">
+                        <div class="home-large-btn" id="eat" onclick="eatdrink()">
+                            <center>
+                                <img src="/static/vacay/images/eatdrink.jpg" style="width:100%; height:100%; border-radius:8px;">
+                                <div class="btn-text">WHERE TO<br>EAT/DRINK?</div>
+                            </center>
+                        </div>
+                        <div class="home-large-btn" id="activity" onclick="activities()">
+                            <center>
+                                <img src="/static/vacay/images/activityimage.jpg" style="width:100%; height:100%; border-radius:8px;"><br>
+                                <div class="btn-text">ACTIVITIES</div>
+                            </center>
+                        </div>
+                    </div>
+                </center>
+			</div>
+	    </div>
+
+	</div>
+</form>
+
+<script src="https://code.createjs.com/createjs-2015.11.26.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC1e8-93-ia4seBJlMR7_BPt-pxnWGrgNA",
+    databaseURL: "https://vacay-42bcd.firebaseio.com",
+    projectId: "vacay-42bcd",
+    storageBucket: "vacay-42bcd.appspot.com"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script src="/static/vacay/noti_alert.js"></script>
+
+<script>
+    function weather(){
+        window.location.href = "https://vacayalldays.com/show_weather";
+    }
+    function nearby(){
+        window.location.href = "https://vacayalldays.com/nearby";
+    }
+    function meet(){
+        window.location.href = "https://vacayalldays.com/get_all_users";
+    }
+    function eatdrink(){
+        window.location.href = "https://vacayalldays.com/eat_entry";
+    }
+    function showNotification(){
+		window.location.href = "https://vacayalldays.com/get_notifications";
+	}
+	function get_jobs(){
+		window.location.href = "https://vacayalldays.com/get_jobs";
+	}
+	function get_announces(){
+		window.location.href = "https://vacayalldays.com/get_announces";
+	}
+	function info(){
+		window.location.href = "https://vacayalldays.com/getinfo?category=Dating Tips(Audience Specific)";
+	}
+	function watercooler(){
+		window.location.href = "https://vacayalldays.com/get_wc?category=Helpful Tips";
+	}
+	function beauty(){
+		window.location.href = "https://vacayalldays.com/beauty_entry";
+	}
+	function inbox(){
+		window.location.href = "https://vacayalldays.com/inbox";
+	}
+	function activities(){
+		window.location.href = "https://vacayalldays.com/activities";
+	}
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

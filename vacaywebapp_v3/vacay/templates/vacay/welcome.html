@@ -1,0 +1,411 @@
+{% extends 'vacay/base.html' %}
+{% block title %}Welcome{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<style>
+
+html, body{
+  background:linear-gradient(90deg,rgba(26, 140, 255,1.0),rgba(26, 140, 255,0.8),rgba(26, 140, 255,0.5),rgba(26, 140, 255,0.5),
+        rgba(26, 140, 255,0.1),rgba(51, 187, 255,0.0),rgba(51, 187, 255,0.0)), url("/static/vacay/images/winterbackground.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+img {
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+}
+
+form h1 {
+  font-size: 21px;
+  background: #327a81 none repeat scroll 0% 0%;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:left
+}
+
+#form {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-top: 2%;
+  margin-bottom: 2% auto;
+  margin-left:auto;
+  margin-right:auto;
+  <!--background:linear-gradient(30deg,rgba(200,150,250,0.7),rgba(50,200,250,0.7));-->
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#form:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 50px 0px 0px 50px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background-color: green;
+  color: #FFF;
+  text-align: center;
+  border:0;
+  padding: 10px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow: ellipsis;
+  box-shadow:1px 1px 5px rgba(0, 0, 0, 0.8);
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.btn_item{
+    width:90%; text-align:center; border-radius:50px; border:0; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.5); background:orange; color:white; height:45px; font-size:16px;
+}
+
+.fa {
+  padding: 12px 18px;
+  font-size: 30px;
+  width: 50px;
+  height:auto;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+
+.fa:hover {
+    background: #3B5998;
+}
+
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+  border-radius:20px 5px 5px 20px;
+}
+
+
+label.fb-btn {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-color: #EEE #CCC #CCC #EEE;
+  font-size:16px;
+  color:white;
+  background-color: #3B5998;
+  text-align: center;
+  width: 82%;
+  height:50px;
+  padding: 12px 18px;
+  border-radius: 5px 10px 10px 5px;
+  cursor: pointer;
+}
+
+.fb {
+  display: inline-block;
+  border: 2px solid #fff;
+  border-color: #EEE #CCC #CCC #EEE;
+  text-align: center;
+  width: 12%;
+  height:50px;
+  border-radius: 10px 5px 5px 10px;
+  cursor: pointer;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #CCC #EEE #EEE #CCC;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="image"] {
+  display: none;
+}
+
+</style>
+
+<script>
+	history.pushState(null, null, location.href);
+	window.onpopstate = function () {
+        history.go(1);
+    };
+</script>
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '330186107386044',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.12'
+    });
+
+    FB.AppEvents.logPageView();
+
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+{% if ln %}<script>alert("Please login with Facebook.");</script>{% endif %}
+
+<div id="alert" style="font-size:16px; font-weight:300; color: black; box-shadow: 0px 0px 100px rgba(0, 0, 0, 1.0);
+	position:fixed; left:50%; float:center; background-color:white; border-radius:10px; padding: 5px 15px 5px 15px;
+	transform:translate(-50%, -50%); width:400px; z-index:200; top:400px; display:none;">
+    <i class="fa fa-meh-o" style="font-size:22px; color:green;"></i><label style="font-size:20px; padding:10px;">Please select ...</label>
+    <img src="/static/vacay/images/cancel.png" style="width:30px; height:30px; float:right; margin-top:5px;" onclick="close_alert()"><br>
+    <div style="width:100%; text-align:center;">
+        <a href="/manager_login?type=beauty">
+            <button class="btn_item">Beauty Manager</button>
+        </a>
+        <a href="/manager_login?type=retail">
+            <button class="btn_item" style="margin-top:8px;">Retail Manager</button>
+        </a>
+        <a href="/manager_login?type=company">
+            <button class="btn_item" style="margin-top:8px; margin-bottom:25px;">Company Manager</button>
+        </a>
+    </div>
+</div>
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle; border-radius: 1px;
+	transform:translate(-50%, -50%); width:auto; z-index:100; top:120px; display: none;" id="gif">
+
+  <form id="form">
+	  {% csrf_token %}
+	    <!--<h1>Register</h1>-->
+
+    <div class="contentform">
+
+		<div class="formcontent">
+            <center><img src="/static/vacay/images/vacaylogo.jpg" style="width:100px; height:100px; border-radius: 50%;">
+                <div style="width:100%; font-size:16px; color:white; text-align:center; padding:30px;">Welcome! Please connect both your Facebook accounts for our security standards.</div>
+            </center>
+			<div class="form-group">
+                <center>
+                    <div id="fb-button" style="width:100%; text-align:center;" onclick="fb_login()">
+                        <img class="fb" src="/static/vacay/images/facebook.png"><label class="fb-btn">Login with Facebook</label>
+                    </div>
+                </center>
+                <center>
+                    <a href="/linkedin" style="display:none;">
+                        <div id="ln-button" style="width:100%; text-align:center;">
+                            <img class="fb" src="/static/vacay/images/linkedin.png"><label class="fb-btn" style="background-color:#007bb5;">Login with LinkedIn</label>
+                        </div>
+                    </a>
+                </center>
+			</div>
+            <input type="hidden" id="ln" value="{% if ln %}ln{% else %}{% endif %}">
+            <div style="width:100%; font-size:16px; color:white; text-align:center; padding:15px;">OR What are you? Please select ...</div>
+			<div class="form-group" style="margin-top:5%; text-align:center;">
+                <button type="submit" class="bouton-update" formaction="/provider_login_page" style="width:42%;">Service Provider</button>
+                <button type="submit" class="bouton-update" formaction="/employee_login_page" style="width:42%; margin-left:20px;">Employee</button>
+            </div>
+
+            <div class="form-group">
+				<center><button type="submit" class="bouton-update" formaction="javascript:open_alert();" style="width:60%;">Manager</button></center>
+			</div>
+
+            <div class="form-group" style="text-align:center; margin-bottom:10%;">
+                <button type="submit" class="bouton-update" style="width:42%;" formaction="/vacayalljobs">Jobs</button>
+                <button type="submit" class="bouton-update" formaction="#" style="width:42%; margin-left:20px;">FAQs</button>
+            </div>
+
+
+            <center><div id="google_translate_element"></div></center>
+
+            <script type="text/javascript">
+                function googleTranslateElementInit() {
+                  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                }
+            </script>
+
+            <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+
+	    </div>
+
+	</div>
+
+  </form>
+<script>
+    function progressBar(){
+
+    }
+    function open_alert(){
+        document.getElementById("alert").style.display = "inline-block";
+    }
+    function close_alert(){
+        document.getElementById("alert").style.display = "none";
+    }
+    function fb_login(){
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                FB.logout(function(response) {
+                    // Person is now logged out
+                });
+            }
+            else {
+                FB.login(function(response) {
+                    getFBData();
+                }, {scope: 'public_profile, email'});
+            }
+        });
+    }
+
+    function getFBData () {
+        FB.api('/me', {fields: 'first_name, last_name, email, gender, birthday, picture.type(large)'}, function(response) {
+            // if (document.getElementById("ln").value){
+            //     post('/linkedin_login', {fb_first_name:response.first_name, fb_last_name:response.last_name, fb_email:response.email, fb_gender:response.gender, fb_photo:response.picture['data']['url'], tosurvey: 'true'});
+            // }else {
+            //     post('/linkedin_login', {fb_first_name:response.first_name, fb_last_name:response.last_name, fb_email:response.email, fb_gender:response.gender, fb_photo:response.picture['data']['url'], tosurvey: 'false'});
+            // }
+            post('/linkedin_login', {fb_first_name:response.first_name, fb_last_name:response.last_name, fb_email:response.email, fb_gender:response.gender, fb_photo:response.picture['data']['url'], tosurvey: 'true'});
+        });
+    }
+</script>
+
+<script>
+function post(path, params, method) {
+        method = method || "post"; // Set method to post by default if not specified.
+
+        // The rest of this code assumes you are not using a library.
+        // It can be made less wordy if you use one.
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for(var key in params) {
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+}
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

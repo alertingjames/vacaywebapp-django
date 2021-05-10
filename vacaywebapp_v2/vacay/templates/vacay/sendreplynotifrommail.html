@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Service Provider's Response</title>
+    <style>
+        html, body{
+            background: url("/static/vacay/images/pattern4.jpg") no-repeat center center fixed;
+            background-size:cover;
+        }
+    </style>
+</head>
+<body>
+
+<input type="hidden" id="sender_name" value="{{sender_name}}">
+<input type="hidden" id="sender_email" value="{{sender_email}}">
+<input type="hidden" id="sender_photo" value="{{sender_photo}}">
+<input type="hidden" id="friend_email" value="{{friend_email}}">
+<input type="hidden" id="message" value="{{message}}">
+<div style="width:100%; height:100%; text-align:center; font-size:30px; color:red; font-family:verdana; padding-top:200px;">Your message was sent successfully</div>
+
+<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC1e8-93-ia4seBJlMR7_BPt-pxnWGrgNA",
+    databaseURL: "https://vacay-42bcd.firebaseio.com",
+    projectId: "vacay-42bcd",
+    storageBucket: "vacay-42bcd.appspot.com"
+  };
+  firebase.initializeApp(config);
+</script>
+<script>
+var sender_email = document.getElementById("sender_email").value.replace(".com","").replace(".","ddoott");
+var friend_email = document.getElementById("friend_email").value.replace(".com","").replace(".","ddoott");
+var messageText = document.getElementById("message").value;
+if (messageText.length > 0){
+        firebase.database().ref('messages/' + sender_email + '_' + friend_email).push().set({
+            message: messageText,
+            image:'',
+            video:'',
+            lat: '',
+            lon: '',
+            time: new Date().getTime(),
+            user:sender_email
+        });
+        firebase.database().ref('messages/' + friend_email + '_' + sender_email).push().set({
+            message: messageText,
+            image:'',
+            video:'',
+            lat: '',
+            lon: '',
+            time: new Date().getTime(),
+            user:sender_email
+        });
+        firebase.database().ref('notification/' + friend_email + '/' + sender_email).remove();
+        firebase.database().ref('notification/' + friend_email + '/' + sender_email).push().set({
+            sender: sender_email,
+            senderName: document.getElementById("sender_name").value,
+            msg: messageText,
+            senderPhoto: document.getElementById("sender_photo").value
+        });
+}
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

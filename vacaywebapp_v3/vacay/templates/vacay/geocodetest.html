@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+    
+<style>
+    
+html, body{
+  background: url("/static/vacay/images/homebg.jpg") no-repeat center center fixed;
+  background-size:cover;
+}    
+    
+</style>    
+    
+</head>    
+    
+<body>
+
+<p id="demo" style="display:none;"></p>
+
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;
+  showWeatherLatLng(position.coords.latitude, position.coords.longitude);
+}
+
+getLocation();
+
+
+function showWeatherLatLng(lat, lng) {
+    var weather_url = "https://darksky.net/forecast/" + lat + "," + lng + "/si12/en";
+    window.location.href = weather_url;
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,392 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block body %}
+<title>Sketchpad</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<script>
+  function launchFullScreen(element) {
+  if(element.requestFullScreen) {
+    element.requestFullScreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullScreen) {
+    element.webkitRequestFullScreen();
+  }
+}
+
+// Launch fullscreen for browsers that support it!
+launchFullScreen(document.documentElement); // the whole page
+</script>
+
+<script type="text/javascript">
+    // Variables for referencing the canvas and 2dcanvas context
+    var canvas,ctx;
+
+    // Variables to keep track of the mouse position and left-button status
+    var mouseX,mouseY,mouseDown=0;
+
+    // Variables to keep track of the touch position
+    var touchX,touchY;
+    var size = 5;
+    var r = 219, g = 31, b = 184;
+    var restorePoints = new Array();
+    var touches = 0;
+
+    // Draws a dot at a specific position on the supplied canvas name
+    // Parameters are: A canvas context, the x position, the y position, the size of the dot
+    function drawDot(ctx,x,y,size) {
+        // Let's use black by setting RGB values to 0, and 255 alpha (completely opaque)
+        a=255;
+
+        var imgSrc = canvas.toDataURL();
+        restorePoints.push(imgSrc);
+
+        // Select a fill style
+        ctx.fillStyle = "rgba("+r+","+g+","+b+","+(a/255)+")";
+
+        // Draw a filled circle
+        ctx.beginPath();
+        ctx.arc(x, y, size, 0, Math.PI*2, true);
+        ctx.closePath();
+        ctx.fill();
+
+        var imgSrc = canvas.toDataURL();
+        restorePoints.push(imgSrc);
+    }
+
+    // Clear the canvas context using the canvas width and height
+    function clearCanvas(canvas,ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        restorePoints.length = 0;
+        var imgSrc = canvas.toDataURL();
+        restorePoints.push(imgSrc);
+    }
+
+    // Keep track of the mouse button being pressed and draw a dot at current location
+    function sketchpad_mouseDown() {
+        mouseDown=1;
+        drawDot(ctx,mouseX,mouseY,size);
+    }
+
+    // Keep track of the mouse button being released
+    function sketchpad_mouseUp() {
+        mouseDown=0;
+    }
+
+    // Keep track of the mouse position and draw a dot if mouse button is currently pressed
+    function sketchpad_mouseMove(e) {
+        // Update the mouse co-ordinates when moved
+        getMousePos(e);
+
+        // Draw a dot if the mouse button is currently being pressed
+        if (mouseDown==1) {
+            drawDot(ctx,mouseX,mouseY,size);
+        }
+    }
+
+    // Get the current mouse position relative to the top-left of the canvas
+    function getMousePos(e) {
+        if (!e)
+            var e = event;
+
+        if (e.offsetX) {
+            mouseX = e.offsetX;
+            mouseY = e.offsetY;
+        }
+        else if (e.layerX) {
+            mouseX = e.layerX;
+            mouseY = e.layerY;
+        }
+     }
+
+    // Draw something when a touch start is detected
+    function sketchpad_touchStart() {
+        // Update the touch co-ordinates
+        getTouchPos();
+
+        drawDot(ctx,touchX,touchY,size);
+
+        // Prevents an additional mousedown event being triggered
+        event.preventDefault();
+    }
+
+    // Draw something and prevent the default scrolling when touch movement is detected
+    function sketchpad_touchMove(e) {
+        // Update the touch co-ordinates
+        getTouchPos(e);
+
+        // During a touchmove event, unlike a mousemove event, we don't need to check if the touch is engaged, since there will always be contact with the screen by definition.
+        drawDot(ctx,touchX,touchY,size);
+
+        // Prevent a scrolling action as a result of this touchmove triggering.
+        event.preventDefault();
+    }
+
+    // Get the touch position relative to the top-left of the canvas
+    // When we get the raw values of pageX and pageY below, they take into account the scrolling on the page
+    // but not the position relative to our target div. We'll adjust them using "target.offsetLeft" and
+    // "target.offsetTop" to get the correct values in relation to the top left of the canvas.
+    function getTouchPos(e) {
+        if (!e)
+            var e = event;
+
+        if(e.touches) {
+            if (e.touches.length == 1) { // Only deal with one finger
+                var touch = e.touches[0]; // Get the information for finger #1
+                touchX=touch.pageX-touch.target.offsetLeft;
+                touchY=touch.pageY-touch.target.offsetTop;
+            }
+        }
+    }
+
+
+    // Set-up the canvas and add our event handlers after the page has loaded
+    function init() {
+        // Get the specific canvas element from the HTML document
+        canvas = document.getElementById('sketchpad');
+
+        // If the browser supports the canvas tag, get the 2d drawing context for this canvas
+        if (canvas.getContext)
+            ctx = canvas.getContext('2d');
+
+        // Check that we have a valid context to draw on/with before adding event handlers
+        if (ctx) {
+            // React to mouse events on the canvas, and mouseup on the entire document
+            canvas.addEventListener('mousedown', sketchpad_mouseDown, false);
+            canvas.addEventListener('mousemove', sketchpad_mouseMove, false);
+            window.addEventListener('mouseup', sketchpad_mouseUp, false);
+
+            // React to touch events on the canvas
+            canvas.addEventListener('touchstart', sketchpad_touchStart, false);
+            canvas.addEventListener('touchmove', sketchpad_touchMove, false);
+            // save the first history of drawing
+            var imgSrc = canvas.toDataURL();
+            restorePoints.push(imgSrc);
+        }
+    }
+</script>
+
+<style>
+
+html, body{
+  background:linear-gradient(0deg,rgba(20,150,250,0.3),rgba(0,100,250,0.3)), url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+/* Some CSS styling */
+#sketchpadapp {
+    /* Prevent nearby text being highlighted when accidentally dragging mouse outside confines of the canvas */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#sketchpadapp {
+  border-radius: 5px;
+  width:100%;
+  height:100%;
+  margin:auto;
+  text-align:center;
+  padding-top:100px;
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+
+
+#sketchpad {
+    height:300px;
+    width:500px;
+    background:white;
+    border:2px solid #888;
+    border-radius:4px;
+    position:relative; /* Necessary for correct mouse co-ords in Firefox */
+}
+.draw-btn {
+    width:auto;
+    border-radius:10px;
+    background:green;
+    padding:5px 10px 5px 10px;
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    -webkit-appearance: none;
+}
+
+select {
+    width:auto;
+    padding:5px 10px 5px 10px;
+    color:black;
+    font-size:18px;
+    font-weight:600;
+    -webkit-appearance: none;
+}
+
+#aa {
+    width:auto;
+    padding:5px 10px 5px 10px;
+    color:black;
+    font-size:18px;
+    font-weight:600;
+    -webkit-appearance: none;
+}
+
+#colorpad {
+    width:150px;
+    border-radius:10px;
+    background:green;
+    padding:5px 10px 5px 10px;
+    color:white;
+    font-size:18px;
+    font-weight:600;
+    -webkit-appearance: none;
+}
+
+</style>
+
+<body>
+    <div id="sketchpadapp">
+        <canvas id="sketchpad" height="300" width="500"></canvas>
+        <div style="width:auto; text-align:center; margin-top:10px;">
+            <button  class="draw-btn">Thickness:</button>
+            <select name="thick" required id="thick" onchange="changeThickness();">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="5" selected>5</option>
+                <option value="6">6</option>
+                <option value="8">8</option>
+                <option value="10">10</option>
+            </select>
+            <input type="hidden" name="image" id="image">
+            <input id="colorpad" class="jscolor {onFineChange:'update(this)'}" style="margin-left:20px;" value="DB1FB8" readonly>
+            <button id="undo" class="draw-btn" style="margin-left:3px; margin-top:5px;" onclick="undoAction();">Undo</button>
+            <button id="clear" class="draw-btn" style="margin-left:3px; margin-top:5px;" onclick="clearCanvas(canvas, ctx);">Clear</button>
+            <button id="save-png" class="draw-btn" style="margin-left:3px; margin-top:5px;" onclick="save();">Save</button>
+        </div>
+        <div id="aa" style="margin-top:30px;">
+
+        </div>
+    </div>
+</body>
+<script src="/static/vacay/jscolor.js"></script>
+<script>
+    window.onload = init;
+    var thickness = document.getElementById("thick");
+    var color = document.getElementById("color");
+    window.onload=init;
+    var i = 0;
+    function changeThickness(){
+     //   alert(thickness.value);
+        size = thickness.value;
+    }
+    function changeRandomColor(){
+        r = Math.floor(Math.random()*256);          // Random between 0-255
+        g = Math.floor(Math.random()*256);          // Random between 0-255
+        b = Math.floor(Math.random()*256);          // Random between 0-255
+        var rgb = 'rgb(' + r + ',' + g + ',' + b + ')'; // Collect all to a string
+        $("#colorpad").css("background-color", rgb);
+    }
+
+    // Undo
+    function undoAction() {
+    //    alert(restorePoints.length);
+        var oImg = new Image();
+        oImg.onload = function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(oImg, 0, 0);
+        }
+        oImg.src = restorePoints.pop();
+    }
+    $("#undo").mouseup(function(){
+        i = 0;
+    }).mousedown(function(){
+        while(i < restorePoints.length){
+           undoAction();
+           i++;
+        }
+    });
+
+    function update(picker){
+        r = Math.round(picker.rgb[0]);
+        g = Math.round(picker.rgb[1]);
+        b = Math.round(picker.rgb[2]);
+    }
+    function save(){
+        var imageURL = getBase64Image();
+        if (imageURL.length > 0 && imageURL != 'None') {
+            post('/returnfromdrawing', {image: imageURL});
+        }
+    }
+
+    function getBase64Image() {
+        var dataURL = canvas.toDataURL("image/png");
+        return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    }
+    function post(path, params, method) {
+        method = method || "post"; // Set method to post by default if not specified.
+
+        // The rest of this code assumes you are not using a library.
+        // It can be made less wordy if you use one.
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for(var key in params) {
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
