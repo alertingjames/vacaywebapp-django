@@ -1,0 +1,289 @@
+{% extends 'vacay/base_tohome.html' %}
+{% block title %}Men's Wax{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script>
+      WebFont.load({
+      google: {
+      families: ["Lato:100,300,400,700,900","Karla:regular","Cookie:regular"]
+    }
+    });
+</script>
+<style>
+
+html, body{
+  background:linear-gradient(0deg,rgba(20,150,250,0.3),rgba(0,100,250,0.3)), url("/static/vacay/images/pattern3.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+@font-face {
+  font-family: Futura;
+  src: url('.../FuturaStdLight.woff') format("WOFF");
+  font-weight: 300;
+}
+
+div h1 {
+  font-size: 23px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:center;
+  font-family: verdana;
+  <!--font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;-->
+  font-weight:500;
+}
+
+#form {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  padding-bottom: 2%;
+  margin-left:auto;
+  margin-right:auto;
+  padding-top:5%;
+  background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.3),rgba(100,50,250,0.5),rgba(100,50,250,0.6),rgba(100,50,250,0.5),rgba(50,100,250,0.0));
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#form:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+i {
+  color:red;
+}
+
+.contentform {
+  padding: 10px 10px 20px 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background:linear-gradient(90deg,rgba(100,50,250,0.0),rgb(0, 128, 43),rgba(50,100,250,0.0));
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom:3%;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+label input {
+  display: none;/* <-- hide the default checkbox */
+}
+label span {/* <-- style the artificial checkbox */
+  height: 25px;
+  width: 25px;
+  margin-right:20px;
+  border: 1px solid white;
+  display: inline-block;
+  position: relative;
+}
+[type=checkbox]:checked + span:before {/* <-- style its checked state..with a ticked icon */
+  content: '\2714';
+  position: absolute;
+  top: 0px;
+  left: 5px;
+}
+
+#checkbox-panel {
+    padding-top:10px;
+    background:linear-gradient(90deg, rgba(0, 255, 0, 0.0),rgba(153, 102, 0, 0.8), rgba(0, 255, 0, 0.0));
+}
+
+#slideshow {
+  margin: auto;
+  position: relative;
+  width: 300px;
+  height: 240px;
+  padding: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  text-align:center;
+}
+
+#slideshow > div {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+}
+
+</style>
+
+<script>
+	<!--history.pushState(null, null, location.href);-->
+	<!--window.onpopstate = function () {-->
+        <!--history.go(1);-->
+    <!--};-->
+</script>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle; border-radius: 1px;
+	transform:translate(-50%, -50%); width:auto; z-index:100; top:120px; display: none;" id="gif">
+
+  <div id="form">
+	  {% csrf_token %}
+	    <h1>Welcome! Please select all the services you want!</h1>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+            <div class="form-group" id="slideshow">
+                {% for service in services %}
+                    <div onclick="javascript:window.location.href='/service_detail/{{service.serviceid}}';">
+                        <img src="{{service.proServicePictureUrl}}" style="max-width:100%; width:auto; max-height:100%; height:auto;">
+                    </div>
+                {% endfor %}
+			</div>
+            <script>
+                $("#slideshow > div:gt(0)").hide();
+
+                setInterval(function() {
+                    $('#slideshow > div:first')
+                    .fadeOut(1000)
+                    .next()
+                    .fadeIn(1000)
+                    .end()
+                    .appendTo('#slideshow');
+                }, 1800);
+            </script>
+			<div class="form-group" style="margin-left:20px; margin-top:50px;" id="panel">
+                <label style="color:white; font-size:16px; margin-left:50px;">
+                    <input type='checkbox' id="chest" name="chest" value="" hidden onchange="chest()">
+                    <span></span>Chest Wax
+                </label><br>
+                <label style="color:white; font-size:16px; margin-left:50px;" onchange="nose()">
+                    <input type='checkbox' id="nose" name="nose" value="" hidden>
+                    <span></span>Nose Wax
+                </label><br>
+                <label style="color:white; font-size:16px; margin-left:50px;">
+                    <input type='checkbox' id="back" name="back" value="" hidden onchange="back()">
+                    <span></span>Back Wax
+                </label><br>
+                <label style="color:white; font-size:16px; margin-left:50px;" onchange="eye()">
+                    <input type='checkbox' id="eye" name="eye" value="" hidden>
+                    <span></span>Eyebrow Wax
+                </label><br>
+            </div>
+            <div class="form-group" style="margin-top:15%;">
+                <button type="submit" class="bouton-update" onclick="okay()">OK</button>
+			</div>
+	    </div>
+
+	</div>
+
+  </div>
+
+<script>
+    var chest;
+    var nose;
+    var back;
+    var eye;
+
+    function okay(){
+        if (document.getElementById("chest").checked){
+            chest = 'Chest Wax';
+        }else {
+            chest = '';
+        }
+        if (document.getElementById("nose").checked){
+            nose = 'Nose Wax';
+        }else {
+            nose = '';
+        }
+        if (document.getElementById("back").checked){
+            back = 'Back Wax';
+        }else {
+            back = '';
+        }
+        if (document.getElementById("eye").checked){
+            eye = 'Eyebrow Wax';
+        }else {
+            eye = '';
+        }
+        if (chest != '' || nose != '' || back != '' || eye != '')
+            post('/filter_beauties', {category:'mwax', chest: chest, nose: nose, back: back, eye: eye});
+        else alert("Please select all checkboxes you want ...");
+    }
+
+    function post(path, params, method) {
+        method = method || "post"; // Set method to post by default if not specified.
+
+        // The rest of this code assumes you are not using a library.
+        // It can be made less wordy if you use one.
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for(var key in params) {
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

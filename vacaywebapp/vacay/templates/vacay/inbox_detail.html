@@ -1,0 +1,592 @@
+{% extends 'vacay/base_inbox.html' %}
+{% block title %}Mail Detail{% endblock %}
+{% block body %}
+
+<br>
+<br>
+<br>
+<style>
+
+html, body{
+  background:linear-gradient(90deg,rgba(26, 140, 255,1.0),rgba(26, 140, 255,0.8),rgba(26, 140, 255,0.5),rgba(26, 140, 255,0.5),
+        rgba(26, 140, 255,0.1),rgba(51, 187, 255,0.0),rgba(51, 187, 255,0.0)), url("/static/vacay/images/winterbackground.jpg") no-repeat center center fixed;
+  background-size:cover;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.desc {
+    padding: 15px;
+    text-align: center;
+}
+
+.header {
+  background-color: #327a81;
+  color: white;
+  font-size: 1.5em;
+  padding: 1rem;
+  text-align: center;
+  text-transform: uppercase;
+  border: 1px solid white;
+}
+
+.manage {
+  border-radius: 10%;
+}
+
+.table-users {
+  border: 1px solid #327a81;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  width: 100%;
+  background-color: white;
+  overflow-x:auto;
+}
+
+.table>tbody>tr>td{
+    vertical-align: middle;
+    horizontal-align: middle;
+}
+
+table td, table th {
+  color: #2b686e;
+  padding: 10px;
+  border: 1px solid white;
+  text-align: center;
+  vertical-align: middle;
+}
+table td {
+  text-align: center;
+  vertical-align: middle;
+}
+table td:last-child {
+  font-size: 0.95em;
+  line-height: 1.4;
+  text-align: center;
+}
+table th {
+  background-color: #daeff1;
+  font-weight: 300;
+  text-align: center;
+  vertical-align: middle;
+}
+table tr:nth-child(2n) {
+  background-color: white;
+  border: 1px solid #327a81;
+}
+table tr:nth-child(2n+1) {
+  background-color: #edf7f8;
+  border: 1px solid white;
+}
+#manage-menu{
+    -webkit-padding-start: 0px;
+    -webkit-margin-before: 0px;
+    -webkit-margin-after: 0px;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    width:40px;
+    background-color:#7be5f8;
+    position: relative; /* <-- Added */
+    z-index: 1; /* <-- Added */
+}
+
+.info p {
+  text-align:center;
+  color: #999;
+  text-transform:none;
+  font-weight:600;
+  font-size:15px;
+  margin-top:2px
+}
+
+.info i {
+  color:#F6AA93;
+}
+form h1 {
+  font-size: 22px;
+  color: rgb(255, 255, 255);
+  padding: 19px 22px;
+  border-radius: 5px 5px 0px 0px;
+  margin: auto;
+  text-shadow: none;
+  text-align:middle;
+  font-family: 'Satisfy', Apple Chancery, cursive;
+}
+
+#edit {
+  border-radius: 5px;
+  max-width:500px;
+  width:auto;
+  height:auto;
+  margin-top: 2% auto;
+  margin-bottom: 2% auto;
+  margin-left:auto;
+  margin-right:auto;
+  <!--background:linear-gradient(30deg,rgba(200,150,250,0.7),rgba(50,200,250,0.7));-->
+  opacity:0.9;
+  overflow: hidden;
+  <!--box-shadow: 25px 25px 0 rgba(0, 0, 0, 0.2);-->
+}
+#edit:hover {
+  <!--background:linear-gradient(0deg,rgba(200,50,250,0.7),rgba(50,200,250,0.7));-->
+}
+
+p span {
+  color: #F00;
+}
+
+p {
+  margin: 0px;
+  font-weight: 600;
+  line-height: 2;
+  color:#fff;
+}
+
+h1 {
+  text-align:center;
+  color: #666;
+  text-shadow: 1px 1px 0px #FFF;
+  margin:50px 0px 0px 0px
+}
+
+input {
+  border-radius: 0px 50px 50px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  margin-right:auto;
+  width: 92%;
+  height: 42px;
+  float: middle;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+select {
+  border-radius: 0px 5px 5px 0px;
+  border: 1px solid #eee;
+  margin-bottom: 15px;
+  width: 75%;
+  height: 40px;
+  float: left;
+  padding: 0px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+a {
+  text-decoration:inherit
+}
+
+textarea {
+  border-radius: 10px 10px 10px 10px;
+  border: 1px solid #EEE;
+  margin: 0;
+  width: 100%;
+  height: 200px;
+  float: middle;
+  padding: 15px 15px;
+  opacity: 0.8;
+  color:black;
+}
+
+.form-group {
+  overflow: hidden;
+  width:100%;
+}
+
+.icon-case {
+  width: 8%;
+  float: left;
+  border-radius: 50px 0px 0px 50px;
+  background:green;
+  height:42px;
+  position: relative;
+  text-align: center;
+  line-height:40px;
+  padding-top:11px;
+}
+
+i {
+  color:yellow;
+}
+
+.contentform {
+  padding: 0px 10px 30px 10px;
+  float:middle;
+  margin:auto;
+}
+
+.bouton-update{
+  background-color: #845801;
+  color: #FFF;
+  text-align: center;
+  width: 100%;
+
+  border:0;
+  padding: 12px 18px;
+  border-radius: 50px 50px 50px 50px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.formcontent {
+  width:100%;
+  float:middle;
+  margin:auto;
+  <!--border-right: 1px dotted #CCC;-->
+  box-sizing: border-box;
+  padding: 0px 0px 0px 0px;
+}
+
+.validation {
+  display:none;
+  margin: 0 0 10px;
+  font-weight:400;
+  font-size:13px;
+  color: #DE5959;
+}
+
+#sendmessage {
+  border:1px solid #fff;
+  display:none;
+  text-align:center;
+  margin:10px 0;
+  font-weight:600;
+  margin-bottom:30px;
+  background-color: #EBF6E0;
+  color: #5F9025;
+  border: 1px solid #B3DC82;
+  padding: 13px 40px 13px 18px;
+  border-radius: 3px;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.03);
+}
+
+#sendmessage.show,.show  {
+  display:block;
+}
+
+th {color:white;}
+
+td {text-align:middle;}
+
+select {
+  border-radius: 5px 5px 5px 5px;
+  border: 1px solid #eee;
+  height: 40px;
+  width:60%;
+  opacity: 0.8;
+  margin:auto;
+  color:red;
+}
+
+#container {
+    top:400px;
+    width: 480px;
+    height: 360px;
+    position:fixed;
+    z-index:100;
+    left:50%;
+    display:none;
+    transform:translate(-50%, -50%);
+    border: 10px #333 solid;
+}
+
+label.cameraButton {
+  display: inline-block;
+  /* Styles to make it look like a button */
+  padding-top: 0.6em;
+  padding-bottom: 0.3em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  border: 2px solid #666;
+  border-color: #EEE #CCC #CCC #EEE;
+  border-radius:50px 50px 50px 50px;
+  font-size:14px;
+  color:white;
+  width:30%;
+  height:42px;
+  text-align:center;
+  background-color: green;
+}
+
+/* Look like a clicked/depressed button */
+label.cameraButton:active {
+  border-color: #CCC #EEE #EEE #CCC;
+}
+
+/* This is the part that actually hides the 'Choose file' text box for camera inputs */
+label.cameraButton input[accept*="image"] {
+  display: none;
+}
+
+</style>
+
+<meta charset="UTF-8">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../lib/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!--<meta name="mobile-web-app-capable" content="yes">-->
+<!--<meta name="apple-mobile-web-app-capable" content="yes">-->
+
+<!--<script>-->
+  <!--function launchFullScreen(element) {-->
+  <!--if(element.requestFullScreen) {-->
+    <!--element.requestFullScreen();-->
+  <!--} else if(element.mozRequestFullScreen) {-->
+    <!--element.mozRequestFullScreen();-->
+  <!--} else if(element.webkitRequestFullScreen) {-->
+    <!--element.webkitRequestFullScreen();-->
+  <!--}-->
+<!--}-->
+
+<!--// Launch fullscreen for browsers that support it!-->
+<!--launchFullScreen(document.documentElement); // the whole page-->
+<!--</script>-->
+
+{% if notloc %}
+<h4><script>alert("There is no any location requested from friend.")</script></h4>
+{% endif %}
+
+<div onclick="" id="alert" style="font-size:16px; font-weight:300; color: red; text-align:center; box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.3);
+	position:fixed; left:50%; float:middle; background-color:white; border-radius:10px; padding: 5px 10px 5px 10px;
+	transform:translate(-50%, -50%); width:200px; z-index:200; top:160px; display:none;"><i class="fa fa-bell" style="font-size:18px; color:red;"></i>
+	You have message!<br>
+	Click here to contact it.
+</div>
+
+<img src="/static/vacay/images/processing.gif" class="glyphicon glyphicon-fire" aria-hidden="true" style="position:fixed; left:50%; float:middle;
+	transform:translate(-50%, -50%); width:80px; height:auto; z-index:100; top:120px; display: none;" id="gif">
+
+<img src="{{mail.photo_url}}" style="position:relative; max-width:60px; max-height:80px; width:auto; height:auto; border-radius:50%; z-index:100; left:2%; margin-top:1.5%;">
+
+  <form id="edit" action="/inloc" method="post" enctype="multipart/form-data">
+	  {% csrf_token %}
+	    <h1>Message from Friend</h1>
+
+    <div class="contentform">
+
+		<div class="formcontent">
+			<div style="width:100%;">
+                <div style="padding-left:20px; padding-right:8px; color: #fff; float:left; font-weight:600; font-size:18px; width:100%; text-overflow: ellipsis; text-align:left;">
+                    From: {{mail.from_mail}}
+                </div><br>
+                <div style="padding-left:8px; padding-right:8px; color: white; float:left; font-weight:600; font-size:16px; width:100%; text-overflow: ellipsis; text-align:right;">
+                    {{mail.request_date}}
+                </div><br>
+                <div id="msg1" style="padding: 10px; color: #fff; float:left; font-weight:500; font-size:16px; width:100%; border-radius:10px;
+                    background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.2),rgba(100,50,250,0.2),rgba(100,50,250,0.2),rgba(100,50,250,0.0),rgba(50,100,250,0.0));
+                    text-align:left; height: auto; text-overflow: ellipsis; white-space: pre-line;">
+                    {{mail.text_message}}
+                </div>
+                <div id="link" style="width:100%; display:none;">
+                    <a href="javascript:accept('accepted');">
+                        <div  id="accept" style="width:50%; float:left; color:red; font-size:18px; text-decoration: underline; text-align:center;">Accept</div>
+                    </a>
+                    <a href="javascript:accept('declined');">
+                        <div id="decline" style="width:50%; float:left; color:red; font-size:18px; text-decoration: underline; text-align:center;">Decline</div>
+                    </a>
+                </div>
+                <div id="msg2" style="padding: 10px; color: #fff; float:left; font-weight:500; font-size:16px; width:100%; border-radius:10px; display:none;
+                    background:linear-gradient(0deg,rgba(100,50,250,0.0),rgba(100,50,250,0.2),rgba(100,50,250,0.2),rgba(100,50,250,0.2),rgba(100,50,250,0.0),rgba(50,100,250,0.0));
+                    text-align:left; height: auto; text-overflow: ellipsis; white-space: pre-line;">
+                </div>
+                <input type="hidden" name="lat" id="lat" value="{{mail.lat_message}}">
+                <input type="hidden" name="lng" id="lng" value="{{mail.lon_message}}">
+                <input type="hidden" name="mail_id" id="mail_id" value="{{mail.mail_id}}">
+                <input type="hidden" name="name" id="name" value="{{mail.name}}">
+                <input type="hidden" name="service" id="service" value="{{mail.service}}">
+                <input type="hidden" name="service_reqdate" id="service_reqdate" value="{{mail.service_reqdate}}">
+                <input type="hidden" name="email" id="email" value="{{mail.from_mail}}">
+                <input type="hidden" name="me_name" id="me_name" value="{{me_name}}">
+                <input type="hidden" name="me_email" id="me_email" value="{{me_email}}">
+                <input type="hidden" name="me_photo" id="me_photo" value="{{me_photo}}">
+                <center>
+                    <div style="width:100%;">
+                        <label style="color:white; padding:6px 12px 6px 12px; border-radius:20px; background-color: rgba(153, 102, 0, 0.8); width:auto; height: auto;"
+                               onclick="document.getElementById('edit').submit();">
+                                <img src="/static/vacay/images/loc.png" style="width:30px; height:30px; margin-right:10px; margin-bottom:5px;">Requested Location</label>
+                    </div><br>
+                    {% if mail.image_message_url != '' and mail.image_message_url != 'None' %}
+                        <a href="{% url 'view_mailimage' mail.mail_id %}">
+                            <img src="{{mail.image_message_url}}" style="width:auto; height:auto; max-width:300px; max-height:300px;">
+                        </a>
+                    {% endif %}
+                </center>
+                <div style="width:100%; text-align:right; float:left; margin-bottom:8px; margin-top:8px;">
+                    <!--<a href="#" class="btn btn-info btn-lg" style="padding:3px 8px 3px 8px; font-size:14px; text-align:center;">-->
+                        <!--<span class="glyphicon glyphicon-trash" style="padding-right:8px;"></span>Delete-->
+                    <!--</a>-->
+                    <a href="{% url 'inreply' mail.mail_id %}" class="btn btn-info btn-lg" style="padding:8px 12px 8px 12px; font-size:16px; text-align:center; margin-bottom:10%;">
+                        <span class="glyphicon glyphicon-share-alt" style="padding-right:8px;"></span>Reply
+                    </a>
+                </div>
+            </div>
+	    </div>
+
+	</div>
+
+
+</form>
+
+<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC1e8-93-ia4seBJlMR7_BPt-pxnWGrgNA",
+    databaseURL: "https://vacay-42bcd.firebaseio.com",
+    projectId: "vacay-42bcd",
+    storageBucket: "vacay-42bcd.appspot.com"
+  };
+  firebase.initializeApp(config);
+</script>
+
+<script>
+
+    var text = document.getElementById("msg1").innerHTML;
+
+    if (text.includes("Please review the information. If you have questions, you can reply directly to the customer. If you want to accept or decline, please click here.")){
+        var index = text.indexOf("Thanks");
+        document.getElementById("msg1").innerHTML = text.substring(0, index-1);
+        document.getElementById("msg2").innerHTML = text.substring(index, text.length);
+        document.getElementById("msg2").style.display = "block";
+        document.getElementById("link").style.display = "block";
+    }
+
+    function accept(sts){
+   //     alert(sts);
+        send_msg(sts);
+    }
+
+    function post(path, params, method) {
+        method = method || "post"; // Set method to post by default if not specified.
+
+        // The rest of this code assumes you are not using a library.
+        // It can be made less wordy if you use one.
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for(var key in params) {
+            if(params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+</script>
+
+<script>
+
+var date = new Date();
+var seconds = date.getSeconds();
+var minutes = date.getMinutes();
+var hours = date.getHours();
+//
+var year = date.getFullYear();
+var month = date.getMonth() + 1; // beware: January = 0; February = 1, etc.
+var day = date.getDate();
+
+var ampm = hours >= 12 ? 'PM' : 'AM';
+hours = hours % 12;
+hours = hours ? hours : 12; // the hour '0' should be '12'
+minutes = minutes < 10 ? '0'+minutes : minutes;
+var timeStr = month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + ampm;
+
+var datetime = timeStr;
+var sender_email = document.getElementById("me_email").value.replace(".com","").replace(".","ddoott");
+var friend_email = document.getElementById("email").value.replace(".com","").replace(".","ddoott");
+
+function send_msg(sts){
+    var messageText = '';
+    if (sts == 'accepted'){
+        messageText = 'Hi, ' + document.getElementById("name").value + '\n' + document.getElementById("me_name").value + ' has accepted you ' +
+            document.getElementById("service").value + ' with schedule of ' + document.getElementById("service_reqdate").value + '\n' + 'Thanks\n' + datetime + '\n' + document.getElementById("me_name").value;
+    }else if (sts == 'declined'){
+        messageText = 'Hi, ' + document.getElementById("name").value + '\n' + document.getElementById("me_name").value + ' can\'t do you ' + document.getElementById("service").value + ' with your requested schedule of ' +
+            document.getElementById("service_reqdate").value + '\n' + 'Please select another time or another service provider.\n' + 'We apologize for the inconvenience\n' + datetime + '\n' + document.getElementById("me_name").value;
+    }
+  //  alert(sender_email);
+
+    if (messageText.length > 0){
+        firebase.database().ref('messages/' + sender_email + '_' + friend_email).push().set({
+            message: messageText,
+            image:'',
+            video:'',
+            lat: '',
+            lon: '',
+            time: new Date().getTime(),
+            user:sender_email
+        });
+        firebase.database().ref('messages/' + friend_email + '_' + sender_email).push().set({
+            message: messageText,
+            image:'',
+            video:'',
+            lat: '',
+            lon: '',
+            time: new Date().getTime(),
+            user:sender_email
+        });
+        firebase.database().ref('notification/' + friend_email + '/' + sender_email).remove();
+        firebase.database().ref('notification/' + friend_email + '/' + sender_email).push().set({
+            sender: sender_email,
+            senderName: document.getElementById("me_name").value,
+            msg: messageText,
+            senderPhoto: document.getElementById("me_photo").value
+        });
+
+        var params = {
+            'service': document.getElementById("service").value,
+            'name': document.getElementById("name").value,
+            'email': document.getElementById("email").value,
+            'service_reqdate': document.getElementById("service_reqdate").value,
+            'status': sts,
+            'mailid': document.getElementById("mail_id").value
+        }
+        post("/accept", params);
+    }
+}
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
